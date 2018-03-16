@@ -13,21 +13,25 @@ export default class TreasureMap extends Component {
         longitude: 0
       },
       nextPosition: {
-        latitude: 41.786776,
-        longitude: -87.752188
+        latitude: 41.89518162984577,
+        longitude: -87.63912666597183,
       },
-      distToNext: 0
+      distToNext: 0,
+      isInside: false
     }
 
-    let locationFinder
+    let locationFinder;
   }
 
 
   async componentDidMount() {
     locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
       (position) => {
+        
         this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
-        this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition) })
+        this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition) });
+        this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 15) });
+        console.log(this.state.currentPosition);
       })
   }
 
@@ -36,8 +40,7 @@ export default class TreasureMap extends Component {
   }
 
   render() {
-    console.log(this.state.locationFinder);
-    return (
+return !this.state.isInside ? (
       <View style={{ flex: 1 }}>
         <MapView
           style={{ flex: 6 }}
@@ -50,9 +53,9 @@ export default class TreasureMap extends Component {
             description="Our school"
           />
         </MapView>
-        <Text style={{ flex: 1 }}>Distance to next clue: {this.state.distToNext}</Text>
+        <Text style={{ flex: 1 }}>Distance to next clue: {this.state.distToNext} meters</Text>
       </View>
-    );
+    ) : (<View>{this.props.navigation.navigate('AR')}</View>)
   }
 }
 
