@@ -1,0 +1,12 @@
+{
+    "extends": "fullstack",
+    "plugins": [
+        "babel"
+    ],
+    "rules": {
+        "babel/new-cap": 1,
+        "babel/object-curly-spacing": 1,
+        "babel/no-invalid-this": 1,
+        "babel/semi": 1
+    }
+}
