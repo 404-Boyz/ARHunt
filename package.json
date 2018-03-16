@@ -4,7 +4,10 @@
   "private": true,
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "eslint": "^4.18.2",
+    "eslint-config-fullstack": "^3.0.0",
     "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-react": "^7.7.0",
     "jest-expo": "25.0.0",
     "react-native-scripts": "1.11.1",
     "react-test-renderer": "16.2.0"
@@ -22,12 +25,12 @@
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react-native": "^4.0.0",
-    "eslint-config-fullstack": "^3.0.0",
     "expo": "^25.0.0",
     "expo-three": "^2.2.2-alpha.1",
     "react": "16.2.0",

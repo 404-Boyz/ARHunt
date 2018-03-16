@@ -36,17 +36,24 @@ export default class Clue extends React.Component {
         scene.background = ExpoTHREE.createARBackgroundTexture(arSession, renderer);
 
         // Edit the box dimensions here and see changes immediately!
-        // let materials = [];
-        // for (let i = 1; i < 7; i++) {
-        //     materials.push([new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('./assets/img/clue_side' + i + '.png') })])
-        // }
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        let cube = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.15, 0.15, material));
-        // const geometry = new THREE.BoxGeometry(0.15, 0.15, 0.15);
-        // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        // const cube = new THREE.Mesh(geometry, material);
-        cube.position.z = 0;
-        cube.position.y = 0;
+
+        const textureLoader = new THREE.TextureLoader();
+
+        const texture0 = textureLoader.load('./assets/img/clue_side1.png');
+        const texture1 = textureLoader.load('./assets/img/clue_side2.png');
+        const texture2 = textureLoader.load('./assets/img/clue_side3.png');
+        const texture3 = textureLoader.load('./assets/img/clue_side4.png');
+        const texture4 = textureLoader.load('./assets/img/clue_side5.png');
+        const texture5 = textureLoader.load('./assets/img/clue_side6.png');
+
+        const texture = new THREE.TextureLoader().load('./assets/img/clue_side1.png')
+
+
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const cube = new THREE.Mesh(geometry, material);
+        cube.position.z = -5;
+        cube.position.y = .5;
         scene.add(cube);
 
         const animate = () => {
