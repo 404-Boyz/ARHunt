@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import ViroSample from './AR';
-import { AR, ChooseAdv, ClueList, Home, LogIn, TreasureMap, Profile, SignUp } from './index'
+import { AR, ChooseAdv, ClueList, Home, LogIn, TreasureMap, Profile, SignUp, Clue } from './index'
 
 
 
@@ -9,9 +9,6 @@ const RootStack = StackNavigator({
   Home: {
     screen: Home
   },
-  // AR: {
-  //   screen: ViroSample
-  // },
   ChooseAdv: {
     screen: ChooseAdv
   },
@@ -30,6 +27,9 @@ const RootStack = StackNavigator({
   SignUp: {
     screen: SignUp
   },
+  AR: {
+    screen: Clue
+  }
 
 },
   {
