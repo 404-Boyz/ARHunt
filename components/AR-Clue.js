@@ -9,15 +9,20 @@ console.disableYellowBox = true;
 
 export default class Clue extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
     render() {
         return (
-
-            <Expo.GLView
-                ref={(ref) => this._glView = ref}
-                style={{ flex: 1 }}
-                onContextCreate={this._onGLContextCreate}
-            />
-
+            <TouchableOpacity disabled={false} onPress={() => console.log("You pressed!")} style={{ flex: 1 }}>
+                <Expo.GLView
+                    ref={(ref) => this._glView = ref}
+                    style={{ flex: 1 }}
+                    onContextCreate={this._onGLContextCreate}
+                />
+            </TouchableOpacity>
         );
     }
 
@@ -46,7 +51,6 @@ export default class Clue extends React.Component {
             const texture4 = textureLoader.load('./assets/img/clue_side5.png');
             const texture5 = textureLoader.load('./assets/img/clue_side6.png');
 
-            // let texture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/crate.gif')
 
             var materials = [
                 new THREE.MeshBasicMaterial({ map: texture0 }),
@@ -64,6 +68,10 @@ export default class Clue extends React.Component {
             cube.position.y = 0.5;
 
             scene.add(cube);
+
+            cube.name = "YES!"
+
+            console.log(camera.getWorldDirection())
 
             const animate = () => {
                 requestAnimationFrame(animate);
