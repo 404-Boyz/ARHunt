@@ -18,7 +18,8 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "node node_modules/jest/bin/jest.js"
+    "test": "node node_modules/jest/bin/jest.js",
+    "start:server": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server/index.js"
   },
   "jest": {
     "preset": "jest-expo"
@@ -43,6 +44,7 @@
     "geolib": "^2.0.24",
     "morgan": "^1.9.0",
     "nachos-ui": "^0.1.2",
+    "nodemon": "^1.17.2",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "path": "^0.12.7",
