@@ -24,6 +24,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -31,12 +32,28 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react-native": "^4.0.0",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
+    "connect-session-sequelize": "^5.2.1",
+    "cookie-parser": "^1.4.3",
     "expo": "^25.0.0",
     "expo-three": "^2.2.2-alpha.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "geolib": "^2.0.24",
+    "morgan": "^1.9.0",
+    "nachos-ui": "^0.1.2",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-navigation": "^1.5.7",
+    "sequelize": "^4.37.1",
+    "session": "^0.1.0",
+    "socket.io": "^2.0.4",
     "three": "^0.91.0"
   }
 }

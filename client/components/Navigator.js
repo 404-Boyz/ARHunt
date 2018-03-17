@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import ViroSample from './AR';
 import { AR, ChooseAdv, ClueList, Home, LogIn, TreasureMap, Profile, SignUp, Clue } from './index'
 
 
@@ -33,7 +32,7 @@ const RootStack = StackNavigator({
 
 },
   {
-    initialRouteName: 'Login'
+    initialRouteName: 'LogIn'
   }
 );
 
