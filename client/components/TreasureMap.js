@@ -17,7 +17,8 @@ export default class TreasureMap extends Component {
         longitude: -87.63912666597183,
       },
       distToNext: 0,
-      isInside: false
+      isInside: false,
+      markers: []
     }
 
     let locationFinder;
@@ -27,7 +28,7 @@ export default class TreasureMap extends Component {
   async componentDidMount() {
     locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
       (position) => {
-        
+
         this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
         this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition) });
         this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 15) });
@@ -40,7 +41,7 @@ export default class TreasureMap extends Component {
   }
 
   render() {
-return !this.state.isInside ? (
+    return !this.state.isInside ? (
       <View style={{ flex: 1 }}>
         <MapView
           style={{ flex: 6 }}
@@ -65,6 +66,8 @@ const initialRegion = {
   latitudeDelta: 0.0922,
   longitudeDelta: 0.0421,
 };
+
+
 
 const testMarker = {
   coordinate: {
