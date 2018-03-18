@@ -16,7 +16,7 @@ export default class Clue extends React.Component {
 
     render() {
         return (
-            <TouchableOpacity disabled={false} onPress={() => console.log("You pressed!")} style={{ flex: 1 }}>
+            <TouchableOpacity disabled={true} onPress={() => console.log("You pressed!")} style={{ flex: 1 }}>
                 <Expo.GLView
                     ref={(ref) => this._glView = ref}
                     style={{ flex: 1 }}
@@ -39,30 +39,40 @@ export default class Clue extends React.Component {
 
         scene.background = ExpoTHREE.createARBackgroundTexture(arSession, renderer);
 
+
         // Edit the box dimensions here and see changes immediately!
 
         const makeCube = () => {
-            const textureLoader = new THREE.TextureLoader();
+            // const textureLoader = new THREE.TextureLoader();
 
-            const texture0 = textureLoader.load('./assets/img/clue_side1.png');
-            const texture1 = textureLoader.load('./assets/img/clue_side2.png');
-            const texture2 = textureLoader.load('./assets/img/clue_side3.png');
-            const texture3 = textureLoader.load('./assets/img/clue_side4.png');
-            const texture4 = textureLoader.load('./assets/img/clue_side5.png');
-            const texture5 = textureLoader.load('./assets/img/clue_side6.png');
+            // const texture0 = textureLoader.load('./assets/img/clue_side1.png');
+            // const texture1 = textureLoader.load('./assets/img/clue_side2.png');
+            // const texture2 = textureLoader.load('./assets/img/clue_side3.png');
+            // const texture3 = textureLoader.load('./assets/img/clue_side4.png');
+            // const texture4 = textureLoader.load('./assets/img/clue_side5.png');
+            // const texture5 = textureLoader.load('./assets/img/clue_side6.png');
 
 
-            var materials = [
-                new THREE.MeshBasicMaterial({ map: texture0 }),
-                new THREE.MeshBasicMaterial({ map: texture1 }),
-                new THREE.MeshBasicMaterial({ map: texture2 }),
-                new THREE.MeshBasicMaterial({ map: texture3 }),
-                new THREE.MeshBasicMaterial({ map: texture4 }),
-                new THREE.MeshBasicMaterial({ map: texture5 })
-            ];
+            // var materials = [
+            //     new THREE.MeshBasicMaterial({ map: texture0 }),
+            //     new THREE.MeshBasicMaterial({ map: texture1 }),
+            //     new THREE.MeshBasicMaterial({ map: texture2 }),
+            //     new THREE.MeshBasicMaterial({ map: texture3 }),
+            //     new THREE.MeshBasicMaterial({ map: texture4 }),
+            //     new THREE.MeshBasicMaterial({ map: texture5 })
+            // ];
 
-            const geometry = new THREE.BoxGeometry(1, 1, 1);
-            const cube = new THREE.Mesh(geometry, materials);
+            const geometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+
+            for (var i = 0; i < geometry.faces.length; i += 2) {
+                var hex = Math.random() * 0xffffff;
+                geometry.faces[i].color.setHex(hex);
+                geometry.faces[i + 1].color.setHex(hex);
+            }
+            var material = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors, overdraw: 0.5 });
+
+
+            const cube = new THREE.Mesh(geometry, material);
 
             cube.position.z = -5;
             cube.position.y = 0.5;
@@ -85,6 +95,13 @@ export default class Clue extends React.Component {
             animate();
         }
         makeCube();
+    }
+
+    _onDocumentTouchStart = (event) => {
+        if (event.touches.length === 1) {
+            event.preventDefault();
+            console.log("You pressed!")
+        }
     }
 
 }
