@@ -1,14 +1,16 @@
 import axios from 'axios';
 
 const GET_LOCATION = 'GET_LOCATION';
+const GET_ACTIVE_LOCATION = 'GET_ACTIVE_LOCATION'
 const GET_ALL_LOCATIONS = 'GET_ALL_LOCATIONS';
 const CHANGE_VISITED_STATUS = 'CHANGE_VISITED_STATUS';
 
 
 // --ACTION CREATORS--
 const getLocation = location => ({ type: GET_LOCATION, location })
+const getActiveLocation = location => ({ type: GET_ACTIVE_LOCATION, location })
 const getLocations = locations => ({ type: GET_ALL_LOCATIONS, locations })
-const changeVisited = visited  => ({type: CHANGE_VISITED_STATUS, visited })
+const changeVisited = visited => ({ type: CHANGE_VISITED_STATUS, visited })
 
 //THUNK CREATORS//
 
@@ -18,20 +20,26 @@ export const getAllLocations = (userId, adventureId) => dispatch => {
     .catch(err => console.error(err))
 }
 
-export const getSingleLocation = ( userId, adventureId, locationId) => dispatch => {
+export const getSingleLocation = (userId, adventureId, locationId) => dispatch => {
   axios.get(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`)
     .then(res => dispatch(getLocation(res.data)))
     .catch(err => console.error(err))
 }
 
-export const changeVisitedStatus = ( userId, adventureId, locationId, status ) => dispatch => {
+export const fetchActiveLocation = (userId, adventureId) => dispatch => {
+  axios.get(`/api/user/${userId}/adventure/${adventureId}/location/active`)
+    .then(res => dispatch(getActiveLocation(res.data))
+      .catch(err => console.error(err)))
+}
+
+export const changeVisitedStatus = (userId, adventureId, locationId, status) => dispatch => {
   axios.put(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`,
-  {
-    userId: userId,
-    adventureId: adventureId,
-    id: locationId,
-    visited: status
-  })
+    {
+      userId: userId,
+      adventureId: adventureId,
+      id: locationId,
+      visited: status
+    })
     .then(res => dispatch(changeVisited(res.data)))
     .catch(err => console.error(err))
 }
@@ -44,8 +52,10 @@ export default function (locations = [], action) {
       return action.locations
     case GET_LOCATION:
       return action.location
+    case GET_ACTIVE_LOCATION:
+      return action.location
     case CHANGE_VISITED_STATUS:
-      return locations.map(loc => (action.location.id === loc.id ? action.location : loc ))
+      return locations.map(loc => (action.location.id === loc.id ? action.location : loc))
     default:
       return locations
   }
