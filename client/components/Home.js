@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator'
+import { connect } from 'react-redux'
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props)
   }
   render() {
     return (
       <View>
-        <Text>Home Screen</Text>
+        <Text>Welcome {props.user.firstName}!</Text>
 
         <Button title='Augmented Reality' onPress={() => this.props.navigation.navigate('AR')} />
         <Button title='Choose Adventure' onPress={() => this.props.navigation.navigate('ChooseAdv')} />
@@ -24,3 +25,11 @@ export default class Home extends Component {
     )
   }
 }
+
+const mapState = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapState)(Home)
