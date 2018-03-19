@@ -1,7 +1,9 @@
 
 import Expo, { Location } from 'expo';
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Modal, TouchableHighlight, Text, Dimensions, Vibration, TouchableWithoutFeedback } from 'react-native'
+import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
+
+import ARModal from './AR-Modal.js'
 
 import * as THREE from 'three'; // 0.87.1
 import ExpoTHREE from 'expo-three'; // 2.0.2
@@ -21,8 +23,8 @@ export default class AR extends React.Component {
                 longitude: 0
             },
             nextPosition: {
-                latitude: 41.895169,
-                longitude: -87.639029,
+                latitude: 41.895370,
+                longitude: -87.638953,
             },
             distToNext: NaN,
             isInside: false,
@@ -47,11 +49,12 @@ export default class AR extends React.Component {
 
                 this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
                 this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition, 1) });
-                this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 20) }, () => {
+                this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 30) }, () => {
                     if (this.state.isInside && this.state.counter === 0) {
                         this.state.counter++
                         this.makeCube(this.gl)
                     }
+                    console.log('dist', this.state.distToNext)
                 });
             })
     }
@@ -73,7 +76,7 @@ export default class AR extends React.Component {
         this.raycaster.setFromCamera(this.touch, this.camera);
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
-            this.setModalVisible(!this.state.modalVisible)
+            this._setModalVisible(!this.state.modalVisible)
         } else {
             Vibration.vibrate()
         }
@@ -104,7 +107,7 @@ export default class AR extends React.Component {
 
         // checking distance to clue location and rendering cube or not based on that
 
-        if (this.state.distToNext < 20) {
+        if (this.state.distToNext < 30) {
             const geometry = new THREE.BoxGeometry(1.4, 1.4, 1.4);
 
             // randomizing the cube colors and creating the 3D/AR shape
@@ -147,12 +150,16 @@ export default class AR extends React.Component {
     }
 
 
-    setModalVisible(visible) {
+    _setModalVisible(visible) {
         this.setState({ modalVisible: visible });
     }
 
 
     render() {
+        let modal = null;
+        if (this.state.modalVisible) {
+            modal = (<ARModal setModalVisible={this._setModalVisible.bind(this)} />)
+        }
         return (
             <TouchableOpacity disabled={false} onPress={(evt) =>
                 this.updateTouch(evt)} style={{ flex: 1 }}>
@@ -161,26 +168,7 @@ export default class AR extends React.Component {
                     style={{ flex: 1 }}
                     onContextCreate={this._onGLContextCreate}
                 />
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        alert('Modal has been closed.');
-                    }}>
-                    <View style={{ marginTop: 22 }}>
-                        <View>
-                            <Text>Hello World!</Text>
-
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.setModalVisible(!this.state.modalVisible);
-                                }}>
-                                <Text>Hide Modal</Text>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-                </Modal>
+                {modal}
             </TouchableOpacity>
 
         );
