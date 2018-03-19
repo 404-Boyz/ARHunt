@@ -16,3 +16,4 @@ router.get('/:adventureId', (req, res, next) => {
         .catch(next)
 });
 
+module.exports = router;

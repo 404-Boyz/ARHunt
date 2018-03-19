@@ -16,3 +16,6 @@ router.get('/:locationId', (req, res, next) => {
         .then(location => res.json(location))
         .catch(next)
 });
+
+
+module.exports = router;
