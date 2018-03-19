@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { AR, ChooseAdv, ClueList, Home, LogIn, TreasureMap, Profile, SignUp } from './index'
+import { AR, ChooseAdv, ClueList, Home, Login, TreasureMap, Profile, SignUp } from './index'
 
 
 
@@ -14,8 +14,8 @@ const RootStack = StackNavigator({
   ClueList: {
     screen: ClueList
   },
-  LogIn: {
-    screen: LogIn
+  Login: {
+    screen: Login
   },
   TreasureMap: {
     screen: TreasureMap
@@ -32,7 +32,7 @@ const RootStack = StackNavigator({
 
 },
   {
-    initialRouteName: 'LogIn'
+    initialRouteName: 'Login'
   }
 );
 
