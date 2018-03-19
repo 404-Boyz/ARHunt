@@ -3,7 +3,7 @@ const db = require('../db')
 
 
 
-
+router.use('/user', require('./user'))
 
 
 router.use((req, res, next) => {
