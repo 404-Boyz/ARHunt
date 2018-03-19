@@ -5,7 +5,11 @@ const Adventure = db.define('adventure', {
   name: Sequelize.STRING,
   description: Sequelize.TEXT,
   locationCount: Sequelize.INTEGER,
-  photoUrl: Sequelize.STRING
+  photoUrl: Sequelize.STRING,
+  status: {
+    type: Sequelize.STRING,
+    defaultValue: 'active'
+  }
 })
 
 module.exports = Adventure;

@@ -12,20 +12,26 @@ const changeVisited = visited  => ({type: CHANGE_VISITED_STATUS, visited })
 
 //THUNK CREATORS//
 
-export const getAllLocations = () => dispatch => {
-  axios.get('/api/user/:userId/location')
+export const getAllLocations = (userId, adventureId) => dispatch => {
+  axios.get(`/api/user/${userId}/adventure/${adventureId}/location`)
     .then(res => dispatch(getLocations(res.data)))
     .catch(err => console.error(err))
 }
 
-export const getSingleLocation = (locationId) => dispatch => {
-  axios.get(`/api/user/:userId/location/${locationId}`)
+export const getSingleLocation = ( userId, adventureId, locationId) => dispatch => {
+  axios.get(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`)
     .then(res => dispatch(getLocation(res.data)))
     .catch(err => console.error(err))
 }
 
-export const changeVisitedStatus = (locationId, status) => dispatch => {
-  axios.put(`/api/user/:userId/location/${locationId}`, { visited: status })
+export const changeVisitedStatus = ( userId, adventureId, locationId, status ) => dispatch => {
+  axios.put(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`,
+  {
+    userId: userId,
+    adventureId: adventureId,
+    id: locationId,
+    visited: status
+  })
     .then(res => dispatch(changeVisited(res.data)))
     .catch(err => console.error(err))
 }
