@@ -14,3 +14,5 @@ router.post('/', (req, res, next) => {
         .then(user => res.json(user))
         .catch(next)
 })
+
+module.exports = router
