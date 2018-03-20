@@ -7,6 +7,8 @@ router.get('/', (req, res, next) => {
     Adventure.findAll()
         .then(adventures => res.json(adventures))
         .catch(console.error('Adventures not found!'))
+        // REVIEW - You're assuming what the error is here, you should check,
+        //          and also send an appropriate respnse code
 });
 
 router.get('/:adventureId', (req, res, next) => {
@@ -48,6 +50,7 @@ router.get('/:adventureId/location/:locationId', (req, res, next) => {
         .catch(next)
 });
 
+// REVIEW - right idea, but please explain the params you're using here
 router.put('/:adventureId/location/:locationId', (req, res, next) => {
     return Location.update({ visited: req.body.visited }, {
         where: {

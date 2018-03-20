@@ -47,6 +47,7 @@ export default class AR extends React.Component {
         await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
             (position) => {
 
+                // REVIEW - Why are you calling setState three times?
                 this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
                 this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition, 1) });
                 this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 30) }, () => {
@@ -175,4 +176,3 @@ export default class AR extends React.Component {
     }
 
 }
-
