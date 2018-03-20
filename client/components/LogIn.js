@@ -7,8 +7,8 @@ import { auth } from '../store'
 
 
 class LogIn extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
       name: '',
@@ -28,10 +28,8 @@ class LogIn extends Component {
           value={this.state.name}
           onChangeText={value => {
             this.setState({ name: value }, () => console.log(this.state.name))
-
           }}
         />
-
         <Input
           name='password'
           style={inputStyle}
@@ -43,10 +41,9 @@ class LogIn extends Component {
         }
         />
         <Button title="Don't have an account? Sign up now!" onPress={() => {
-          props.this.props.navigation.navigate('SignUp')
-
+          console.log('hit it')
+          // this.props.navigation.navigate('SignUp')
         }} />
-
         <Image style={{ width: 200, height: 200, alignSelf: 'center' }} source={{ uri: 'http://www.parc-des-pirates.com/uk/img/logo.png' }}
         />
       </View>
