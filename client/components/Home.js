@@ -5,8 +5,8 @@ import { RootStack } from './Navigator.js'
 import { connect } from 'react-redux'
 
 class Home extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
   }
   render() {
     return (
