@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View } from 'react-native';
 import { StackNavigator, navigationOptions } from 'react-navigation';
+import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
 
@@ -42,9 +43,21 @@ export default class TreasureMap extends Component {
 
   render() {
     return !this.state.isInside ? (
-      <View style={{ flex: 1 }}>
+      <Container>
+        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: '0px' }} >
+          <Left />
+          <Right>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+              <Icon name="menu" />
+            </Button>
+          </Right>
+        </Header>
+
+
         <MapView
-          style={{ flex: 6 }}
+          style={{ flex: 10 }}
           showsUserLocation={true}
           initialRegion={initialRegion}
         >
@@ -54,8 +67,10 @@ export default class TreasureMap extends Component {
             description="Our school"
           />
         </MapView>
-        <Text style={{ flex: 1 }}>Distance to next clue: {this.state.distToNext} meters</Text>
-      </View>
+        <Text style={{ flex: 1, textAlign: 'center' }}>Distance to next clue: {this.state.distToNext} meters</Text>
+
+
+      </Container>
     ) : (<View>{this.props.navigation.navigate('AR')}</View>)
   }
 }
