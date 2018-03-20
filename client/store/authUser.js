@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { StackNavigator, navigationOptions } from 'react-navigation'
 
+const server = 'http://localhost:4040';
+
 /**
  * ACTION TYPES
  */
@@ -33,9 +35,16 @@ export const me = () =>
 export const auth = (userName, password, method) =>
   dispatch => {
     console.log(userName, password, method)
-    axios.post(`/auth/${method}`, { userName, password })
+    fetch(`${server}/auth/${method}`, {
+      method: 'POST',
+      body: {
+        userName: userName,
+        password: password
+      }
+    }
+    )
       .then(res => {
-        console.log('THUNKING IT UP')
+        console.log('THUNKING IT UP. RES: ', res)
         dispatch(getUser(res.data))
         props.this.props.navigation.navigate('Home')
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
@@ -57,7 +66,7 @@ export const logout = () =>
 /**
  * REDUCER
  */
-export default function (state = user, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case GET_USER:
       console.log('IN REDUCER!!!', action)
