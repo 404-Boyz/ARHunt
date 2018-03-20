@@ -3,6 +3,7 @@ import { View, Text, Button } from 'react-native';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
+import {}  from '../store'
 
 export default class TreasureMap extends Component {
   constructor(props) {
