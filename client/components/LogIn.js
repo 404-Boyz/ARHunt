@@ -14,6 +14,7 @@ class LogIn extends Component {
       name: '',
       password: ''
     }
+
   }
 
   render() {
@@ -30,6 +31,7 @@ class LogIn extends Component {
 
           }}
         />
+
         <Input
           name='password'
           style={inputStyle}
@@ -37,7 +39,9 @@ class LogIn extends Component {
           value={this.state.password}
           onChangeText={value => this.setState({ password: value })}
         />
-        <Button title='Start your hunt!' onPress={(evt) => this.props.handleLogIn(evt)} />
+        <Button title='Start your hunt!' onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)
+        }
+        />
         <Button title="Don't have an account? Sign up now!" onPress={() => {
           props.this.props.navigation.navigate('SignUp')
 
@@ -53,17 +57,14 @@ class LogIn extends Component {
 
 
 const mapDispatch = (dispatch, ownProps) => {
+
   return {
-    handleLogIn(evt) {
-      const formName = 'logIn'
-      const userName = evt.target.userName
-      const password = evt.target.password
-      dispatch(auth(password, formName, userName))
+    handleLogIn(name, password) {
+      console.log(name, password)
+      dispatch(auth(name, password, 'login'))
     }
   }
 }
-
-
 
 export const Login = connect(null, mapDispatch)(LogIn)
 
