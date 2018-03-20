@@ -7,8 +7,8 @@ import { auth } from '../store'
 
 
 class LogIn extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
       name: '',

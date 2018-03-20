@@ -5,13 +5,13 @@ import { RootStack } from './Navigator'
 import { connect } from 'react-redux'
 
 class Home extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
   }
   render() {
     return (
       <View>
-        <Text>Welcome Jimmy!</Text>
+        <Text>Welcome Tommy!</Text>
 
         <Button title='Augmented Reality' onPress={() => this.props.navigation.navigate('AR')} />
         <Button title='Choose Adventure' onPress={() => this.props.navigation.navigate('ChooseAdv')} />

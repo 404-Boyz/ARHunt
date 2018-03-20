@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { StackNavigator, navigationOptions } from 'react-navigation'
-
-const server = 'http://localhost:4040';
+import { devAxios } from './index'
 
 /**
  * ACTION TYPES
@@ -25,8 +24,7 @@ const removeUser = () => ({ type: REMOVE_USER })
  */
 export const me = () =>
   dispatch => {
-    console.log('IN ME THUNK')
-    axios.get('/auth/me')
+    devAxios.get('/auth/me')
       .then(res =>
         dispatch(getUser(res.data || user)))
       .catch(err => console.log(err))
@@ -34,19 +32,9 @@ export const me = () =>
 
 export const auth = (userName, password, method) =>
   dispatch => {
-    console.log(userName, password, method)
-    fetch(`${server}/auth/${method}`, {
-      method: 'POST',
-      body: {
-        userName: userName,
-        password: password
-      }
-    }
-    )
+    devAxios.post(`/auth/${method}`, { userName, password })
       .then(res => {
-        console.log('THUNKING IT UP. RES: ', res)
-        dispatch(getUser(res.data))
-        props.this.props.navigation.navigate('Home')
+        dispatch(getUser(res.data));
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
         dispatch(getUser({ error: authError }))
       })
@@ -56,7 +44,7 @@ export const auth = (userName, password, method) =>
 
 export const logout = () =>
   dispatch =>
-    axios.post('/auth/logout')
+    devAxios.post('/auth/logout')
       .then(_ => {
         dispatch(removeUser())
         history.push('/login')
@@ -66,10 +54,9 @@ export const logout = () =>
 /**
  * REDUCER
  */
-export default function (state = {}, action) {
+export default function (state = user, action) {
   switch (action.type) {
     case GET_USER:
-      console.log('IN REDUCER!!!', action)
       return action.user
     case REMOVE_USER:
       return user
