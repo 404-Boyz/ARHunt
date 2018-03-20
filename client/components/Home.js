@@ -11,12 +11,12 @@ class Home extends Component {
   render() {
     return (
       <View>
-        <Text>Welcome {props.user.firstName}!</Text>
+        <Text>Welcome Jimmy!</Text>
 
         <Button title='Augmented Reality' onPress={() => this.props.navigation.navigate('AR')} />
         <Button title='Choose Adventure' onPress={() => this.props.navigation.navigate('ChooseAdv')} />
         <Button title='Clue List' onPress={() => this.props.navigation.navigate('ClueList')} />
-        <Button title='Log In' onPress={() => this.props.navigation.navigate('LogIn')} />
+        <Button title='Log In' onPress={() => this.props.navigation.navigate('Login')} />
         <Button title='Map' onPress={() => this.props.navigation.navigate('TreasureMap')} />
         <Button title='Profile' onPress={() => this.props.navigation.navigate('Profile')} />
         <Button title='Sign Up' onPress={() => this.props.navigation.navigate('SignUp')} />
