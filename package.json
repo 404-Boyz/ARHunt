@@ -26,6 +26,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/vector-icons": "^6.3.1",
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
@@ -38,6 +39,7 @@
     "expo-three": "^2.2.2-alpha.1",
     "geolib": "^2.0.24",
     "nachos-ui": "^0.1.2",
+    "native-base": "^2.3.10",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-navigation": "^1.5.7",
