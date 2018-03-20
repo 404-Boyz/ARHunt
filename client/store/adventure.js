@@ -1,4 +1,5 @@
-import axios from 'axios';
+import devAxios from './index';
+
 
 const GET_ADVENTURE = 'GET_ADVENTURE';
 const GET_ALL_ADVENTURES = 'GET_ALL_ADVENTURES'
