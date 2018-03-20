@@ -63,6 +63,6 @@ const mapDispatch = (dispatch, ownProps) => {
   }
 }
 
-export const Login = connect(null, mapDispatch)(LogIn)
+export default connect(null, mapDispatch)(LogIn)
 
 const inputStyle = { margin: 15 }

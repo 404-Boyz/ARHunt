@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text} from 'react-native';
+
+import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
+
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { Container, Content, Card, CardItem, Body, Button } from 'native-base';
 
@@ -11,7 +13,17 @@ export default class ClueList extends Component {
     return (
       <Container>
 
-        <Content>
+        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: '0px' }} >
+          <Left />
+          <Right>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+              <Icon name="menu" />
+            </Button>
+          </Right>
+        </Header>
+        <Content padder>
           <Card>
             <CardItem header>
               <Text>Chicago Highrise Adventure: Clue 1</Text>

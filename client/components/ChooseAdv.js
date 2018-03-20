@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+
+import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
 import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
+
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 
@@ -15,8 +18,17 @@ export default class ChooseAdv extends Component {
 
     return (
       <Container>
-
-        <Content>
+         <Header style={{ backgroundColor: 'transparent', borderBottomWidth: '0px' }} >
+          <Left />
+          <Right>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+              <Icon name="menu" />
+            </Button>
+          </Right>
+        </Header>
+        <Content padder>
         <TouchableOpacity onPress={() => console.log("PRESSED")}>
           <Card style={{flex: 0}}>
             <CardItem>
@@ -73,6 +85,7 @@ export default class ChooseAdv extends Component {
             </CardItem>
           </Card>
           </TouchableOpacity>
+
         </Content>
       </Container>
     )

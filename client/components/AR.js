@@ -2,6 +2,7 @@
 import Expo, { Location } from 'expo';
 import React, { Component } from 'react';
 import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
+import { Container, Header, Left, Icon, Right, Button, Content } from 'native-base';
 
 import ARModal from './AR-Modal.js'
 
@@ -161,15 +162,27 @@ export default class AR extends React.Component {
             modal = (<ARModal setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
-            <TouchableOpacity disabled={false} onPress={(evt) =>
-                this.updateTouch(evt)} style={{ flex: 1 }}>
-                <Expo.GLView
-                    ref={(ref) => this._glView = ref}
-                    style={{ flex: 1 }}
-                    onContextCreate={this._onGLContextCreate}
-                />
-                {modal}
-            </TouchableOpacity>
+            <Container>
+                <Header style={{ backgroundColor: 'transparent', borderBottomWidth: '0px' }} >
+                    <Left />
+                    <Right>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+                            <Icon name="menu" />
+                        </Button>
+                    </Right>
+                </Header>
+                <TouchableOpacity disabled={false} onPress={(evt) =>
+                    this.updateTouch(evt)} style={{ flex: 1 }}>
+                    <Expo.GLView
+                        ref={(ref) => this._glView = ref}
+                        style={{ flex: 1 }}
+                        onContextCreate={this._onGLContextCreate}
+                    />
+                    {modal}
+                </TouchableOpacity>
+            </Container>
 
         );
     }
