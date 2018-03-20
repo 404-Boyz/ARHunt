@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
 import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
 
 import { StackNavigator, navigationOptions } from 'react-navigation';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
 export default class ChooseAdv extends Component {
   constructor(props) {

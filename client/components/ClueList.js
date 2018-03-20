@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
-import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
+import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
 
 import { StackNavigator, navigationOptions } from 'react-navigation';
-import { Container, Content, Card, CardItem, Body, Button } from 'native-base';
 
 export default class ClueList extends Component {
   constructor(props) {
