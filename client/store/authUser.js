@@ -1,6 +1,9 @@
 import axios from 'axios'
-import { StackNavigator, navigationOptions } from 'react-navigation'
+import { StackNavigator, navigationOptions, NavigationActions } from 'react-navigation'
 import { devAxios } from './index'
+import { RootStack } from '../components/Navigator'
+
+
 
 /**
  * ACTION TYPES
@@ -29,6 +32,7 @@ export const me = () =>
         dispatch(getUser(res.data || user)))
       .catch(err => console.log(err))
   }
+
 
 export const auth = (userName, password, method) =>
   dispatch => {

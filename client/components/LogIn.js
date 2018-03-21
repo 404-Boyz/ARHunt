@@ -4,6 +4,7 @@ import { StackNavigator, navigationOptions } from 'react-navigation';
 import { Input } from 'nachos-ui'
 import { connect } from 'react-redux'
 import { auth } from '../store'
+import { RootStack } from './Navigator'
 
 
 class LogIn extends Component {
@@ -41,8 +42,7 @@ class LogIn extends Component {
         }
         />
         <Button title="Don't have an account? Sign up now!" onPress={() => {
-          console.log('hit it')
-          // this.props.navigation.navigate('SignUp')
+          this.props.navigation.navigate('SignUp')
         }} />
         <Image style={{ width: 200, height: 200, alignSelf: 'center' }} source={{ uri: 'http://www.parc-des-pirates.com/uk/img/logo.png' }}
         />
@@ -53,15 +53,17 @@ class LogIn extends Component {
 }
 
 
-const mapDispatch = (dispatch, ownProps) => {
+const mapDispatch = (dispatch) => {
 
   return {
     handleLogIn(name, password) {
-      console.log(name, password)
+      console.log(name, password);
       dispatch(auth(name, password, 'login'))
+      this.props.navigation.navigate('Profile')
     }
   }
 }
+
 
 export default connect(null, mapDispatch)(LogIn)
 

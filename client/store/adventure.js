@@ -13,7 +13,7 @@ const getAdventures = adventures => ({ type: GET_ALL_ADVENTURES, adventures })
 //THUNK CREATORS//
 
 export const getAllAdventures = () => dispatch => {
-  axios.get('/api/user/:userId/adventure')
+  devAxios.get('/api/user/:userId/adventure')
     .then(res => dispatch(getAdventures(res.data)))
     .catch(err => console.error(err))
 }

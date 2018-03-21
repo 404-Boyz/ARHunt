@@ -9,7 +9,8 @@ export default class SignUp extends Component {
   render() {
     return (
       <View>
-        <Text>You know you wanna!</Text>
+        <Text>Your Adventure awaits!</Text>
+        <Text>Sign In!</Text>
         <Button title='Hit me' onPress={() => this.props.navigation.navigate('Home')} />
       </View>
     )
