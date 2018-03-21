@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native'
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { connect } from 'react-redux'
 import { authLogIn } from '../store'
 import { RootStack } from './Navigator'
-import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Form } from 'native-base'
+import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Form, Icon } from 'native-base'
 
 class LogIn extends Component {
   constructor() {
@@ -19,22 +20,26 @@ class LogIn extends Component {
     return (<Container>
       <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
         <Left />
-        <Right />
+        <Right>
+          <Button
+            transparent
+            onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+            <Icon name="menu" />
+          </Button>
+        </Right>
       </Header>
       <Content>
-        <Text style={{ alignSelf: 'center', fontSize: 40 }}>Log In!</Text>
+        <Text style={styles.text}>Log In!</Text>
         <Form style={{ margin: 15 }}>
-          <Item regular style={{ margin: 15 }}>
+          <Item regular style={styles.input}>
             <Input
               placeholder='User Name' value={this.state.name}
               onChangeText={(value) => {
-                console.log('changing text', this.state.name);
                 this.setState({ name: value })
-                console.log('state is set: ', this.state.name)
               }
               } />
           </Item>
-          <Item regular style={{ margin: 15 }}>
+          <Item regular style={styles.input}>
             <Input
               placeholder='Password' value={this.state.password}
               onChangeText={(value) => this.setState({ password: value })
@@ -65,4 +70,17 @@ const mapDispatch = (dispatch) => {
 
 export default connect(null, mapDispatch)(LogIn)
 
-const inputStyle = { margin: 15 }
+const styles = new StyleSheet.create({
+  text: {
+    alignSelf: 'center',
+    fontSize: 40
+  },
+  input: {
+    margin: 15,
+    marginRight: 15,
+    marginLeft: 15
+  },
+  button: {
+    alignSelf: 'center'
+  }
+})
