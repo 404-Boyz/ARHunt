@@ -14,11 +14,7 @@ const getAdventures = adventures => ({ type: GET_ALL_ADVENTURES, adventures })
 
 export const getAllAdventures = () => dispatch => {
   devAxios.get('/api/user/:userId/adventure')
-<<<<<<< HEAD
     .then(res => dispatch(getAdventures(res.data)))
-=======
-    .then(res =>  dispatch(getAdventures(res.data)))
->>>>>>> master
     .catch(err => console.error(err))
 }
 

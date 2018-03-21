@@ -3,7 +3,7 @@ import { View, Text, Button, Image } from 'react-native';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { Input } from 'nachos-ui'
 import { connect } from 'react-redux'
-import { auth } from '../store'
+import { authLogIn } from '../store'
 import { RootStack } from './Navigator'
 
 
@@ -58,7 +58,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleLogIn(name, password) {
       console.log(name, password);
-      dispatch(auth(name, password, 'login'))
+      dispatch(authLogIn(name, password, 'login'))
       this.props.navigation.navigate('Profile')
     }
   }
