@@ -1,4 +1,4 @@
-import devAxios from './index';
+import { devAxios } from './index';
 
 
 const GET_ADVENTURE = 'GET_ADVENTURE';
@@ -13,13 +13,13 @@ const getAdventures = adventures => ({ type: GET_ALL_ADVENTURES, adventures })
 //THUNK CREATORS//
 
 export const getAllAdventures = () => dispatch => {
-  axios.get('/api/user/:userId/adventure')
-    .then(res => dispatch(getAdventures(res.data)))
+  devAxios.get('/api/user/:userId/adventure')
+    .then(res =>  dispatch(getAdventures(res.data)))
     .catch(err => console.error(err))
 }
 
 export const getSingleAdventure = (adventureId) => dispatch => {
-  axios.get(`/api/user/:userId/adventure/${adventureId}`)
+  devAxios.get(`/api/user/:userId/adventure/${adventureId}`)
     .then(res => dispatch(getAdventure(res.data)))
     .catch(err => console.error(err))
 }
