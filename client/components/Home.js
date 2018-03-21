@@ -12,7 +12,7 @@ class Home extends Component {
     return (
 
       <Container>
-        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: '0px' }} >
+        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
           <Left />
           <Right>
             <Button
