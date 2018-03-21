@@ -26,8 +26,12 @@ class LogIn extends Component {
         <Form style={{ margin: 15 }}>
           <Item regular style={{ margin: 15 }}>
             <Input
-              placeholder='User Name' value={this.state.userName}
-              onChangeText={(value) => this.setState({ userName: value })
+              placeholder='User Name' value={this.state.name}
+              onChangeText={(value) => {
+                console.log('changing text', this.state.name);
+                this.setState({ name: value })
+                console.log('state is set: ', this.state.name)
+              }
               } />
           </Item>
           <Item regular style={{ margin: 15 }}>
