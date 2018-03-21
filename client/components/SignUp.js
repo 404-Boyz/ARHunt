@@ -55,7 +55,7 @@ class SignUp extends Component {
               } />
           </Item>
           <Item regular>
-            <Input placeholder='password' value={this.state.password}
+            <Input placeholder='Password' value={this.state.password}
               onChangeText={(value) => this.setState({ password: value })
               } />
           </Item>

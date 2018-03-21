@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Image } from 'react-native';
 import { StackNavigator, navigationOptions } from 'react-navigation';
-import { Input } from 'nachos-ui'
 import { connect } from 'react-redux'
 import { authLogIn } from '../store'
 import { RootStack } from './Navigator'
-
+import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Form } from 'native-base'
 
 class LogIn extends Component {
   constructor() {
@@ -15,39 +13,35 @@ class LogIn extends Component {
       name: '',
       password: ''
     }
-
   }
 
   render() {
-    return (
-      <View style={{}}>
-        <Text style={{ alignSelf: 'center', fontSize: 30 }}>Log in!</Text>
-        <Input
-          name='userName'
-          style={inputStyle}
-          placeholder='User name'
-          value={this.state.name}
-          onChangeText={value => {
-            this.setState({ name: value }, () => console.log(this.state.name))
-          }}
-        />
-        <Input
-          name='password'
-          style={inputStyle}
-          placeholder='Password'
-          value={this.state.password}
-          onChangeText={value => this.setState({ password: value })}
-        />
-        <Button title='Start your hunt!' onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)
-        }
-        />
-        <Button title="Don't have an account? Sign up now!" onPress={() => {
-          this.props.navigation.navigate('SignUp')
-        }} />
-        <Image style={{ width: 200, height: 200, alignSelf: 'center' }} source={{ uri: 'http://www.parc-des-pirates.com/uk/img/logo.png' }}
-        />
-      </View>
-    )
+    return (<Container>
+      <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+        <Left />
+        <Right />
+      </Header>
+      <Content>
+        <Text style={{ alignSelf: 'center', fontSize: 40 }}>Log In!</Text>
+        <Form style={{ margin: 15 }}>
+          <Item regular style={{ margin: 15 }}>
+            <Input
+              placeholder='User Name' value={this.state.userName}
+              onChangeText={(value) => this.setState({ userName: value })
+              } />
+          </Item>
+          <Item regular style={{ margin: 15 }}>
+            <Input
+              placeholder='Password' value={this.state.password}
+              onChangeText={(value) => this.setState({ password: value })
+              } />
+          </Item>
+        </Form>
+        <Button style={{ alignSelf: 'center' }} rounded onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)}>
+          <Text>Submit</Text>
+        </Button>
+      </Content>
+    </Container>)
   }
 
 }

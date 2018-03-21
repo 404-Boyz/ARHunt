@@ -11,15 +11,10 @@ import ChooseAdv from './ChooseAdv'
 import AR from './AR'
 import SideBar from './SideBar'
 import ClueList from './ClueList'
-import Home from './Home'
 
 let width = Dimensions.get('window').width / 2
 
 const RootStack = DrawerNavigator({
-
-    Home: {
-        screen: Home
-    },
     ChooseAdv: {
         screen: ChooseAdv
     },
@@ -43,7 +38,7 @@ const RootStack = DrawerNavigator({
     }
 },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Login',
         drawerPosition: 'right',
         drawerWidth: width,
         contentComponent: props => <SideBar {...props} />
