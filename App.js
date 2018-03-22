@@ -10,11 +10,12 @@ export default class Root extends Component {
   constructor(props) {
     super(props)
 
-    this.socket = io('https://b802bc28.ngrok.io')
+    this.socket = io('https://peaceful-dawn-66038.herokuapp.com')
     this.socket.on('connect', () => {
-      console.log('Connected!')
+      console.log('Hunting the most dangerous game')
     })
   }
+
   render() {
     return (
       <Provider store={store}>
