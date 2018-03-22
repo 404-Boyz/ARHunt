@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import { StyleSheet } from 'react-native'
 import { StackNavigator, navigationOptions } from 'react-navigation';
-import { Input } from 'nachos-ui'
 import { connect } from 'react-redux'
-import { auth } from '../store'
-
+import { authLogIn } from '../store'
+import { RootStack } from './Navigator'
+import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Form, Icon } from 'native-base'
 
 class LogIn extends Component {
   constructor() {
@@ -14,55 +14,73 @@ class LogIn extends Component {
       name: '',
       password: ''
     }
-
   }
 
   render() {
-    return (
-      <View style={{}}>
-        <Text style={{ alignSelf: 'center', fontSize: 30 }}>Log in!</Text>
-        <Input
-          name='userName'
-          style={inputStyle}
-          placeholder='User name'
-          value={this.state.name}
-          onChangeText={value => {
-            this.setState({ name: value }, () => console.log(this.state.name))
-          }}
-        />
-        <Input
-          name='password'
-          style={inputStyle}
-          placeholder='Password'
-          value={this.state.password}
-          onChangeText={value => this.setState({ password: value })}
-        />
-        <Button title='Start your hunt!' onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)
-        }
-        />
-        <Button title="Don't have an account? Sign up now!" onPress={() => {
-          console.log('hit it')
-          // this.props.navigation.navigate('SignUp')
-        }} />
-        <Image style={{ width: 200, height: 200, alignSelf: 'center' }} source={{ uri: 'http://www.parc-des-pirates.com/uk/img/logo.png' }}
-        />
-      </View>
-    )
+    return (<Container>
+      <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+        <Left />
+        <Right>
+          <Button
+            transparent
+            onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+            <Icon name="menu" />
+          </Button>
+        </Right>
+      </Header>
+      <Content>
+        <Text style={styles.text}>Log In!</Text>
+        <Form style={{ margin: 15 }}>
+          <Item regular style={styles.input}>
+            <Input
+              placeholder='User Name' value={this.state.name}
+              onChangeText={(value) => {
+                this.setState({ name: value })
+              }
+              } />
+          </Item>
+          <Item regular style={styles.input}>
+            <Input
+              placeholder='Password' value={this.state.password}
+              onChangeText={(value) => this.setState({ password: value })
+              } />
+          </Item>
+        </Form>
+        <Button style={{ alignSelf: 'center' }} rounded onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)}>
+          <Text>Submit</Text>
+        </Button>
+      </Content>
+    </Container>)
   }
 
 }
 
 
-const mapDispatch = (dispatch, ownProps) => {
+const mapDispatch = (dispatch) => {
 
   return {
     handleLogIn(name, password) {
-      console.log(name, password)
-      dispatch(auth(name, password, 'login'))
+      console.log(name, password);
+      dispatch(authLogIn(name, password, 'login'))
+      this.props.navigation.navigate('Profile')
     }
   }
 }
 
+
 export default connect(null, mapDispatch)(LogIn)
 
-const inputStyle = { margin: 15 }
+const styles = new StyleSheet.create({
+  text: {
+    alignSelf: 'center',
+    fontSize: 40
+  },
+  input: {
+    margin: 15,
+    marginRight: 15,
+    marginLeft: 15
+  },
+  button: {
+    alignSelf: 'center'
+  }
+})

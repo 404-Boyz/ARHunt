@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
+
 import { connect } from 'react-redux';
 import { changeVisitedStatus, fetchActiveLocation } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
+import { Button, Container, Header, Content, Card, CardItem, Body } from 'native-base'
 
 class ARModal extends Component {
   constructor(props) {
