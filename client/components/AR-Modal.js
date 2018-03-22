@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
 
-export default class ARModal extends Component {
+import { connect } from 'react-redux';
+import { changeVisitedStatus, fetchActiveLocation } from '../store';
+import { StackNavigator, navigationOptions } from 'react-navigation';
+import { RootStack } from './Navigator.js'
+import { Button, Container, Header, Content, Card, CardItem, Body } from 'native-base'
+
+class ARModal extends Component {
   constructor(props) {
     super(props)
+  }
+
+  async componentDidMount() {
+    //fire change status to visited true
+    await this.props.changeStatus(1, 1, this.props.currentLocation.id, true)
+    // fire new Active location
+    this.props.getActive(1, 1)
+    // on modal close, send to maps.
   }
   render(props) {
     return (
@@ -15,13 +29,14 @@ export default class ARModal extends Component {
         }}>
         <View style={{ marginTop: 22 }}>
           <View>
-            <Text>Hello World!</Text>
+            <Text>GOOD WORK - YOU FOUND IT!</Text>
 
             <TouchableHighlight
               onPress={() => {
-                this.props.setModalVisible(false);
+                // this.props.setModalVisible(false);
+                this.props.navigation.navigate('TreasureMap')
               }}>
-              <Text>Hide Modal</Text>
+              <Text>Continue To Next Clue</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -29,3 +44,23 @@ export default class ARModal extends Component {
     )
   }
 }
+
+const mapState = (state) => {
+  return {
+    currentLocation: state.location
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    changeStatus: (user, adventure, location, status) => {
+      dispatch(changeVisitedStatus(user, adventure, location, status))
+    },
+    getActive: (user, adv) => {
+      console.log('NEW ACTIVE LOCATION!')
+      dispatch(fetchActiveLocation(user, adv))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(ARModal);

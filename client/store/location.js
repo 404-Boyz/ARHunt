@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { devAxios } from './index';
 
 const GET_LOCATION = 'GET_LOCATION';
 const GET_ACTIVE_LOCATION = 'GET_ACTIVE_LOCATION'
@@ -15,32 +15,40 @@ const changeVisited = visited => ({ type: CHANGE_VISITED_STATUS, visited })
 //THUNK CREATORS//
 
 export const getAllLocations = (userId, adventureId) => dispatch => {
-  axios.get(`/api/user/${userId}/adventure/${adventureId}/location`)
+  devAxios.get(`/api/user/${userId}/adventure/${adventureId}/location`)
     .then(res => dispatch(getLocations(res.data)))
     .catch(err => console.error(err))
 }
 
 export const getSingleLocation = (userId, adventureId, locationId) => dispatch => {
-  axios.get(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`)
+  devAxios.get(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`)
     .then(res => dispatch(getLocation(res.data)))
     .catch(err => console.error(err))
 }
 
 export const fetchActiveLocation = (userId, adventureId) => dispatch => {
-  axios.get(`/api/user/${userId}/adventure/${adventureId}/location/active`)
-    .then(res => dispatch(getActiveLocation(res.data))
-      .catch(err => console.error(err)))
+  console.log("GOT TO THE devAxios REQUEST", userId, adventureId)
+  devAxios.get(`/api/user/${userId}/adventure/${adventureId}/location/active`)
+    .then(res => dispatch(getActiveLocation(res.data)))
+    .catch(err => console.error(err))
 }
 
 export const changeVisitedStatus = (userId, adventureId, locationId, status) => dispatch => {
-  axios.put(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`,
+  devAxios.put(`/api/user/${userId}/adventure/${adventureId}/location/${locationId}`,
     {
       userId: userId,
       adventureId: adventureId,
       id: locationId,
       visited: status
     })
-    .then(res => dispatch(changeVisited(res.data)))
+    .then(res => {
+      dispatch(changeVisited({
+        userId: userId,
+        adventureId: adventureId,
+        id: locationId,
+        visited: status
+      }))
+    })
     .catch(err => console.error(err))
 }
 
@@ -53,9 +61,10 @@ export default function (locations = [], action) {
     case GET_LOCATION:
       return action.location
     case GET_ACTIVE_LOCATION:
+      console.log('GOT HERE!!!', action.location)
       return action.location
     case CHANGE_VISITED_STATUS:
-      return locations.map(loc => (action.location.id === loc.id ? action.location : loc))
+      return action.visited
     default:
       return locations
   }

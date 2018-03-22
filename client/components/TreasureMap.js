@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { StackNavigator, navigationOptions } from 'react-navigation';
 import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
-import {}  from '../store'
+import { } from '../store'
 
 export default class TreasureMap extends Component {
   constructor(props) {
@@ -15,8 +14,8 @@ export default class TreasureMap extends Component {
         longitude: 0
       },
       nextPosition: {
-        latitude: 41.89518162984577,
-        longitude: -87.63912666597183,
+        latitude: 41.895544,
+        longitude: -87.639980,
       },
       distToNext: 0,
       isInside: false,
@@ -34,7 +33,7 @@ export default class TreasureMap extends Component {
         this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
         this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition) });
         this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 15) });
-        console.log(this.state.currentPosition);
+
       })
   }
 
@@ -64,8 +63,8 @@ export default class TreasureMap extends Component {
         >
           <MapView.Marker
             coordinate={testMarker.coordinate}
-            title="FullStack"
-            description="Our school"
+            title="Clue #2"
+            description="Can you find it?"
           />
         </MapView>
         <Text style={{ flex: 1, textAlign: 'center' }}>Distance to next clue: {this.state.distToNext} meters</Text>
@@ -87,8 +86,8 @@ const initialRegion = {
 
 const testMarker = {
   coordinate: {
-    latitude: 41.895266,
-    longitude: -87.639035,
+    latitude: 41.895544,
+    longitude: -87.639980,
   },
   title: 'Fullstack Academy',
   description: 'Home Sweet Home'
