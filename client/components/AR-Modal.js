@@ -21,26 +21,39 @@ class ARModal extends Component {
   }
   render(props) {
     return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        onRequestClose={() => {
-          alert('Modal has been closed.');
-        }}>
-        <View style={{ marginTop: 22 }}>
-          <View>
-            <Text>GOOD WORK - YOU FOUND IT!</Text>
-
-            <TouchableHighlight
-              onPress={() => {
-                // this.props.setModalVisible(false);
-                this.props.navigation.navigate('TreasureMap')
-              }}>
-              <Text>Continue To Next Clue</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </Modal>
+      <Container>
+        <Header />
+        <Content>
+          <Card>
+            <Modal
+              animationType="slide"
+              transparent={false}>
+              <CardItem header>
+                <Text>GOOD WORK - YOU FOUND IT!</Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>
+                    Next Clue
+                </Text>
+                <Text></Text>
+                </Body>
+              </CardItem>
+              <CardItem footer>
+                <Button>
+                  <TouchableHighlight
+                    onPress={() => {
+                      // this.props.setModalVisible(false);
+                      this.props.navigation.navigate('TreasureMap')
+                    }}>
+                    <Text>  Continue To Next Location  </Text>
+                  </TouchableHighlight>
+                </Button>
+              </CardItem>
+            </Modal>
+          </Card>
+        </Content>
+      </Container>
     )
   }
 }
