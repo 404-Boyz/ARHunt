@@ -9,7 +9,7 @@ class ChooseAdv extends Component {
     super(props)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.fetchAdventures();
   }
 
@@ -30,44 +30,47 @@ class ChooseAdv extends Component {
         <Content padder>
           {adventures.map(adventure => {
             return (
-            <TouchableOpacity key={adventure.id} onPress={() => Alert.alert(
-              'AR you ready to begin?',
-              `Hit ok to start ${adventure.name}`,
-              [
-                  {text: 'Begin!', onPress: () => { this.props.getActive(1, 1); this.props.navigation.navigate('AR')}},
-                  {text: 'Cancel', onPress: () => console.log('Cancel Pressed')}
-              ],
-              {cancelable: false}
-            )}>
-            <Card style={{flex: 0}}>
-              <CardItem>
-                <Left>
-                  <Thumbnail source={{uri: `${adventure.photoUrl}`}} />
-                  <Body>
-                    <Text>{adventure.name}</Text>
-                    <Text note>DO SOMETHING LATER</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem>
-                <Body>
-                  <Image source={{uri: `${adventure.photoUrl}`}} style={{height: 200, width: '100%', flex: 1}}/>
-                  <Text>
-                    {adventure.description}
-                  </Text>
-                </Body>
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Button transparent textStyle={{color: '#87838B'}}>
-                    <Text>1,926 Hunts Completed</Text>
-                  </Button>
-                </Left>
-              </CardItem>
-            </Card>
-            </TouchableOpacity>
-             )
-            }
+              <TouchableOpacity key={adventure.id} onPress={() => {
+                this.props.getActive(1, 1)
+                Alert.alert(
+                  'AR you ready to begin?',
+                  `Hit ok to start ${adventure.name}`,
+                  [
+                    { text: 'Begin!', onPress: () => { this.props.navigation.navigate('AR') } },
+                    { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
+                  ],
+                  { cancelable: false }
+                )
+              }}>
+                <Card style={{ flex: 0 }}>
+                  <CardItem>
+                    <Left>
+                      <Thumbnail source={{ uri: `${adventure.photoUrl}` }} />
+                      <Body>
+                        <Text>{adventure.name}</Text>
+                        <Text note>DO SOMETHING LATER</Text>
+                      </Body>
+                    </Left>
+                  </CardItem>
+                  <CardItem>
+                    <Body>
+                      <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
+                      <Text>
+                        {adventure.description}
+                      </Text>
+                    </Body>
+                  </CardItem>
+                  <CardItem>
+                    <Left>
+                      <Button transparent textStyle={{ color: '#87838B' }}>
+                        <Text>1,926 Hunts Completed</Text>
+                      </Button>
+                    </Left>
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>
+            )
+          }
           )}
 
         </Content>

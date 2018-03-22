@@ -47,24 +47,34 @@ class AR extends React.Component {
     // checking current location and distance to clue
 
     locationFinder = async () => {
+        console.log(this.state.counter)
         await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
             (position) => {
-                this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude }}, () => {
-                    if (this.props.currentLocation.positionInHunt === 1){
+                this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } }, () => {
+                    if (this.props.currentLocation.positionInHunt === 1) {
+                        console.log('cube')
+                        this.state.counter++
                         this.makeCube(this.gl)
                     }
                 });
 
-                console.log('test', this.props)
-                this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, {latitude: this.props.currentLocation.latitude, longitude: this.props.currentLocation.longitude}, 1),
-                    isInside: geolib.isPointInCircle(this.state.currentPosition, {latitude: this.props.currentLocation.latitude, longitude: this.props.currentLocation.longitude}, 30) }, () => {
+                let next = {
+                    latitude: this.props.currentLocation.latitude,
+                    longitude: this.props.currentLocation.longitude
+                }
+                console.log('LAT', typeof this.props.currentLocation.latitude)
+
+                this.setState({
+                    distToNext: geolib.getDistance(this.state.currentPosition, next, 1),
+                    isInside: geolib.isPointInCircle(this.state.currentPosition, next, 30)
+                }, () => {
                     if (this.state.isInside && this.state.counter === 0) {
                         this.state.counter++
                         this.makeCube(this.gl)
                     }
                     console.log('dist', this.state.distToNext)
                 });
-                
+
             })
     }
 
@@ -113,6 +123,7 @@ class AR extends React.Component {
     makeCube(gl) {
         let animate;
         console.log('IN', this.state.distToNext)
+        this.cubeMade = true;
 
         // checking distance to clue location and rendering cube or not based on that
 
@@ -165,7 +176,7 @@ class AR extends React.Component {
 
 
     render() {
-        
+
         let modal = null;
         if (this.state.modalVisible) {
             modal = (<ARModal setModalVisible={this._setModalVisible.bind(this)} />)
