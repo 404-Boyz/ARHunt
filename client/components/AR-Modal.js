@@ -2,24 +2,22 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
 
 import { connect } from 'react-redux';
-import { changeVisitedStatus, fetchActiveLocation } from '../store';
+import { fetchActiveLocation } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
-import { Button, Container, Header, Content, Card, CardItem, Body } from 'native-base'
 
 class ARModal extends Component {
   constructor(props) {
     super(props)
   }
 
-  async componentDidMount() {
-    //fire change status to visited true
-    await this.props.changeStatus(1, 1, this.props.currentLocation.id, true)
-    // fire new Active location
+  componentDidMount() {
+    //fire new clue on load
     this.props.getActive(1, 1)
-    // on modal close, send to maps.
   }
+
   render(props) {
+    console.log('NEW CLUE?', this.props.currentClue)
     return (
       <Modal
         animationType="slide"
@@ -47,17 +45,14 @@ class ARModal extends Component {
 
 const mapState = (state) => {
   return {
-    currentLocation: state.location
+    geoPosition: state.geoPosition,
+    currentClue: state.location
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    changeStatus: (user, adventure, location, status) => {
-      dispatch(changeVisitedStatus(user, adventure, location, status))
-    },
     getActive: (user, adv) => {
-      console.log('NEW ACTIVE LOCATION!')
       dispatch(fetchActiveLocation(user, adv))
     }
   }
