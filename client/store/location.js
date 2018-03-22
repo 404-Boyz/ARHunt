@@ -27,7 +27,6 @@ export const getSingleLocation = (userId, adventureId, locationId) => dispatch =
 }
 
 export const fetchActiveLocation = (userId, adventureId) => dispatch => {
-  console.log("GOT TO THE devAxios REQUEST", userId, adventureId)
   devAxios.get(`/api/user/${userId}/adventure/${adventureId}/location/active`)
     .then(res => dispatch(getActiveLocation(res.data)))
     .catch(err => console.error(err))

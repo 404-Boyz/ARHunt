@@ -14,6 +14,7 @@ class ChooseAdv extends Component {
   }
 
   render() {
+    console.log('PROPS NEW', this.props)
     const adventures = this.props.adventures;
     return (
       <Container>
