@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
-import { } from '../store'
+import { styles } from '../assets/styles/StyleSheet'
 
 export default class TreasureMap extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ export default class TreasureMap extends Component {
   render() {
     return !this.state.isInside ? (
       <Container>
-        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+        <Header style={styles.Header} >
           <Left />
           <Right>
             <Button
@@ -67,7 +67,7 @@ export default class TreasureMap extends Component {
             description="Can you find it?"
           />
         </MapView>
-        <Text style={{ flex: 1, textAlign: 'center' }}>Distance to next clue: {this.state.distToNext} meters</Text>
+        <Text style={styles.mapText}>Distance to next clue: {this.state.distToNext} meters</Text>
 
 
       </Container>

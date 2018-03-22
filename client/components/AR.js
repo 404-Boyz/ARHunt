@@ -4,6 +4,8 @@ import React from 'react';
 import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
 import { Container, Header, Left, Icon, Right, Button } from 'native-base';
 import { connect } from 'react-redux';
+import { styles } from '../assets/styles/StyleSheet';
+
 
 import ARModal from './AR-Modal.js'
 
@@ -182,7 +184,7 @@ class AR extends React.Component {
         }
         return (
             <Container>
-                <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+                <Header style={styles.Header} >
                     <Left />
                     <Right>
                         <Button
