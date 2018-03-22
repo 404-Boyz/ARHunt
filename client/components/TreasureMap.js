@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { StackNavigator, navigationOptions } from 'react-navigation';
 import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
@@ -15,8 +14,8 @@ export default class TreasureMap extends Component {
         longitude: 0
       },
       nextPosition: {
-        latitude: 41.89518162984577,
-        longitude: -87.63912666597183,
+        latitude: 0,
+        longitude: 0,
       },
       distToNext: 0,
       isInside: false,

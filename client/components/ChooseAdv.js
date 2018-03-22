@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-
-import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
-
-import { StackNavigator, navigationOptions } from 'react-navigation';
+import { Image, TouchableOpacity, Alert } from 'react-native';
+import { getAllAdventures, fetchActiveLocation } from '../store';
+import { connect } from 'react-redux';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
-export default class ChooseAdv extends Component {
+class ChooseAdv extends Component {
   constructor(props) {
     super(props)
   }
 
-  
+  componentDidMount () {
+    this.props.fetchAdventures();
+  }
+
   render() {
-
-    // Map over existing adventures here, using map state and dispatch to get list of adventures available.
-
+    const adventures = this.props.adventures;
     return (
       <Container>
-         <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
           <Left />
           <Right>
             <Button
@@ -28,65 +28,71 @@ export default class ChooseAdv extends Component {
           </Right>
         </Header>
         <Content padder>
-        <TouchableOpacity onPress={() => console.log("PRESSED")}>
-          <Card style={{flex: 0}}>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{uri: 'https://urbanmatter.com/chicago/wp-content/uploads/2016/09/chicago-image-1.jpg'}} />
+          {adventures.map(adventure => {
+            return (
+            <TouchableOpacity key={adventure.id} onPress={() => Alert.alert(
+              'AR you ready to begin?',
+              `Hit ok to start ${adventure.name}`,
+              [
+                  {text: 'Begin!', onPress: () => { this.props.getActive(1, 1); this.props.navigation.navigate('AR')}},
+                  {text: 'Cancel', onPress: () => console.log('Cancel Pressed')}
+              ],
+              {cancelable: false}
+            )}>
+            <Card style={{flex: 0}}>
+              <CardItem>
+                <Left>
+                  <Thumbnail source={{uri: `${adventure.photoUrl}`}} />
+                  <Body>
+                    <Text>{adventure.name}</Text>
+                    <Text note>DO SOMETHING LATER</Text>
+                  </Body>
+                </Left>
+              </CardItem>
+              <CardItem>
                 <Body>
-                  <Text>Chicago Highrise Adventures</Text>
-                  <Text note>A Hunt to Highlight Chicago Architecture</Text>
+                  <Image source={{uri: `${adventure.photoUrl}`}} style={{height: 200, width: '100%', flex: 1}}/>
+                  <Text>
+                    {adventure.description}
+                  </Text>
                 </Body>
-              </Left>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Image source={{uri: 'https://urbanmatter.com/chicago/wp-content/uploads/2016/09/chicago-image-1.jpg'}} style={{height: 200, width: '100%', flex: 1}}/>
-                <Text>
-                  Take a wonderful super awesome tour of the tallest buildings in Chicago... The Sears/Willis Tower, The John Hancock, The Trump Tower, and many many more! What an enjoyable time with many buildings to visit!!! SO great!!
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Text>1,926 Hunts Completed</Text>
-                </Button>
-              </Left>
-            </CardItem>
-          </Card>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log("PRESSED2")}>
-          <Card style={{flex: 0}}>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{uri: 'https://bloximages.chicago2.vip.townnews.com/nwitimes.com/content/tncms/assets/v3/editorial/b/47/b477b45d-f22b-5d44-aedc-55f52cbbfffd/5a67940a55436.image.jpg'}} />
-                <Body>
-                  <Text>Chicago Pizza Adventures</Text>
-                  <Text note>A Hunt to Highlight Chicago's Best Pizza'</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Image source={{uri: 'https://bloximages.chicago2.vip.townnews.com/nwitimes.com/content/tncms/assets/v3/editorial/b/47/b477b45d-f22b-5d44-aedc-55f52cbbfffd/5a67940a55436.image.jpg'}} style={{height: 200, width: '100%', flex: 1}}/>
-                <Text>
-                  If You love pizza, look no further! This delicious hunt to taste a slice from every one of our Chicago-Famouse pizza spots. Come hunrgy, Leave Happy!
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Text>136 Hunts Completed</Text>
-                </Button>
-              </Left>
-            </CardItem>
-          </Card>
-          </TouchableOpacity>
+              </CardItem>
+              <CardItem>
+                <Left>
+                  <Button transparent textStyle={{color: '#87838B'}}>
+                    <Text>1,926 Hunts Completed</Text>
+                  </Button>
+                </Left>
+              </CardItem>
+            </Card>
+            </TouchableOpacity>
+             )
+            }
+          )}
 
         </Content>
       </Container>
     )
-  } 
+  }
 }
+
+
+const mapState = (state) => {
+  return {
+    adventures: state.adventure
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    fetchAdventures: () => {
+      dispatch(getAllAdventures())
+    },
+    getActive: (user, adv) => {
+      dispatch(fetchActiveLocation(user, adv))
+    }
+  }
+}
+
+
+export default connect(mapState, mapDispatch)(ChooseAdv);

@@ -1,8 +1,9 @@
 
 import Expo, { Location } from 'expo';
-import React, { Component } from 'react';
+import React from 'react';
 import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
-import { Container, Header, Left, Icon, Right, Button, Content } from 'native-base';
+import { Container, Header, Left, Icon, Right, Button } from 'native-base';
+import { connect } from 'react-redux';
 
 import ARModal from './AR-Modal.js'
 
@@ -13,7 +14,7 @@ import geolib from 'geolib';
 
 console.disableYellowBox = true;
 
-export default class AR extends React.Component {
+class AR extends React.Component {
 
     constructor(props) {
         super(props);
@@ -23,9 +24,9 @@ export default class AR extends React.Component {
                 latitude: 0,
                 longitude: 0
             },
-            nextPosition: {
-                latitude: 41.895370,
-                longitude: -87.638953,
+            nextLocation: {
+                latitude: 0,
+                longitude: 0
             },
             distToNext: NaN,
             isInside: false,
@@ -38,6 +39,7 @@ export default class AR extends React.Component {
     touch = new THREE.Vector2();
     raycaster = new THREE.Raycaster();
 
+
     componentDidMount() {
         this.locationFinder();
     }
@@ -47,16 +49,22 @@ export default class AR extends React.Component {
     locationFinder = async () => {
         await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
             (position) => {
+                this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude }}, () => {
+                    if (this.props.currentLocation.positionInHunt === 1){
+                        this.makeCube(this.gl)
+                    }
+                });
 
-                this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
-                this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition, 1) });
-                this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 30) }, () => {
+                console.log('test', this.props)
+                this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, {latitude: this.props.currentLocation.latitude, longitude: this.props.currentLocation.longitude}, 1),
+                    isInside: geolib.isPointInCircle(this.state.currentPosition, {latitude: this.props.currentLocation.latitude, longitude: this.props.currentLocation.longitude}, 30) }, () => {
                     if (this.state.isInside && this.state.counter === 0) {
                         this.state.counter++
                         this.makeCube(this.gl)
                     }
                     console.log('dist', this.state.distToNext)
                 });
+                
             })
     }
 
@@ -157,6 +165,7 @@ export default class AR extends React.Component {
 
 
     render() {
+        
         let modal = null;
         if (this.state.modalVisible) {
             modal = (<ARModal setModalVisible={this._setModalVisible.bind(this)} />)
@@ -189,3 +198,10 @@ export default class AR extends React.Component {
 
 }
 
+const mapState = (state) => {
+    return {
+        currentLocation: state.location
+    }
+}
+
+export default connect(mapState)(AR);
