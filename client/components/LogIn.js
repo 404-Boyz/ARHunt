@@ -46,6 +46,7 @@ class LogIn extends Component {
               } />
           </Item>
         </Form>
+        <Button transparent info style={styles.button} onPress={() => this.props.navigation.navigate('SignUp')}><Text>Don't have an account? Sign up!</Text></Button>
         <Button style={{ alignSelf: 'center' }} rounded onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)}>
           <Text>Submit</Text>
         </Button>

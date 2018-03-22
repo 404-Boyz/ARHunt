@@ -21,7 +21,11 @@ class SignUp extends Component {
     return (
       <Container>
         <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
-          <Left />
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.back()}>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
           <Right />
         </Header>
         <Content>
