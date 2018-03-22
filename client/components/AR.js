@@ -47,13 +47,11 @@ class AR extends React.Component {
     // checking current location and distance to clue
 
     locationFinder = async () => {
-        console.log(this.state.counter)
         await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
             (position) => {
                 this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } }, () => {
-                    if (this.props.currentLocation.positionInHunt === 1) {
-                        console.log('cube')
-                        this.state.counter++
+                    console.log('COUNT', this.state.counter)
+                    if (this.props.currentLocation.positionInHunt === 1 && this.state.counter < 1) {
                         this.makeCube(this.gl)
                     }
                 });
@@ -68,8 +66,7 @@ class AR extends React.Component {
                     distToNext: geolib.getDistance(this.state.currentPosition, next, 1),
                     isInside: geolib.isPointInCircle(this.state.currentPosition, next, 30)
                 }, () => {
-                    if (this.state.isInside && this.state.counter === 0) {
-                        this.state.counter++
+                    if (this.state.isInside && this.state.counter < 1) {
                         this.makeCube(this.gl)
                     }
                     console.log('dist', this.state.distToNext)
@@ -95,6 +92,7 @@ class AR extends React.Component {
         this.raycaster.setFromCamera(this.touch, this.camera);
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
+            this.setState({ counter: 0 })
             this._setModalVisible(!this.state.modalVisible)
         } else {
             Vibration.vibrate()
@@ -123,11 +121,13 @@ class AR extends React.Component {
     makeCube(gl) {
         let animate;
         console.log('IN', this.state.distToNext)
-        this.cubeMade = true;
+        this.setState({ counter: 1 })
+        console.log('AFTER CUBE', this.state.counter)
+
 
         // checking distance to clue location and rendering cube or not based on that
 
-        if (this.state.distToNext < 30) {
+        if (this.state.distToNext < 30 || this.props.currentLocation.positionInHunt === 1) {
             const geometry = new THREE.BoxGeometry(1.4, 1.4, 1.4);
 
             // randomizing the cube colors and creating the 3D/AR shape
@@ -176,10 +176,9 @@ class AR extends React.Component {
 
 
     render() {
-
         let modal = null;
         if (this.state.modalVisible) {
-            modal = (<ARModal setModalVisible={this._setModalVisible.bind(this)} />)
+            modal = (<ARModal navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
             <Container>

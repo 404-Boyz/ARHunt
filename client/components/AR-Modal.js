@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { changeVisitedStatus, fetchActiveLocation } from '../store';
+import { StackNavigator, navigationOptions } from 'react-navigation';
+import { RootStack } from './Navigator.js'
 
 class ARModal extends Component {
   constructor(props) {
@@ -25,13 +27,14 @@ class ARModal extends Component {
         }}>
         <View style={{ marginTop: 22 }}>
           <View>
-            <Text>Hello World!</Text>
+            <Text>GOOD WORK - YOU FOUND IT!</Text>
 
             <TouchableHighlight
               onPress={() => {
-                this.props.setModalVisible(false);
+                // this.props.setModalVisible(false);
+                this.props.navigation.navigate('TreasureMap')
               }}>
-              <Text>Hide Modal</Text>
+              <Text>Continue To Next Clue</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -42,7 +45,7 @@ class ARModal extends Component {
 
 const mapState = (state) => {
   return {
-      currentLocation: state.location
+    currentLocation: state.location
   }
 }
 
@@ -52,6 +55,7 @@ const mapDispatch = (dispatch) => {
       dispatch(changeVisitedStatus(user, adventure, location, status))
     },
     getActive: (user, adv) => {
+      console.log('NEW ACTIVE LOCATION!')
       dispatch(fetchActiveLocation(user, adv))
     }
   }
