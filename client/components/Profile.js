@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
-import { getAllAdventures } from '../store';
+import { getAllAdventures, getCurrentPosition, stopTracking } from '../store';
 import { connect } from 'react-redux';
 import { TouchableOpacity, Image } from 'react-native';
 import { styles } from '../assets/styles/StyleSheet'
@@ -11,13 +11,12 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchAdventures();
+    this.props.fetchInitialData();
   }
 
 
   render() {
     const adventures = this.props.adventures;
-
     return (
       <Container>
         <Header style={styles.Header} >
@@ -64,7 +63,6 @@ class Profile extends React.Component {
             )
           }
           )}
-          <Button title='Hit me' onPress={() => this.props.navigation.navigate('Home')} />
         </Content>
       </Container>
     )
@@ -73,14 +71,16 @@ class Profile extends React.Component {
 
 const mapState = (state) => {
   return {
-    adventures: state.adventure
+    adventures: state.adventure,
+    geoPosition: state.geoPosition
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchAdventures: () => {
-      dispatch(getAllAdventures())
+    fetchInitialData: () => {
+      dispatch(getCurrentPosition());
+      dispatch(getAllAdventures());
     }
   }
 }

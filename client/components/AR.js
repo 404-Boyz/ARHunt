@@ -5,6 +5,7 @@ import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
 import { Container, Header, Left, Icon, Right, Button } from 'native-base';
 import { connect } from 'react-redux';
 import { styles } from '../assets/styles/StyleSheet';
+import { changeVisitedStatus } from '../store';
 
 
 import ARModal from './AR-Modal.js'
@@ -22,17 +23,7 @@ class AR extends React.Component {
         super(props);
         this.state = {
             modalVisible: false,
-            currentPosition: {
-                latitude: 0,
-                longitude: 0
-            },
-            nextLocation: {
-                latitude: 0,
-                longitude: 0
-            },
-            distToNext: NaN,
-            isInside: false,
-            counter: 0
+            distToNext: NaN
         };
         this._onGLContextCreate = this._onGLContextCreate.bind(this);
         this.makeCube = this.makeCube.bind(this);
@@ -42,39 +33,16 @@ class AR extends React.Component {
     raycaster = new THREE.Raycaster();
 
 
-    componentDidMount() {
-        this.locationFinder();
-    }
-
     // checking current location and distance to clue
 
-    locationFinder = async () => {
-        await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
-            (position) => {
-                this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } }, () => {
-                    console.log('COUNT', this.state.counter)
-                    if (this.props.currentLocation.positionInHunt === 1 && this.state.counter < 1) {
-                        this.makeCube(this.gl)
-                    }
-                });
-
-                let next = {
-                    latitude: this.props.currentLocation.latitude,
-                    longitude: this.props.currentLocation.longitude
-                }
-                console.log('LAT', typeof this.props.currentLocation.latitude)
-
-                this.setState({
-                    distToNext: geolib.getDistance(this.state.currentPosition, next, 1),
-                    isInside: geolib.isPointInCircle(this.state.currentPosition, next, 30)
-                }, () => {
-                    if (this.state.isInside && this.state.counter < 1) {
-                        this.makeCube(this.gl)
-                    }
-                    console.log('dist', this.state.distToNext)
-                });
-
-            })
+    locationFinder = () => {
+        this.setState({
+            distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.props.currentClue.latitude, longitude: +this.props.currentClue.longitude }, 5),
+        }, () => {
+            if (this.state.distToNext < 20 || this.props.currentClue.positionInHunt === 1) {
+                this.makeCube(this.gl)
+            }
+        });
     }
 
     // grab the touch location and match it to the screen
@@ -94,8 +62,9 @@ class AR extends React.Component {
         this.raycaster.setFromCamera(this.touch, this.camera);
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
-            this.setState({ counter: 0 })
             this._setModalVisible(!this.state.modalVisible)
+            this.props.changeStatus(1, 1, this.props.currentClue.id, true)
+            this.scene.remove.apply(this.scene, this.scene.children);
         } else {
             Vibration.vibrate()
         }
@@ -115,59 +84,52 @@ class AR extends React.Component {
         this.renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
         this.scene.background = ExpoTHREE.createARBackgroundTexture(this.arSession, this.renderer);
 
-        this.makeCube(this.gl);
+        let animate = () => {
+            requestAnimationFrame(animate);
+            this.renderer.render(this.scene, this.camera);
+            gl.endFrameEXP();
+        }
+        animate()
+
+        this.locationFinder()
     }
 
     // create the AR cube
 
     makeCube(gl) {
         let animate;
-        console.log('IN', this.state.distToNext)
-        this.setState({ counter: 1 })
-        console.log('AFTER CUBE', this.state.counter)
-
-
         // checking distance to clue location and rendering cube or not based on that
 
-        if (this.state.distToNext < 30 || this.props.currentLocation.positionInHunt === 1) {
-            const geometry = new THREE.BoxGeometry(1.4, 1.4, 1.4);
+        // if (this.state.distToNext < 10 || this.props.currentClue.positionInHunt === 1) {
+        const geometry = new THREE.BoxGeometry(1.4, 1.4, 1.4);
 
-            // randomizing the cube colors and creating the 3D/AR shape
+        // randomizing the cube colors and creating the 3D/AR shape
 
-            for (let i = 0; i < geometry.faces.length; i += 2) {
-                let hex = Math.random() * 0xffffff;
-                geometry.faces[i].color.setHex(hex);
-                geometry.faces[i + 1].color.setHex(hex);
-            }
-            const material = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors, overdraw: 0.5 });
-            const cube = new THREE.Mesh(geometry, material);
-
-            cube.position.z = -8;
-            cube.position.y = 0.8;
-
-            this.scene.add(cube);
-
-            // run the AR scene & camera with the cube
-
-            animate = () => {
-                requestAnimationFrame(animate);
-
-                cube.rotation.x += 0.07;
-                cube.rotation.y += 0.04;
-
-                this.renderer.render(this.scene, this.camera);
-                gl.endFrameEXP();
-            }
-        } else {
-
-            // run the AR scene & camera without the cube
-
-            animate = () => {
-                requestAnimationFrame(animate);
-                this.renderer.render(this.scene, this.camera);
-                gl.endFrameEXP();
-            }
+        for (let i = 0; i < geometry.faces.length; i += 2) {
+            let hex = Math.random() * 0xffffff;
+            geometry.faces[i].color.setHex(hex);
+            geometry.faces[i + 1].color.setHex(hex);
         }
+        const material = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors, overdraw: 0.5 });
+        const cube = new THREE.Mesh(geometry, material);
+
+        cube.position.z = -8;
+        cube.position.y = 0.8;
+
+        this.scene.add(cube);
+
+        // run the AR scene & camera with the cube
+
+        animate = () => {
+            requestAnimationFrame(animate);
+
+            cube.rotation.x += 0.07;
+            cube.rotation.y += 0.04;
+
+            this.renderer.render(this.scene, this.camera);
+            gl.endFrameEXP();
+        }
+        // }
         animate();
     }
 
@@ -212,8 +174,17 @@ class AR extends React.Component {
 
 const mapState = (state) => {
     return {
-        currentLocation: state.location
+        geoPosition: state.geoPosition,
+        currentClue: state.location
     }
 }
 
-export default connect(mapState)(AR);
+const mapDispatch = (dispatch) => {
+    return {
+        changeStatus: (user, adventure, location, status) => {
+            dispatch(changeVisitedStatus(user, adventure, location, status))
+        },
+    }
+}
+
+export default connect(mapState, mapDispatch)(AR);

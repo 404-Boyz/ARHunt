@@ -2,62 +2,70 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
 
 import { connect } from 'react-redux';
-import { changeVisitedStatus, fetchActiveLocation } from '../store';
+import { fetchActiveLocation } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
-import { Button, Container, Header, Content, Card, CardItem, Body } from 'native-base'
 
 class ARModal extends Component {
   constructor(props) {
     super(props)
   }
 
-  async componentDidMount() {
-    //fire change status to visited true
-    await this.props.changeStatus(1, 1, this.props.currentLocation.id, true)
-    // fire new Active location
+  componentDidMount() {
+    //fire new clue on load
     this.props.getActive(1, 1)
-    // on modal close, send to maps.
   }
-  render(props) {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        onRequestClose={() => {
-          alert('Modal has been closed.');
-        }}>
-        <View style={{ marginTop: 22 }}>
-          <View>
-            <Text>GOOD WORK - YOU FOUND IT!</Text>
 
-            <TouchableHighlight
-              onPress={() => {
-                // this.props.setModalVisible(false);
-                this.props.navigation.navigate('TreasureMap')
-              }}>
-              <Text>Continue To Next Clue</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </Modal>
+  render(props) {
+    console.log('NEW CLUE?', this.props.currentClue)
+    return (
+      <Container>
+        <Header />
+        <Content>
+          <Card>
+            <Modal
+              animationType="slide"
+              transparent={false}>
+              <CardItem header>
+                <Text>GOOD WORK - YOU FOUND IT!</Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>
+                    Next Clue
+                </Text>
+                <Text></Text>
+                </Body>
+              </CardItem>
+              <CardItem footer>
+                <Button>
+                  <TouchableHighlight
+                    onPress={() => {
+                      // this.props.setModalVisible(false);
+                      this.props.navigation.navigate('TreasureMap')
+                    }}>
+                    <Text>  Continue To Next Location  </Text>
+                  </TouchableHighlight>
+                </Button>
+              </CardItem>
+            </Modal>
+          </Card>
+        </Content>
+      </Container>
     )
   }
 }
 
 const mapState = (state) => {
   return {
-    currentLocation: state.location
+    geoPosition: state.geoPosition,
+    currentClue: state.location
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    changeStatus: (user, adventure, location, status) => {
-      dispatch(changeVisitedStatus(user, adventure, location, status))
-    },
     getActive: (user, adv) => {
-      console.log('NEW ACTIVE LOCATION!')
       dispatch(fetchActiveLocation(user, adv))
     }
   }
