@@ -12,7 +12,7 @@ export default class Root extends Component {
 
     this.socket = io('https://peaceful-dawn-66038.herokuapp.com')
     this.socket.on('connect', () => {
-      console.log('Hunting the most dangerous game')
+      console.log('Hunting the most dangerous game. Release the sockets!')
     })
   }
 
@@ -23,11 +23,3 @@ export default class Root extends Component {
       </Provider>);
   }
 }
-
-
-
-
-
-
-
-

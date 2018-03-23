@@ -3,6 +3,7 @@ import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Ic
 import { getAllAdventures, getCurrentPosition, stopTracking } from '../store';
 import { connect } from 'react-redux';
 import { TouchableOpacity, Image } from 'react-native';
+import { styles } from '../assets/styles/StyleSheet'
 
 class Profile extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Profile extends React.Component {
     const adventures = this.props.adventures;
     return (
       <Container>
-        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+        <Header style={styles.Header} >
           <Left />
           <Right>
             <Button

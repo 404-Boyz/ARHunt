@@ -3,7 +3,7 @@ import { StackNavigator, navigationOptions } from 'react-navigation';
 import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Icon } from 'native-base'
 import { connect } from 'react-redux'
 import { authSignUp } from '../store'
-import { StyleSheet } from 'react-native'
+import { styles } from '../assets/styles/StyleSheet'
 
 class SignUp extends Component {
   constructor(props) {
@@ -29,36 +29,35 @@ class SignUp extends Component {
           <Right />
         </Header>
         <Content>
-          <Text style={styles.text}>Your adventure awaits...</Text>
-          <Text style={styles.text}>Sign up!</Text>
-          <Item regular style={styles.input}>
+          <Text style={styles.signInText}>Your adventure awaits...</Text>
+          <Text style={styles.signInText}>Sign up!</Text>
+          <Item regular style={styles.signInInput}>
             <Input placeholder='First Name' value={this.state.firstName}
               onChangeText={(value) => {
-                console.log('first name: ', this.state.firstName)
                 this.setState({ firstName: value })
               }} />
           </Item>
-          <Item regular style={styles.input}>
+          <Item regular style={styles.signInInput}>
             <Input placeholder='Last Name' value={this.state.lastName}
               onChangeText={(value) => this.setState({ lastName: value })
               } />
           </Item>
-          <Item regular style={styles.input}>
+          <Item regular style={styles.signInInput}>
             <Input placeholder='User Name' value={this.state.userName}
               onChangeText={(value) => this.setState({ userName: value })
               } />
           </Item>
-          <Item regular style={styles.input}>
+          <Item regular style={styles.signInInput}>
             <Input placeholder='Email' value={this.state.email}
               onChangeText={(value) => this.setState({ email: value })
               } />
           </Item>
-          <Item regular style={styles.input}>
+          <Item regular style={styles.signInInput}>
             <Input placeholder='Password' value={this.state.password}
               onChangeText={(value) => this.setState({ password: value })
               } />
           </Item>
-          <Button rounded style={styles.button} onPress={this.props.handleSignUp.bind(this, this.state)}>
+          <Button rounded style={styles.signInButton} onPress={this.props.handleSignUp.bind(this, this.state)}>
             <Text>Submit</Text>
           </Button>
         </Content>
@@ -77,20 +76,5 @@ const mapDispatch = (dispatch) => {
     }
   }
 }
-
-const styles = new StyleSheet.create({
-  text: {
-    alignSelf: 'center',
-    fontSize: 30
-  },
-  input: {
-    margin: 15,
-    marginRight: 15,
-    marginLeft: 15
-  },
-  button: {
-    alignSelf: 'center'
-  }
-})
 
 export default connect(null, mapDispatch)(SignUp)

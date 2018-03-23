@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { authLogIn } from '../store'
 import { RootStack } from './Navigator'
 import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Form, Icon } from 'native-base'
+import { styles } from '../assets/styles/StyleSheet'
 
 class LogIn extends Component {
   constructor() {
@@ -18,20 +19,14 @@ class LogIn extends Component {
 
   render() {
     return (<Container>
-      <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+      <Header style={styles.Header} >
         <Left />
-        <Right>
-          <Button
-            transparent
-            onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-            <Icon name="menu" />
-          </Button>
-        </Right>
+        <Right />
       </Header>
       <Content>
-        <Text style={styles.text}>Log In!</Text>
+        <Text style={styles.signInText}>Log In!</Text>
         <Form style={{ margin: 15 }}>
-          <Item regular style={styles.input}>
+          <Item regular style={styles.signInInput}>
             <Input
               placeholder='User Name' value={this.state.name}
               onChangeText={(value) => {
@@ -39,15 +34,15 @@ class LogIn extends Component {
               }
               } />
           </Item>
-          <Item regular style={styles.input}>
+          <Item regular style={styles.signInInput}>
             <Input
               placeholder='Password' value={this.state.password}
               onChangeText={(value) => this.setState({ password: value })
               } />
           </Item>
         </Form>
-        <Button transparent info style={styles.button} onPress={() => this.props.navigation.navigate('SignUp')}><Text>Don't have an account? Sign up!</Text></Button>
-        <Button style={{ alignSelf: 'center' }} rounded onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)}>
+        <Button transparent info style={styles.signInButton} onPress={() => this.props.navigation.navigate('SignUp')}><Text>Don't have an account? Sign up!</Text></Button>
+        <Button style={styles.signInButton} rounded onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)}>
           <Text>Submit</Text>
         </Button>
       </Content>
@@ -61,7 +56,6 @@ const mapDispatch = (dispatch) => {
 
   return {
     handleLogIn(name, password) {
-      console.log(name, password);
       dispatch(authLogIn(name, password, 'login'))
       this.props.navigation.navigate('Profile')
     }
@@ -71,17 +65,3 @@ const mapDispatch = (dispatch) => {
 
 export default connect(null, mapDispatch)(LogIn)
 
-const styles = new StyleSheet.create({
-  text: {
-    alignSelf: 'center',
-    fontSize: 40
-  },
-  input: {
-    margin: 15,
-    marginRight: 15,
-    marginLeft: 15
-  },
-  button: {
-    alignSelf: 'center'
-  }
-})

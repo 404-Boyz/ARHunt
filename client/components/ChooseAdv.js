@@ -3,6 +3,7 @@ import { Image, TouchableOpacity, Alert } from 'react-native';
 import { getAllAdventures, fetchActiveLocation } from '../store';
 import { connect } from 'react-redux';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
+import { styles } from '../assets/styles/StyleSheet'
 
 class ChooseAdv extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class ChooseAdv extends Component {
     const adventures = this.props.adventures;
     return (
       <Container>
-        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+        <Header style={styles.Header} >
           <Left />
           <Right>
             <Button
@@ -43,13 +44,13 @@ class ChooseAdv extends Component {
                   { cancelable: false }
                 )
               }}>
-                <Card style={{ flex: 0 }}>
+                <Card style={styles.Card}>
                   <CardItem>
                     <Left>
                       <Thumbnail source={{ uri: `${adventure.photoUrl}` }} />
                       <Body>
                         <Text>{adventure.name}</Text>
-                        <Text note>DO SOMETHING LATER</Text>
+                        <Text note>{adventure.location}</Text>
                       </Body>
                     </Left>
                   </CardItem>
@@ -63,7 +64,7 @@ class ChooseAdv extends Component {
                   </CardItem>
                   <CardItem>
                     <Left>
-                      <Button transparent textStyle={{ color: '#87838B' }}>
+                      <Button transparent info>
                         <Text>1,926 Hunts Completed</Text>
                       </Button>
                     </Left>

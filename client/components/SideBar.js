@@ -1,9 +1,9 @@
 import React from "react";
 import { Image } from "react-native";
 import { Container, Content, Text, List, ListItem } from "native-base";
+import { styles } from '../assets/styles/StyleSheet'
 
-const routes = ["Home", "ChooseAdv", "ClueList", "Login", "TreasureMap", "SignUp", "Profile", "AR", "ARModal"];
-
+const routes = ["ChooseAdv", "ClueList", "Login", "TreasureMap", "SignUp", "Profile", "AR", "ARModal"];
 
 export default class SideBar extends React.Component {
     render() {
@@ -14,12 +14,7 @@ export default class SideBar extends React.Component {
                         source={{
                             uri: "https://github.com/GeekyAnts/NativeBase-KitchenSink/raw/react-navigation/img/drawer-cover.png"
                         }}
-                        style={{
-                            height: 120,
-                            alignSelf: "stretch",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}>
+                        style={styles.SideBar}>
                     </Image>
                     <List
                         dataArray={routes}
