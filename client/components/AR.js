@@ -94,7 +94,7 @@ class AR extends React.Component {
 
     // create the AR cube
 
-    makeCube(gl) {
+    makeCube = async (gl) => {
         let animate;
         // checking distance to clue location and rendering cube or not based on that
 
@@ -103,12 +103,22 @@ class AR extends React.Component {
 
         // randomizing the cube colors and creating the 3D/AR shape
 
-        for (let i = 0; i < geometry.faces.length; i += 2) {
-            let hex = Math.random() * 0xffffff;
-            geometry.faces[i].color.setHex(hex);
-            geometry.faces[i + 1].color.setHex(hex);
-        }
-        const material = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors, overdraw: 0.5 });
+        // for (let i = 0; i < geometry.faces.length; i += 2) {
+        //     let hex = Math.random() * 0xffffff;
+        //     geometry.faces[i].color.setHex(hex);
+        //     geometry.faces[i + 1].color.setHex(hex);
+        // }
+
+        // custom clue generated on cube
+
+        const texture = await ExpoTHREE.loadAsync(
+            require('../../assets/img/clue.png')
+        );
+
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+
+
+        // const material = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors, overdraw: 0.5 });
         const cube = new THREE.Mesh(geometry, material);
 
         cube.position.z = -8;
