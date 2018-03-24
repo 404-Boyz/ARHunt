@@ -62,6 +62,10 @@ class AR extends React.Component {
         this.raycaster.setFromCamera(this.touch, this.camera);
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
+            //audio fire here
+            // const modalAudio = new Expo.Audio.Sound();
+
+
             this._setModalVisible(!this.state.modalVisible)
             this.props.changeStatus(1, 1, this.props.currentClue.id, true)
             this.scene.remove.apply(this.scene, this.scene.children);
@@ -158,9 +162,6 @@ class AR extends React.Component {
             <Container>
                 <Header style={styles.Header} >
                     <Left />
-                    <Body>
-                        <Title>Camera</Title>
-                    </Body>
                     <Right>
                         <Button
                             transparent

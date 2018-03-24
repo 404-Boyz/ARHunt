@@ -43,7 +43,6 @@ export const styles = new StyleSheet.create({
     marginRight: 35,
     marginLeft: 35,
     marginBottom: 12,
-    color: '#cccccc',
     padding: 4
   },
   signInButton: {
