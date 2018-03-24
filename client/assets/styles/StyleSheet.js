@@ -8,7 +8,7 @@ export const styles = new StyleSheet.create({
     backgroundColor: '#2C3039'
   },
   Content: {
-    padding: 40
+    padding: 15
   },
   Card: {
     flex: 0,
@@ -47,7 +47,9 @@ export const styles = new StyleSheet.create({
   },
   signInButton: {
     alignSelf: 'center',
-    backgroundColor: '#10BBBA'
+    backgroundColor: '#10BBBA',
+    paddingTop: 30,
+    paddingBottom: 30
   },
   SideBar: {
     height: 120,

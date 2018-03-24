@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import { getAllAdventures, getCurrentPosition, stopTracking } from '../store';
 import { connect } from 'react-redux';
-import { TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import { styles } from '../assets/styles/StyleSheet'
 
 class Profile extends React.Component {
@@ -32,40 +32,42 @@ class Profile extends React.Component {
             </Button>
           </Right>
         </Header>
-        <Content padder style={styles.Content}>
-          {adventures.filter(adventure => adventure.status === 'active').map(adventure => {
-            return (
-              <TouchableOpacity key={adventure.id} onPress={() => console.log("PRESSED")}>
-                <Card style={styles.Card}>
-                  <CardItem style={styles.CardHead}>
-                    <Left>
-                      <Thumbnail source={require('../assets/img/SA-thumb.png')} />
+        <Content>
+          <View style={styles.Content}>
+            {adventures.filter(adventure => adventure.status === 'active').map(adventure => {
+              return (
+                <TouchableOpacity key={adventure.id} onPress={() => console.log("PRESSED")}>
+                  <Card style={styles.Card}>
+                    <CardItem style={styles.CardHead}>
+                      <Left>
+                        <Thumbnail source={require('../assets/img/SA-thumb.png')} />
+                        <Body>
+                          <Text>{adventure.name}</Text>
+                          <Text note>DO SOMETHING LATER</Text>
+                        </Body>
+                      </Left>
+                    </CardItem>
+                    <CardItem style={styles.CardBody}>
                       <Body>
-                        <Text>{adventure.name}</Text>
-                        <Text note>DO SOMETHING LATER</Text>
+                        <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
+                        <Text>
+                          {adventure.description}
+                        </Text>
                       </Body>
-                    </Left>
-                  </CardItem>
-                  <CardItem style={styles.CardBody}>
-                    <Body>
-                      <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
-                      <Text>
-                        {adventure.description}
-                      </Text>
-                    </Body>
-                  </CardItem>
-                  <CardItem style={styles.CardBody}>
-                    <Left>
-                      <Button transparent textStyle={{ color: '#87838B' }}>
-                        <Text>1,926 Hunts Completed</Text>
-                      </Button>
-                    </Left>
-                  </CardItem>
-                </Card>
-              </TouchableOpacity>
-            )
-          }
-          )}
+                    </CardItem>
+                    <CardItem style={styles.CardBody}>
+                      <Left>
+                        <Button transparent textStyle={{ color: '#87838B' }}>
+                          <Text>1,926 Hunts Completed</Text>
+                        </Button>
+                      </Left>
+                    </CardItem>
+                  </Card>
+                </TouchableOpacity>
+              )
+            }
+            )}
+          </View>
         </Content>
       </Container>
     )

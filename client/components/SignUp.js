@@ -71,7 +71,7 @@ class SignUp extends Component {
               } />
           </Item>
           <Button rounded style={styles.signInButton} onPress={this.props.handleSignUp.bind(this, this.state)}>
-            <Text>Sign Up</Text>
+            <Text>                            Sign Up                             </Text>
           </Button>
         </Content>
       </Container>
