@@ -2,7 +2,7 @@
 import Expo, { Location } from 'expo';
 import React from 'react';
 import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
-import { Container, Header, Left, Icon, Right, Button } from 'native-base';
+import { Container, Header, Left, Icon, Right, Button, Title, Body } from 'native-base';
 import { connect } from 'react-redux';
 import { styles } from '../assets/styles/StyleSheet';
 import { changeVisitedStatus } from '../store';
@@ -114,7 +114,7 @@ class AR extends React.Component {
         // custom clue generated on cube
 
         const texture = await ExpoTHREE.loadAsync(
-            require('../../assets/img/clue.png')
+            require('../assets/img/clue.png')
         );
 
         const material = new THREE.MeshBasicMaterial({ map: texture });
@@ -158,6 +158,9 @@ class AR extends React.Component {
             <Container>
                 <Header style={styles.Header} >
                     <Left />
+                    <Body>
+                        <Title>Camera</Title>
+                    </Body>
                     <Right>
                         <Button
                             transparent

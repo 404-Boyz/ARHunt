@@ -5,6 +5,7 @@ import RootStack from './client/components/Navigator.js'
 import store from './client/store'
 import { Provider } from 'react-redux'
 import io from 'socket.io-client'
+import { Font } from 'expo'
 
 export default class Root extends Component {
   constructor(props) {
@@ -14,6 +15,12 @@ export default class Root extends Component {
     this.socket.on('connect', () => {
       console.log('Hunting the most dangerous game. Release the sockets!')
     })
+  }
+
+  componentDidMount() {
+    Font.loadAsync({
+      'oswald-light': require('./client/assets/fonts/Oswald-Light.ttf'),
+    });
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
-
+import { Container, Content, CardItem, Card, Header, Button, Body } from 'native-base';
 import { connect } from 'react-redux';
 import { fetchActiveLocation } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
@@ -34,7 +34,6 @@ class ARModal extends Component {
                   <Text>
                     Next Clue
                 </Text>
-                <Text></Text>
                 </Body>
               </CardItem>
               <CardItem footer>

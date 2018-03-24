@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { DrawerNavigator } from 'react-navigation';
+import { DrawerNavigator, Easing, Animated } from 'react-navigation';
 // import { AR, ChooseAdv, ClueList, Home, Login, TreasureMap, Profile, SignUp, SideBar } from './index.js'
 
 import Profile from './Profile'
@@ -15,26 +15,50 @@ import ClueList from './ClueList'
 
 let width = Dimensions.get('window').width / 2
 
+const transitionConfig = () => {
+    return {
+        transitionSpec: {
+            duration: 750,
+            easing: Easing.out(Easing.poly(4)),
+            timing: Animated.timing,
+            useNativeDriver: true,
+        },
+        screenInterpolator: sceneProps => {
+            const { layout, position, scene } = sceneProps
+
+            const thisSceneIndex = scene.index
+            const width2 = layout.initWidth
+
+            const translateX = position.interpolate({
+                inputRange: [thisSceneIndex - 1, thisSceneIndex],
+                outputRange: [width2, 0],
+            })
+
+            return { transform: [{ translateX }] }
+        },
+    }
+}
+
 const RootStack = DrawerNavigator({
-    ChooseAdv: {
+    ADVENTURES: {
         screen: ChooseAdv
     },
-    ClueList: {
+    'CLUE LIST': {
         screen: ClueList
     },
     Login: {
         screen: Login
     },
-    TreasureMap: {
+    MAP: {
         screen: TreasureMap
     },
-    Profile: {
+    'MY PROFILE': {
         screen: Profile
     },
     SignUp: {
         screen: SignUp
     },
-    AR: {
+    CAMERA: {
         screen: AR
     },
     ARModal: {
@@ -43,6 +67,7 @@ const RootStack = DrawerNavigator({
 },
     {
         initialRouteName: 'Login',
+        transitionConfig,
         drawerPosition: 'right',
         drawerWidth: width,
         contentComponent: props => <SideBar {...props} />

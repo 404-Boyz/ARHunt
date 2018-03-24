@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Image, View } from 'react-native'
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { connect } from 'react-redux'
 import { authLogIn } from '../store'
@@ -18,33 +18,42 @@ class LogIn extends Component {
   }
 
   render() {
-    return (<Container>
-      <Header style={styles.Header} >
+    return (<Container style={styles.Container}>
+      <Header style={styles.HeaderLogin} iosBarStyle="light-content">
         <Left />
         <Right />
       </Header>
       <Content>
-        <Text style={styles.signInText}>Log In!</Text>
-        <Form style={{ margin: 15 }}>
-          <Item regular style={styles.signInInput}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.mainLogo} source={require('../assets/img/scavengAR-logo.png')} />
+        </View>
+        <Form>
+          <Item rounded style={styles.signInInput}>
             <Input
+              style={styles.input}
               placeholder='User Name' value={this.state.name}
+              placeholderTextColor="#4B5059"
               onChangeText={(value) => {
                 this.setState({ name: value })
               }
               } />
           </Item>
-          <Item regular style={styles.signInInput}>
+          <Item rounded style={styles.signInInput}>
             <Input
+              style={styles.input}
               placeholder='Password' value={this.state.password}
+              placeholderTextColor="#4B5059"
+              secureTextEntry={true}
               onChangeText={(value) => this.setState({ password: value })
               } />
           </Item>
         </Form>
-        <Button transparent info style={styles.signInButton} onPress={() => this.props.navigation.navigate('SignUp')}><Text>Don't have an account? Sign up!</Text></Button>
         <Button style={styles.signInButton} rounded onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)}>
-          <Text>Submit</Text>
+          <Text>Login</Text>
         </Button>
+        <View style={styles.signUpTextContainer}>
+          <Button transparent info onPress={() => this.props.navigation.navigate('SignUp')}><Text style={styles.signUpText}>Don't have an account? Sign up!</Text></Button>
+        </View>
       </Content>
     </Container>)
   }
@@ -57,7 +66,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleLogIn(name, password) {
       dispatch(authLogIn(name, password, 'login'))
-      this.props.navigation.navigate('Profile')
+      this.props.navigation.navigate('MY PROFILE')
     }
   }
 }
