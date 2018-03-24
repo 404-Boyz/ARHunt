@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, TouchableOpacity, Alert } from 'react-native';
 import { getAllAdventures, fetchActiveLocation } from '../store';
 import { connect } from 'react-redux';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import { styles } from '../assets/styles/StyleSheet'
 
 class ChooseAdv extends Component {
@@ -21,6 +21,9 @@ class ChooseAdv extends Component {
       <Container>
         <Header style={styles.Header} >
           <Left />
+          <Body>
+            <Title>Adventures</Title>
+          </Body>
           <Right>
             <Button
               transparent
@@ -38,7 +41,7 @@ class ChooseAdv extends Component {
                   'AR you ready to begin?',
                   `Hit ok to start ${adventure.name}`,
                   [
-                    { text: 'Begin!', onPress: () => { this.props.navigation.navigate('AR') } },
+                    { text: 'Begin!', onPress: () => { this.props.navigation.navigate('CAMERA') } },
                     { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
                   ],
                   { cancelable: false }

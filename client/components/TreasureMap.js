@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Container, Header, Left, Icon, Right, Button, Content, Text } from 'native-base';
+import { Container, Header, Left, Icon, Right, Button, Text, Title, Body } from 'native-base';
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
 import { styles } from '../assets/styles/StyleSheet'
@@ -46,6 +46,9 @@ export default class TreasureMap extends Component {
       <Container>
         <Header style={styles.Header} >
           <Left />
+          <Body>
+            <Title>Map</Title>
+          </Body>
           <Right>
             <Button
               transparent

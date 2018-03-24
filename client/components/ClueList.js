@@ -14,6 +14,9 @@ export default class ClueList extends Component {
 
         <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
           <Left />
+          <Body>
+            <Title>Clue List</Title>
+          </Body>
           <Right>
             <Button
               transparent
@@ -34,29 +37,29 @@ export default class ClueList extends Component {
                 </Text>
               </Body>
             </CardItem>
-            <CardItem footer style={{display: 'flex', justifyContent: 'space-between'}}>
+            <CardItem footer style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Text>Distance To Go: 86m</Text>
               <Button bordered danger>
-                <Text style={{paddingLeft: 10, paddingRight: 10}}> Stuck? Get A Hint! </Text>
+                <Text style={{ paddingLeft: 10, paddingRight: 10 }}> Stuck? Get A Hint! </Text>
               </Button>
             </CardItem>
-         </Card>
-        <Card>
-          <CardItem header>
-            <Text>Chicago Highrise Adventure: Clue 2</Text>
-          </CardItem>
-          <CardItem>
-            <Body>
-              <Text>
-                UNLOCK CLUE 1 TO CONTINUE
+          </Card>
+          <Card>
+            <CardItem header>
+              <Text>Chicago Highrise Adventure: Clue 2</Text>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text>
+                  UNLOCK CLUE 1 TO CONTINUE
               </Text>
-            </Body>
-          </CardItem>
-          <CardItem footer>
-            <Text></Text>
-          </CardItem>
-       </Card>
-      </Content>
+              </Body>
+            </CardItem>
+            <CardItem footer>
+              <Text></Text>
+            </CardItem>
+          </Card>
+        </Content>
       </Container>
     )
   }
