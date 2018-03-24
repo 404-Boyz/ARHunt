@@ -49,7 +49,7 @@ class LogIn extends Component {
           </Item>
         </Form>
         <Button style={styles.signInButton} rounded onPress={this.props.handleLogIn.bind(this, this.state.name, this.state.password)}>
-          <Text>Login</Text>
+          <Text>                            Login                                  </Text>
         </Button>
         <View style={styles.signUpTextContainer}>
           <Button transparent info onPress={() => this.props.navigation.navigate('SignUp')}><Text style={styles.signUpText}>Don't have an account? Sign up!</Text></Button>
