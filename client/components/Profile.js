@@ -2,8 +2,9 @@ import React from 'react';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import { getAllAdventures, getCurrentPosition, stopTracking } from '../store';
 import { connect } from 'react-redux';
-import { TouchableOpacity, View, Image } from 'react-native';
+import { TouchableOpacity, View, Image, ImageBackground } from 'react-native';
 import { styles } from '../assets/styles/StyleSheet'
+import { Ionicons } from '@expo/vector-icons';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -16,8 +17,10 @@ class Profile extends React.Component {
 
 
   render() {
+
     const adventures = this.props.adventures.filter(adventure => adventure.status === 'active');
-    
+    const user = this.props.user;
+
     return (
       <Container style={styles.Container}>
         <Header style={styles.Header} iosBarStyle="light-content">
@@ -34,33 +37,37 @@ class Profile extends React.Component {
           </Right>
         </Header>
         <Content>
+          <ImageBackground style={styles.profileHead} source={require('../assets/img/SA-pattern.png')}>
+            <Thumbnail style={{ marginBottom: 10 }} large source={require('../assets/img/SA-thumb.png')} />
+            <Text style={styles.profileName}>{user.fullName}</Text>
+            <Text style={styles.profilePoints}>1,050 Points</Text>
+          </ImageBackground>
           <View style={styles.Content}>
               {adventures.length ? adventures.map(adventure => {
               return (
                 <TouchableOpacity key={adventure.id} onPress={() => console.log("PRESSED")}>
                   <Card style={styles.Card}>
-                    <CardItem style={styles.CardHead}>
+                    <CardItem style={styles.CardHeadFoot}>
                       <Left>
                         <Thumbnail source={require('../assets/img/SA-thumb.png')} />
                         <Body>
-                          <Text>{adventure.name}</Text>
-                          <Text note>DO SOMETHING LATER</Text>
+                          <Text style={styles.CardTitle}>{adventure.name}</Text>
+                          <Text note style={styles.CardNote}>Chicago, Il</Text>
                         </Body>
                       </Left>
                     </CardItem>
                     <CardItem style={styles.CardBody}>
                       <Body>
                         <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
-                        <Text>
+                        <Text style={styles.CardText}>
                           {adventure.description}
                         </Text>
                       </Body>
                     </CardItem>
-                    <CardItem style={styles.CardBody}>
+                    <CardItem style={styles.CardHeadFoot}>
                       <Left>
-                        <Button transparent textStyle={{ color: '#87838B' }}>
-                          <Text>1,926 Hunts Completed</Text>
-                        </Button>
+                        <Ionicons name="md-heart" size={22} color="#09b9b8" />
+                        <Text style={styles.CardHunts}>1,926 Hunts Completed</Text>
                       </Left>
                     </CardItem>
                   </Card>
@@ -94,7 +101,8 @@ class Profile extends React.Component {
 const mapState = (state) => {
   return {
     adventures: state.adventure,
-    geoPosition: state.geoPosition
+    geoPosition: state.geoPosition,
+    user: state.authUser
   }
 }
 

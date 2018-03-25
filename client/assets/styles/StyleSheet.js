@@ -15,13 +15,41 @@ export const styles = new StyleSheet.create({
     marginTop: 15,
     marginLeft: 15,
     marginRight: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    backgroundColor: '#dfdce3'
   },
-  CardHead: {
-    backgroundColor: '#d4d0d9'
+  CardHeadFoot: {
+    backgroundColor: '#d4d0d9',
+    paddingTop: 10,
+    paddingBottom: 10
   },
   CardBody: {
-    backgroundColor: '#dfdce3'
+    backgroundColor: '#dfdce3',
+    paddingTop: 20,
+    paddingBottom: 20
+  },
+  CardTitle: {
+    fontFamily: 'oswald-light',
+    color: '#222A33',
+    letterSpacing: 1,
+    fontSize: 18
+  },
+  CardNote: {
+    fontFamily: 'oswald-light',
+    letterSpacing: 1
+  },
+  CardText: {
+    fontFamily: 'oswald-light',
+    color: '#807e83',
+    marginTop: 20
+  },
+  CardHunts: {
+    color: '#09b9b8',
+    fontFamily: 'oswald-light',
+    fontSize: 14
+  },
+  Hint: {
+    color: '#ede9e9'
   },
   Header: {
     backgroundColor: '#222A33',
@@ -95,6 +123,7 @@ export const styles = new StyleSheet.create({
   },
 
   // Signup specific styling
+
   mainLogo2: {
     width: 120,
     height: 131,
@@ -109,16 +138,53 @@ export const styles = new StyleSheet.create({
   DrawerImg: {
     width: 210,
     height: 120,
-    marginBottom: 40
+    marginBottom: 40,
+    marginTop: 30
   },
   NavText: {
     color: '#ede9e9',
     fontFamily: 'oswald-light',
-    letterSpacing: 2,
+    letterSpacing: 1,
     marginLeft: 12
   },
   NavItem: {
     borderBottomWidth: 0
-  }
+  },
 
+  // Profile specific styling
+
+  profileHead: {
+    backgroundColor: '#0da09c',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    padding: 20,
+    width: '100%'
+  },
+  profileName: {
+    color: '#2C3039',
+    fontSize: 24,
+    fontFamily: 'oswald-light',
+    letterSpacing: 2
+  },
+  profilePoints: {
+    marginTop: 5,
+    fontSize: 14,
+    color: '#d4d0d9'
+  },
+
+  //modal styling
+  modalContainer: {
+    marginTop: 60,
+  },
+
+  //clueList styling
+  clueListFooter: {
+    backgroundColor: '#d4d0d9',
+    paddingTop: 10,
+    paddingBottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
 })

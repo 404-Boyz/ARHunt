@@ -4,7 +4,14 @@ import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Con
 import { getAllLocations } from '../store';
 import geolib from 'geolib';
 
+
 class ClueList extends Component {
+
+import { styles } from '../assets/styles/StyleSheet';
+import { TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { StackNavigator, navigationOptions } from 'react-navigation';
+
   constructor(props) {
     super(props)
 
@@ -20,17 +27,21 @@ componentDidMount() {
 
   render() {
     return (
-      <Container>
-        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }} >
+
+      <Container style={styles.Container}>
+
+        <Header style={styles.Header} iosBarStyle="light-content" >
+
           <Left />
           <Body>
-            <Title>Clue List</Title>
+            <Title style={styles.title}>Clue List</Title>
           </Body>
           <Right>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-              <Icon name="menu" />
+
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+              <Icon name="menu" style={styles.title} />
             </Button>
           </Right>
         </Header>
@@ -42,8 +53,8 @@ componentDidMount() {
             location.visited ?
           
             <Card key={location.id}>
-              <CardItem  header>
-                <Text>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+              <CardItem style={styles.CardHeadFoot}>
+                <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
               </CardItem>
               <CardItem>
                 <Body>
@@ -52,25 +63,29 @@ componentDidMount() {
                   </Text>
                 </Body>
               </CardItem>
-              <CardItem footer style={{display: 'flex', justifyContent: 'center'}}>
-                <Button bordered danger>
-                  <Text style={{paddingLeft: 10, paddingRight: 10}}> Stuck? Get A Hint! </Text>
-                </Button>
-              </CardItem>
+              <CardItem style={styles.clueListFooter}>
+              <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
+              <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}}>
+              <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+              <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
+              </TouchableOpacity>
+            </CardItem>
             </Card>
             :
             <Card key={location.id} >
-            <CardItem  header>
-              <Text>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+            <CardItem style={styles.CardHeadFoot}>
+              <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
             </CardItem>
-            <CardItem>
+            <CardItem style={styles.CardBody}>
               <Body>
-                <Text>
+
+                <Text style={styles.CardText}>
                   Complete your current clue to continue!
                 </Text>
               </Body>
             </CardItem>
-            <CardItem footer style={{display: 'flex', justifyContent: 'space-between'}}>
+            <CardItem style={styles.clueListFooter}>
+
             </CardItem>
           </Card>
           )}

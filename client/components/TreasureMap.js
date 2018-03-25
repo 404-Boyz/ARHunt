@@ -5,6 +5,8 @@ import { MapView, Location } from 'expo';
 import geolib from 'geolib';
 import { styles } from '../assets/styles/StyleSheet'
 import { connect } from 'react-redux';
+import { fetchActiveLocation } from '../store';
+
 
 class TreasureMap extends Component {
   constructor(props) {
@@ -23,12 +25,13 @@ class TreasureMap extends Component {
       markers: []
     }
 
-    let locationFinder;
+    // let locationFinder;
   }
 
 
   async componentDidMount() {
-    locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
+    await this.props.getActive(this.props.user, 1);
+    this.locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
       (position) => {
 
         this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
@@ -39,23 +42,24 @@ class TreasureMap extends Component {
   }
 
   componentWillUnmount() {
-    locationFinder.remove();
+    this.locationFinder.remove();
   }
 
   render() {
-    console.log("PROPS IN MAP ARE::::::::", )
+    console.log('current clue///////////', this.props.currentClue)
+
     return !this.state.isInside ? (
-      <Container>
-        <Header style={styles.Header} >
+      <Container style={styles.Container}>
+        <Header style={styles.Header} iosBarStyle="light-content">
           <Left />
           <Body>
-            <Title>Map</Title>
+            <Title style={styles.title}>MAP</Title>
           </Body>
           <Right>
             <Button
               transparent
               onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-              <Icon name="menu" />
+              <Icon style={styles.title} name="menu" />
             </Button>
           </Right>
         </Header>
@@ -88,8 +92,6 @@ const initialRegion = {
   longitudeDelta: 0.008,
 };
 
-
-
 const testMarker = {
   coordinate: {
     latitude: 41.895544,
@@ -102,15 +104,19 @@ const testMarker = {
 
 const mapState = (state) => {
   return {
+    currentClue: state.location,
     adventures: state.adventure,
     geoPosition: state.geoPosition,
-    currentClue: state.location
+    user: state.authUser
   }
 }
 
-// const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch) => {
+  return {
+    getActive: (user, adv) => {
+      dispatch(fetchActiveLocation(user, adv))
+    }
+  }
+}
 
-// }
-
-
-export default connect(mapState)(TreasureMap);
+export default connect(mapState, mapDispatch)(TreasureMap);

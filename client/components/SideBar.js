@@ -7,10 +7,10 @@ import { Ionicons } from '@expo/vector-icons';
 const routes = ["MY PROFILE", "CLUE LIST", "MAP", "CAMERA", "ADVENTURES"];
 const icons = {
     'MY PROFILE': 'ios-contact',
-    'CLUE LIST': 'ios-list-box',
-    'MAP': 'ios-map',
+    'CLUE LIST': 'ios-list-box-outline',
+    'MAP': 'ios-map-outline',
     'CAMERA': 'ios-qr-scanner',
-    'ADVENTURES': 'ios-images'
+    'ADVENTURES': 'ios-images-outline'
 }
 
 
