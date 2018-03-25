@@ -1,20 +1,37 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux'
 import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Content, Text, Title } from 'native-base';
+import { getAllLocations } from '../store';
+import geolib from 'geolib';
+
+
+class ClueList extends Component {
+
 import { styles } from '../assets/styles/StyleSheet';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 
-export default class ClueList extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      distToNext: 0
+    }
   }
+
+componentDidMount() {
+  this.props.fetchLocations(1, 1);
+}
+
+
   render() {
     return (
+
       <Container style={styles.Container}>
 
         <Header style={styles.Header} iosBarStyle="light-content" >
+
           <Left />
           <Body>
             <Title style={styles.title}>Clue List</Title>
@@ -22,48 +39,78 @@ export default class ClueList extends Component {
           <Right>
             <Button
               transparent
+
               onPress={() => this.props.navigation.navigate("DrawerOpen")}>
               <Icon name="menu" style={styles.title} />
             </Button>
           </Right>
         </Header>
         <Content padder>
-          <Card>
-            <CardItem style={styles.CardHeadFoot}>
-              <Text style={styles.CardTitle}>Chicago Highrise Adventure: Clue 1</Text>
-            </CardItem>
-            <CardItem style={styles.CardBody}>
-              <Body>
-                <Text style={styles.CardText}>
-                  Some might say it's the tallest building in the world... some might say that's incorrect. Whichever way you look at it, you're going to be looking straight up.
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem style={styles.clueListFooter}>
+        {this.props.allClues.sort((a, b) => {
+          return a.positionInHunt - b.positionInHunt
+        }).map(location => {
+          return (
+            location.visited ?
+          
+            <Card key={location.id}>
+              <CardItem style={styles.CardHeadFoot}>
+                <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>
+                    {location.clue}
+                  </Text>
+                </Body>
+              </CardItem>
+              <CardItem style={styles.clueListFooter}>
               <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
               <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}}>
               <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
               <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
               </TouchableOpacity>
             </CardItem>
-          </Card>
-          <Card>
-            <CardItem header>
-              <Text>Chicago Highrise Adventure: Clue 2</Text>
+            </Card>
+            :
+            <Card key={location.id} >
+            <CardItem style={styles.CardHeadFoot}>
+              <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
             </CardItem>
-            <CardItem>
+            <CardItem style={styles.CardBody}>
               <Body>
-                <Text>
-                  UNLOCK CLUE 1 TO CONTINUE
-              </Text>
+
+                <Text style={styles.CardText}>
+                  Complete your current clue to continue!
+                </Text>
               </Body>
             </CardItem>
-            <CardItem footer>
-              <Text></Text>
+            <CardItem style={styles.clueListFooter}>
+
             </CardItem>
           </Card>
-        </Content>
+          )}
+        )}
+      </Content>
       </Container>
     )
   }
 }
+
+
+const mapState = (state) => {
+  return {
+    adventures: state.adventure,
+    geoPosition: state.geoPosition,
+    allClues: state.location
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    fetchLocations: (user, adv) => {
+    dispatch(getAllLocations(user, adv))
+    },
+  }
+}
+
+export default connect(mapState, mapDispatch)(ClueList);

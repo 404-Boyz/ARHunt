@@ -7,6 +7,7 @@ import { styles } from '../assets/styles/StyleSheet'
 import { connect } from 'react-redux';
 import { fetchActiveLocation } from '../store';
 
+
 class TreasureMap extends Component {
   constructor(props) {
     super(props)
@@ -46,6 +47,7 @@ class TreasureMap extends Component {
 
   render() {
     console.log('current clue///////////', this.props.currentClue)
+
     return !this.state.isInside ? (
       <Container style={styles.Container}>
         <Header style={styles.Header} iosBarStyle="light-content">
@@ -68,11 +70,12 @@ class TreasureMap extends Component {
           showsUserLocation={true}
           initialRegion={initialRegion}
         >
-          <MapView.Marker
-            coordinate={testMarker.coordinate}
-            title="Clue #2"
-            description="Can you find it?"
-          />
+        <MapView.Circle
+          center={testMarker.coordinate}
+          radius={300}
+          strokeColor="rgba(16,187,186, .2)"
+          fillColor="rgba(16,187,186, .2)"
+      />
         </MapView>
         <Text style={styles.mapText}>Distance to next clue: {this.state.distToNext} meters</Text>
 
@@ -85,8 +88,8 @@ class TreasureMap extends Component {
 const initialRegion = {
   latitude: 41.895266,
   longitude: -87.639035,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
+  latitudeDelta: 0.008,
+  longitudeDelta: 0.008,
 };
 
 const testMarker = {
@@ -98,9 +101,12 @@ const testMarker = {
   description: 'Home Sweet Home'
 }
 
+
 const mapState = (state) => {
   return {
     currentClue: state.location,
+    adventures: state.adventure,
+    geoPosition: state.geoPosition,
     user: state.authUser
   }
 }

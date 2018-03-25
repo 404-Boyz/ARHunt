@@ -17,8 +17,10 @@ class Profile extends React.Component {
 
 
   render() {
-    const adventures = this.props.adventures;
+
+    const adventures = this.props.adventures.filter(adventure => adventure.status === 'active');
     const user = this.props.user;
+
     return (
       <Container style={styles.Container}>
         <Header style={styles.Header} iosBarStyle="light-content">
@@ -41,7 +43,7 @@ class Profile extends React.Component {
             <Text style={styles.profilePoints}>1,050 Points</Text>
           </ImageBackground>
           <View style={styles.Content}>
-            {adventures.filter(adventure => adventure.status === 'active').map(adventure => {
+              {adventures.length ? adventures.map(adventure => {
               return (
                 <TouchableOpacity key={adventure.id} onPress={() => console.log("PRESSED")}>
                   <Card style={styles.Card}>
@@ -71,8 +73,24 @@ class Profile extends React.Component {
                   </Card>
                 </TouchableOpacity>
               )
-            }
-            )}
+            }) :
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("ADVENTURES")}>
+            <Card style={styles.Card}>
+              <CardItem style={styles.CardHead}>
+                <Left>
+                  <Thumbnail source={require('../assets/img/SA-thumb.png')} />
+                  <Body>
+                    <Text>You Have No Adventures</Text>
+                  </Body>
+                </Left>
+              </CardItem>
+              <CardItem style={styles.CardBody}>
+              <Body>
+              <Text> Choose a new adventure! </Text>
+            </Body>
+              </CardItem>
+            </Card>
+          </TouchableOpacity>}
           </View>
         </Content>
       </Container>
