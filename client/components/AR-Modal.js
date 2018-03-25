@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
 import { Container, Content, CardItem, Card, Header, Button, Body } from 'native-base';
 import { connect } from 'react-redux';
-import { fetchActiveLocation } from '../store';
+import { fetchActiveLocation, changeVisitedStatus } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
 import { styles } from '../assets/styles/StyleSheet'

@@ -4,8 +4,10 @@ import { Container, Header, Left, Icon, Right, Button, Text, Title, Body } from 
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
 import { styles } from '../assets/styles/StyleSheet'
+import { connect } from 'react-redux';
+import { fetchActiveLocation } from '../store';
 
-export default class TreasureMap extends Component {
+class TreasureMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,7 +29,8 @@ export default class TreasureMap extends Component {
 
 
   async componentDidMount() {
-    locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
+    await this.props.getActive(this.props.user, 1);
+    this.locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
       (position) => {
 
         this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
@@ -42,6 +45,7 @@ export default class TreasureMap extends Component {
   }
 
   render() {
+    console.log('current clue///////////', this.props.currentClue)
     return !this.state.isInside ? (
       <Container style={styles.Container}>
         <Header style={styles.Header} iosBarStyle="light-content">
@@ -85,8 +89,6 @@ const initialRegion = {
   longitudeDelta: 0.0421,
 };
 
-
-
 const testMarker = {
   coordinate: {
     latitude: 41.895544,
@@ -95,3 +97,20 @@ const testMarker = {
   title: 'Fullstack Academy',
   description: 'Home Sweet Home'
 }
+
+const mapState = (state) => {
+  return {
+    currentClue: state.location,
+    user: state.authUser
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    getActive: (user, adv) => {
+      dispatch(fetchActiveLocation(user, adv))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(TreasureMap);

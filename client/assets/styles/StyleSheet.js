@@ -168,6 +168,11 @@ export const styles = new StyleSheet.create({
     marginTop: 5,
     fontSize: 14,
     color: '#d4d0d9'
-  }
+  },
 
+  //modal styling
+  modalContainer: {
+    marginTop: 60,
+
+  }
 })
