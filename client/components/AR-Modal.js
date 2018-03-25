@@ -41,7 +41,7 @@ class ARModal extends Component {
                   <TouchableHighlight
                     onPress={() => {
                       // this.props.setModalVisible(false);
-                      this.props.navigation.navigate('TreasureMap')
+                      this.props.navigation.navigate('MAP')
                     }}>
                     <Text>  Continue To Next Location  </Text>
                   </TouchableHighlight>

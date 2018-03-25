@@ -1,5 +1,5 @@
 
-import Expo, { Location } from 'expo';
+import Expo, { Location, Audio, Constants } from 'expo';
 import React from 'react';
 import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
 import { Container, Header, Left, Icon, Right, Button, Title, Body } from 'native-base';
@@ -58,14 +58,26 @@ class AR extends React.Component {
 
     // check the touch location against the raycaster and see if it matches our cube
 
+    cubeTappedAudio = async () => {
+             const source = require("../assets/audio/171671__fins__success-1.wav")
+            console.log("audio function..............")
+            try {
+              await Audio.setIsEnabledAsync(true);
+              const sound = new Audio.Sound();
+              await sound.loadAsync(source);
+              await sound.playAsync();
+            } catch (error) {
+              console.error(error);
+            }
+    }
+
+
     runHitTest = () => {
         this.raycaster.setFromCamera(this.touch, this.camera);
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
             //audio fire here
-            // const modalAudio = new Expo.Audio.Sound();
-
-
+            this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
             this.props.changeStatus(1, 1, this.props.currentClue.id, true)
             this.scene.remove.apply(this.scene, this.scene.children);
