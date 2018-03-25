@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Content, Text, Title } from 'native-base';
 import { getAllLocations } from '../store';
 import geolib from 'geolib';
-
-
-class ClueList extends Component {
-
 import { styles } from '../assets/styles/StyleSheet';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigator, navigationOptions } from 'react-navigation';
+
+
+class ClueList extends Component {
+
 
   constructor(props) {
     super(props)
@@ -20,9 +20,9 @@ import { StackNavigator, navigationOptions } from 'react-navigation';
     }
   }
 
-componentDidMount() {
-  this.props.fetchLocations(1, 1);
-}
+  componentDidMount() {
+    this.props.fetchLocations(1, 1);
+  }
 
 
   render() {
@@ -46,51 +46,52 @@ componentDidMount() {
           </Right>
         </Header>
         <Content padder>
-        {this.props.allClues.sort((a, b) => {
-          return a.positionInHunt - b.positionInHunt
-        }).map(location => {
-          return (
-            location.visited ?
-          
-            <Card key={location.id}>
-              <CardItem style={styles.CardHeadFoot}>
-                <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
-              </CardItem>
-              <CardItem>
-                <Body>
-                  <Text>
-                    {location.clue}
-                  </Text>
-                </Body>
-              </CardItem>
-              <CardItem style={styles.clueListFooter}>
-              <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
-              <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}}>
-              <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
-              <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
-              </TouchableOpacity>
-            </CardItem>
-            </Card>
-            :
-            <Card key={location.id} >
-            <CardItem style={styles.CardHeadFoot}>
-              <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
-            </CardItem>
-            <CardItem style={styles.CardBody}>
-              <Body>
+          {this.props.allClues.sort((a, b) => {
+            return a.positionInHunt - b.positionInHunt
+          }).map(location => {
+            return (
+              location.visited ?
 
-                <Text style={styles.CardText}>
-                  Complete your current clue to continue!
+                <Card key={location.id}>
+                  <CardItem style={styles.CardHeadFoot}>
+                    <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+                  </CardItem>
+                  <CardItem style={styles.CardBody}>
+                    <Body>
+                      <Text style={styles.CardText}>
+                        {location.clue}
+                      </Text>
+                    </Body>
+                  </CardItem>
+                  <CardItem style={styles.clueListFooter}>
+                    <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
+                    <TouchableOpacity style={{ display: 'flex', flexDirection: 'row' }}>
+                      <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+                      <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
+                    </TouchableOpacity>
+                  </CardItem>
+                </Card>
+                :
+                <Card key={location.id} >
+                  <CardItem style={styles.CardHeadFoot}>
+                    <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+                  </CardItem>
+                  <CardItem style={styles.CardBody}>
+                    <Body>
+
+                      <Text style={styles.CardText}>
+                        Complete your current clue to continue!
                 </Text>
-              </Body>
-            </CardItem>
-            <CardItem style={styles.clueListFooter}>
+                    </Body>
+                  </CardItem>
+                  <CardItem style={styles.clueListFooter}>
 
-            </CardItem>
-          </Card>
+                  </CardItem>
+                </Card>
+            )
+          }
           )}
-        )}
-      </Content>
+        </Content>
       </Container>
     )
   }
@@ -108,7 +109,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchLocations: (user, adv) => {
-    dispatch(getAllLocations(user, adv))
+      dispatch(getAllLocations(user, adv))
     },
   }
 }
