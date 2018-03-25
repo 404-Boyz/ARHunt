@@ -4,8 +4,9 @@ import { Container, Header, Left, Icon, Right, Button, Text, Title, Body } from 
 import { MapView, Location } from 'expo';
 import geolib from 'geolib';
 import { styles } from '../assets/styles/StyleSheet'
+import { connect } from 'react-redux';
 
-export default class TreasureMap extends Component {
+class TreasureMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -42,6 +43,7 @@ export default class TreasureMap extends Component {
   }
 
   render() {
+    console.log("PROPS IN MAP ARE::::::::", )
     return !this.state.isInside ? (
       <Container>
         <Header style={styles.Header} >
@@ -64,11 +66,12 @@ export default class TreasureMap extends Component {
           showsUserLocation={true}
           initialRegion={initialRegion}
         >
-          <MapView.Marker
-            coordinate={testMarker.coordinate}
-            title="Clue #2"
-            description="Can you find it?"
-          />
+        <MapView.Circle
+          center={testMarker.coordinate}
+          radius={300}
+          strokeColor="rgba(16,187,186, .2)"
+          fillColor="rgba(16,187,186, .2)"
+      />
         </MapView>
         <Text style={styles.mapText}>Distance to next clue: {this.state.distToNext} meters</Text>
 
@@ -81,8 +84,8 @@ export default class TreasureMap extends Component {
 const initialRegion = {
   latitude: 41.895266,
   longitude: -87.639035,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
+  latitudeDelta: 0.008,
+  longitudeDelta: 0.008,
 };
 
 
@@ -95,3 +98,19 @@ const testMarker = {
   title: 'Fullstack Academy',
   description: 'Home Sweet Home'
 }
+
+
+const mapState = (state) => {
+  return {
+    adventures: state.adventure,
+    geoPosition: state.geoPosition,
+    currentClue: state.location
+  }
+}
+
+// const mapDispatch = (dispatch) => {
+
+// }
+
+
+export default connect(mapState)(TreasureMap);
