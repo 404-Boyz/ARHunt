@@ -9,7 +9,6 @@ import Login from './LogIn'
 import SignUp from './SignUp'
 import ChooseAdv from './ChooseAdv'
 import AR from './AR'
-import ARModal from './AR-Modal'
 import SideBar from './SideBar'
 import ClueList from './ClueList'
 
@@ -61,9 +60,6 @@ const RootStack = DrawerNavigator({
     CAMERA: {
         screen: AR
     },
-    ARModal: {
-        screen: ARModal
-    }
 },
     {
         initialRouteName: 'Login',

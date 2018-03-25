@@ -7,68 +7,42 @@ import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
 import { styles } from '../assets/styles/StyleSheet'
 
-class ARModal extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidMount() {
-    //fire new clue on load
-    this.props.getActive(1, 1)
-  }
-
-  render(props) {
-    console.log('NEW CLUE?', this.props.currentClue)
-    return (
-      <Container style={styles.Container}>
-        <Header style={styles.Header} iosBarStyle="light-content" />
-        <Content>
-          <Card>
-            <Modal
-              animationType="slide"
-              transparent={false}>
-              <CardItem header>
-                <Text>GOOD WORK - YOU FOUND IT!</Text>
-              </CardItem>
-              <CardItem>
-                <Body>
-                  <Text>
-                    Next Clue
+export const ARModal = (props) => {
+  return (
+    <Container style={styles.Container}>
+      <Header style={styles.Header} iosBarStyle="light-content" />
+      <Content>
+        <Card>
+          <Modal
+            animationType="slide"
+            transparent={false}>
+            <CardItem header>
+              <Text>Oh. Hello there.</Text>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text>
+                  You got it! High Five! No rest for the wicked, my friend. On to the next!
                 </Text>
-                </Body>
-              </CardItem>
-              <CardItem footer>
-                <Button>
-                  <TouchableHighlight
-                    onPress={() => {
-                      // this.props.setModalVisible(false);
-                      this.props.navigation.navigate('MAP')
-                    }}>
-                    <Text>  Continue To Next Location  </Text>
-                  </TouchableHighlight>
-                </Button>
-              </CardItem>
-            </Modal>
-          </Card>
-        </Content>
-      </Container>
-    )
-  }
+                <Text>{props.clue.clue}</Text>
+              </Body>
+            </CardItem>
+            <CardItem footer>
+              <Button success>
+                <TouchableHighlight
+                  onPress={() => {
+                    // this.props.setModalVisible(false);
+                    props.change(1, 1, props.clue.id, true);
+                    props.navigation.navigate('MAP')
+                  }}>
+                  <Text>GO!</Text>
+                </TouchableHighlight>
+              </Button>
+            </CardItem>
+          </Modal>
+        </Card>
+      </Content>
+    </Container>
+  )
 }
 
-const mapState = (state) => {
-  return {
-    geoPosition: state.geoPosition,
-    currentClue: state.location
-  }
-}
-
-const mapDispatch = (dispatch) => {
-  return {
-    getActive: (user, adv) => {
-      dispatch(fetchActiveLocation(user, adv))
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(ARModal);

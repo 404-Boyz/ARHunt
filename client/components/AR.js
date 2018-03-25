@@ -6,9 +6,7 @@ import { Container, Header, Left, Icon, Right, Button, Title, Body } from 'nativ
 import { connect } from 'react-redux';
 import { styles } from '../assets/styles/StyleSheet';
 import { changeVisitedStatus } from '../store';
-
-
-import ARModal from './AR-Modal.js'
+import { ARModal } from './AR-Modal.js'
 
 import * as THREE from 'three'; // 0.87.1
 import ExpoTHREE from 'expo-three'; // 2.0.2
@@ -59,16 +57,16 @@ class AR extends React.Component {
     // check the touch location against the raycaster and see if it matches our cube
 
     cubeTappedAudio = async () => {
-             const source = require("../assets/audio/171671__fins__success-1.wav")
-            console.log("audio function..............")
-            try {
-              await Audio.setIsEnabledAsync(true);
-              const sound = new Audio.Sound();
-              await sound.loadAsync(source);
-              await sound.playAsync();
-            } catch (error) {
-              console.error(error);
-            }
+        const source = require("../assets/audio/171671__fins__success-1.wav")
+        console.log("audio function..............")
+        try {
+            await Audio.setIsEnabledAsync(true);
+            const sound = new Audio.Sound();
+            await sound.loadAsync(source);
+            await sound.playAsync();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 
@@ -79,7 +77,6 @@ class AR extends React.Component {
             //audio fire here
             this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
-            this.props.changeStatus(1, 1, this.props.currentClue.id, true)
             this.scene.remove.apply(this.scene, this.scene.children);
         } else {
             Vibration.vibrate()
@@ -168,7 +165,7 @@ class AR extends React.Component {
     render() {
         let modal = null;
         if (this.state.modalVisible) {
-            modal = (<ARModal navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
+            modal = (<ARModal clue={this.props.currentClue} change={this.props.changeStatus} navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
             <Container style={styles.Container}>
