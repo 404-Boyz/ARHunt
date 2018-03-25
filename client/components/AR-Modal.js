@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
 import { Container, Content, CardItem, Card, Header, Button, Body } from 'native-base';
 import { connect } from 'react-redux';
-import { fetchActiveLocation } from '../store';
+import { fetchActiveLocation, changeVisitedStatus } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
 import { styles } from '../assets/styles/StyleSheet'
@@ -12,32 +12,25 @@ class ARModal extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    //fire new clue on load
-    this.props.getActive(1, 1)
-  }
-
   render(props) {
-    console.log('NEW CLUE?', this.props.currentClue)
+    console.log('NEW CLUE???????????', this.props.clue)
     return (
-      <Container style={styles.Container}>
-        <Header style={styles.Header} iosBarStyle="light-content" />
-        <Content>
-          <Card>
-            <Modal
-              animationType="slide"
-              transparent={false}>
-              <CardItem header>
-                <Text>GOOD WORK - YOU FOUND IT!</Text>
-              </CardItem>
-              <CardItem>
-                <Body>
-                  <Text>
-                    Next Clue
-                </Text>
-                </Body>
-              </CardItem>
-              <CardItem footer>
+      <Modal
+        animationType="slide"
+        transparent={true}>
+        <View style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(44,48,57,0.8)'}} >
+            <View style={{
+              width: 300,
+              height: 500,
+              borderRadius: 10,
+              backgroundColor: '#dfdce3'}} >
+              <Text>Clue # {this.props.clue.positionInHunt}</Text>
+              <Text>{this.props.clue.clue}</Text>
                 <Button>
                   <TouchableHighlight
                     onPress={() => {
@@ -47,11 +40,9 @@ class ARModal extends Component {
                     <Text>  Continue To Next Location  </Text>
                   </TouchableHighlight>
                 </Button>
-              </CardItem>
-            </Modal>
-          </Card>
-        </Content>
-      </Container>
+                </View>
+                </View>
+            </Modal >
     )
   }
 }
@@ -59,7 +50,8 @@ class ARModal extends Component {
 const mapState = (state) => {
   return {
     geoPosition: state.geoPosition,
-    currentClue: state.location
+    currentClue: state.location,
+    user: state.authUser
   }
 }
 

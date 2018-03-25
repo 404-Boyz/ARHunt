@@ -79,7 +79,7 @@ class AR extends React.Component {
             //audio fire here
             this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
-            this.props.changeStatus(1, 1, this.props.currentClue.id, true)
+            this.props.changeStatus(this.props.user.id, 1, this.props.currentClue.id, true)
             this.scene.remove.apply(this.scene, this.scene.children);
         } else {
             Vibration.vibrate()
@@ -114,9 +114,6 @@ class AR extends React.Component {
 
     makeCube = async (gl) => {
         let animate;
-        // checking distance to clue location and rendering cube or not based on that
-
-        // if (this.state.distToNext < 10 || this.props.currentClue.positionInHunt === 1) {
         const geometry = new THREE.BoxGeometry(1.4, 1.4, 1.4);
 
         // randomizing the cube colors and creating the 3D/AR shape
@@ -126,6 +123,7 @@ class AR extends React.Component {
         //     geometry.faces[i].color.setHex(hex);
         //     geometry.faces[i + 1].color.setHex(hex);
         // }
+        // const material = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors, overdraw: 0.5 });
 
         // custom clue generated on cube
 
@@ -135,8 +133,6 @@ class AR extends React.Component {
 
         const material = new THREE.MeshBasicMaterial({ map: texture });
 
-
-        // const material = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors, overdraw: 0.5 });
         const cube = new THREE.Mesh(geometry, material);
 
         cube.position.z = -8;
@@ -155,7 +151,6 @@ class AR extends React.Component {
             this.renderer.render(this.scene, this.camera);
             gl.endFrameEXP();
         }
-        // }
         animate();
     }
 
@@ -164,11 +159,10 @@ class AR extends React.Component {
         this.setState({ modalVisible: visible });
     }
 
-
     render() {
         let modal = null;
         if (this.state.modalVisible) {
-            modal = (<ARModal navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
+            modal = (<ARModal clue={this.props.currentClue} navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
             <Container style={styles.Container}>
@@ -204,7 +198,8 @@ class AR extends React.Component {
 const mapState = (state) => {
     return {
         geoPosition: state.geoPosition,
-        currentClue: state.location
+        currentClue: state.location,
+        user: state.authUser
     }
 }
 
@@ -212,7 +207,7 @@ const mapDispatch = (dispatch) => {
     return {
         changeStatus: (user, adventure, location, status) => {
             dispatch(changeVisitedStatus(user, adventure, location, status))
-        },
+        }
     }
 }
 
