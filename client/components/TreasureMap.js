@@ -24,7 +24,7 @@ class TreasureMap extends Component {
       markers: []
     }
 
-    let locationFinder;
+    // let locationFinder;
   }
 
 
@@ -41,7 +41,7 @@ class TreasureMap extends Component {
   }
 
   componentWillUnmount() {
-    locationFinder.remove();
+    this.locationFinder.remove();
   }
 
   render() {
