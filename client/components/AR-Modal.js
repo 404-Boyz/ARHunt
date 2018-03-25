@@ -13,7 +13,13 @@ class ARModal extends Component {
   }
 
   render(props) {
-    console.log('NEW CLUE???????????', this.props.clue)
+
+if (this.clue === undefined) {
+  console.log('NEW CLUE???????????', this.clue, this.props.clue)
+this.clue = this.props.clue
+}
+
+
     return (
       <Modal
         animationType="slide"
@@ -29,8 +35,8 @@ class ARModal extends Component {
               height: 500,
               borderRadius: 10,
               backgroundColor: '#dfdce3'}} >
-              <Text>Clue # {this.props.clue.positionInHunt}</Text>
-              <Text>{this.props.clue.clue}</Text>
+              <Text>Clue # {this.clue.positionInHunt}</Text>
+              <Text>{this.clue.clue}</Text>
                 <Button>
                   <TouchableHighlight
                     onPress={() => {

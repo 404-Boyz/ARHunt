@@ -48,6 +48,9 @@ export const styles = new StyleSheet.create({
     fontFamily: 'oswald-light',
     fontSize: 14
   },
+  Hint: {
+    color: '#ede9e9'
+  },
   Header: {
     backgroundColor: '#222A33',
     borderBottomWidth: 0
@@ -173,6 +176,15 @@ export const styles = new StyleSheet.create({
   //modal styling
   modalContainer: {
     marginTop: 60,
+  },
 
+  //clueList styling
+  clueListFooter: {
+    backgroundColor: '#d4d0d9',
+    paddingTop: 10,
+    paddingBottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 })

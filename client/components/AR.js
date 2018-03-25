@@ -161,7 +161,7 @@ class AR extends React.Component {
 
     render() {
         let modal = null;
-        if (this.state.modalVisible) {
+        if (this.state.modalVisible && this.props.currentClue) {
             modal = (<ARModal clue={this.props.currentClue} navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
