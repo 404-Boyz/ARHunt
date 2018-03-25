@@ -159,14 +159,17 @@ class AR extends React.Component {
             modal = (<ARModal navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
-            <Container>
-                <Header style={styles.Header} >
+            <Container style={styles.Container}>
+                <Header style={styles.Header} iosBarStyle="light-content">
                     <Left />
+                    <Body>
+                        <Title style={styles.title}>CAMERA</Title>
+                    </Body>
                     <Right>
                         <Button
                             transparent
                             onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-                            <Icon name="menu" />
+                            <Icon style={styles.title} name="menu" />
                         </Button>
                     </Right>
                 </Header>

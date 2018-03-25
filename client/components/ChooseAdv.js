@@ -4,6 +4,7 @@ import { getAllAdventures, fetchActiveLocation } from '../store';
 import { connect } from 'react-redux';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import { styles } from '../assets/styles/StyleSheet'
+import { Ionicons } from '@expo/vector-icons';
 
 class ChooseAdv extends Component {
   constructor(props) {
@@ -18,17 +19,17 @@ class ChooseAdv extends Component {
     console.log('PROPS NEW', this.props)
     const adventures = this.props.adventures;
     return (
-      <Container>
-        <Header style={styles.Header} >
+      <Container style={styles.Container}>
+        <Header style={styles.Header} iosBarStyle="light-content">
           <Left />
           <Body>
-            <Title>Adventures</Title>
+            <Title style={styles.title}>ADVENTURES</Title>
           </Body>
           <Right>
             <Button
               transparent
               onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-              <Icon name="menu" />
+              <Icon style={styles.title} name="menu" />
             </Button>
           </Right>
         </Header>
@@ -39,7 +40,7 @@ class ChooseAdv extends Component {
                 this.props.getActive(1, 1)
                 Alert.alert(
                   'AR you ready to begin?',
-                  `Hit ok to start ${adventure.name}`,
+                  `Starting ${adventure.name}`,
                   [
                     { text: 'Begin!', onPress: () => { this.props.navigation.navigate('CAMERA') } },
                     { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
@@ -48,28 +49,27 @@ class ChooseAdv extends Component {
                 )
               }}>
                 <Card style={styles.Card}>
-                  <CardItem>
+                  <CardItem style={styles.CardHeadFoot}>
                     <Left>
                       <Thumbnail source={{ uri: `${adventure.photoUrl}` }} />
                       <Body>
-                        <Text>{adventure.name}</Text>
-                        <Text note>{adventure.location}</Text>
+                        <Text style={styles.CardTitle}>{adventure.name}</Text>
+                        <Text note style={styles.CardNote}>Chicago, Il</Text>
                       </Body>
                     </Left>
                   </CardItem>
-                  <CardItem>
+                  <CardItem style={styles.CardBody}>
                     <Body>
                       <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
-                      <Text>
+                      <Text style={styles.CardText}>
                         {adventure.description}
                       </Text>
                     </Body>
                   </CardItem>
-                  <CardItem>
+                  <CardItem style={styles.CardHeadFoot}>
                     <Left>
-                      <Button transparent info>
-                        <Text>1,926 Hunts Completed</Text>
-                      </Button>
+                      <Ionicons name="md-heart" size={22} color="#09b9b8" />
+                      <Text style={styles.CardHunts}>1,926 Hunts Completed</Text>
                     </Left>
                   </CardItem>
                 </Card>

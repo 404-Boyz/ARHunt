@@ -85,7 +85,7 @@ const mapDispatch = (dispatch) => {
     handleSignUp(info) {
       console.log(info);
       dispatch(authSignUp(info, 'signup'))
-      this.props.navigation.navigate('Profile')
+      this.props.navigation.navigate('MY PROFILE')
     }
   }
 }
