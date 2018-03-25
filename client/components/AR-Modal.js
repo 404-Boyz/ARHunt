@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { fetchActiveLocation } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
+import { styles } from '../assets/styles/StyleSheet'
 
 class ARModal extends Component {
   constructor(props) {
@@ -19,8 +20,8 @@ class ARModal extends Component {
   render(props) {
     console.log('NEW CLUE?', this.props.currentClue)
     return (
-      <Container>
-        <Header />
+      <Container style={styles.Container}>
+        <Header style={styles.Header} iosBarStyle="light-content" />
         <Content>
           <Card>
             <Modal
@@ -41,7 +42,7 @@ class ARModal extends Component {
                   <TouchableHighlight
                     onPress={() => {
                       // this.props.setModalVisible(false);
-                      this.props.navigation.navigate('TreasureMap')
+                      this.props.navigation.navigate('MAP')
                     }}>
                     <Text>  Continue To Next Location  </Text>
                   </TouchableHighlight>

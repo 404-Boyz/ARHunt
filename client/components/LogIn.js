@@ -4,7 +4,7 @@ import { StackNavigator, navigationOptions } from 'react-navigation';
 import { connect } from 'react-redux'
 import { authLogIn } from '../store'
 import { RootStack } from './Navigator'
-import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Form, Icon } from 'native-base'
+import { Container, Header, Content, Item, Input, Text, Left, Right, Button, Form, Thumbnail } from 'native-base'
 import { styles } from '../assets/styles/StyleSheet'
 
 class LogIn extends Component {

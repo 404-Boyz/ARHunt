@@ -43,17 +43,17 @@ export default class TreasureMap extends Component {
 
   render() {
     return !this.state.isInside ? (
-      <Container>
-        <Header style={styles.Header} >
+      <Container style={styles.Container}>
+        <Header style={styles.Header} iosBarStyle="light-content">
           <Left />
           <Body>
-            <Title>Map</Title>
+            <Title style={styles.title}>MAP</Title>
           </Body>
           <Right>
             <Button
               transparent
               onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-              <Icon name="menu" />
+              <Icon style={styles.title} name="menu" />
             </Button>
           </Right>
         </Header>
