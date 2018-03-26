@@ -12,44 +12,24 @@ class TreasureMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentPosition: {
-        latitude: 0,
-        longitude: 0
-      },
-      nextPosition: {
-        latitude: 41.895544,
-        longitude: -87.639980,
-      },
       distToNext: 0,
-      isInside: false,
-      markers: [],
       clue: this.props.locations.find(loc => loc.visited === false)
     }
-
-    // let locationFinder;
   }
 
-
-  async componentDidMount() {
-
-    this.locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
-      (position) => {
-
-        this.setState({ currentPosition: { latitude: position.coords.latitude, longitude: position.coords.longitude } });
-        this.setState({ distToNext: geolib.getDistance(this.state.currentPosition, this.state.nextPosition) });
-        this.setState({ isInside: geolib.isPointInCircle(this.state.currentPosition, this.state.nextPosition, 15) });
-
-      })
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({ distToNext: geolib.getDistance(this.props.geoPosition, {latitude: this.state.clue.latitude, longitude: this.state.clue.longitude}) });
+    }, 3000);
   }
+
 
   componentWillUnmount() {
     this.locationFinder.remove();
   }
 
   render() {
-    console.log('current clue///////////', this.state.clue)
-
-    return !this.state.isInside ? (
+    return this.state.clue ? (
       <Container style={styles.Container}>
         <Header style={styles.Header} iosBarStyle="light-content">
           <Left />
@@ -72,7 +52,7 @@ class TreasureMap extends Component {
           initialRegion={initialRegion}
         >
           <MapView.Circle
-            center={testMarker.coordinate}
+            center={{latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude}}
             radius={300}
             strokeColor="rgba(16,187,186, .2)"
             fillColor="rgba(16,187,186, .2)"
@@ -92,16 +72,6 @@ const initialRegion = {
   latitudeDelta: 0.008,
   longitudeDelta: 0.008,
 };
-
-const testMarker = {
-  coordinate: {
-    latitude: 41.895544,
-    longitude: -87.639980,
-  },
-  title: 'Fullstack Academy',
-  description: 'Home Sweet Home'
-}
-
 
 const mapState = (state) => {
   return {

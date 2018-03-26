@@ -27,11 +27,11 @@ export const getSingleAdventure = (adventureId) => dispatch => {
 }
 
 export const changeAdventureStatus = (userId, adventureId, status) => dispatch => {
-  devAxios.put(`/api/user/${userId}/adventure/${adventureId}`, 
+  devAxios.put(`/api/user/${userId}/adventure/${adventureId}`,
   {
     userId: userId,
     adventureId: adventureId,
-    visited: status
+    status: status
   })
     .then(res => dispatch(changeStatus(res.data)))
     .catch(err => console.error(err))
