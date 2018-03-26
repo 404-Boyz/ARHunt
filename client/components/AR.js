@@ -60,7 +60,7 @@ class AR extends React.Component {
 
     cubeTappedAudio = async () => {
              const source = require("../assets/audio/171671__fins__success-1.wav")
-            console.log("audio function..............")
+            
             const sound = new Audio.Sound();
         try {
             await Audio.setIsEnabledAsync(true);

@@ -18,9 +18,8 @@ class ChooseAdv extends Component {
   }
 
   beginAdventureAudio = async () => {
-    // const source = require("../assets/audio/241475__reitanna__and-so-it-begins.wav")
-    // const source = require("../assets/audio/234565__foolboymedia__announcement-begin.wav")
-    const source = require("../assets/audio/269194__mickleness__game-start.mp3")
+
+  const source = require("../assets/audio/269194__mickleness__game-start.mp3")
    const sound = new Audio.Sound();
 try {
    await Audio.setIsEnabledAsync(true);

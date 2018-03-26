@@ -21,9 +21,7 @@ class ClueList extends Component {
 
   componentDidMount() {
     this.props.fetchLocations(1, 1);
-
   }
-
 
   render() {
 
@@ -76,14 +74,14 @@ class ClueList extends Component {
                     </CardItem>
                     <CardItem style={styles.CardBody}>
                       <Body>
-  
+
                         <Text style={styles.CardText}>
                           Complete your current clue to continue!
                   </Text>
                       </Body>
                     </CardItem>
                     <CardItem style={styles.clueListFooter}>
-  
+
                     </CardItem>
                   </Card>
               )
