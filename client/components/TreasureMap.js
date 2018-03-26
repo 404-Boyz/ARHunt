@@ -12,7 +12,7 @@ class TreasureMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      distToNext: 0,
+      distToNext: null,
       clue: this.props.locations.find(loc => loc.visited === false)
     }
   }
@@ -23,13 +23,9 @@ class TreasureMap extends Component {
     }, 3000);
   }
 
-
-  componentWillUnmount() {
-    this.locationFinder.remove();
-  }
-
   render() {
-    return this.state.clue ? (
+    console.log(this.state.distToNext)
+    return (
       <Container style={styles.Container}>
         <Header style={styles.Header} iosBarStyle="light-content">
           <Left />
@@ -58,19 +54,18 @@ class TreasureMap extends Component {
             fillColor="rgba(16,187,186, .2)"
           />
         </MapView>
-        <Text style={styles.mapText}>Distance to next clue: {this.state.distToNext} meters</Text>
-
-
+        <Text style={styles.mapText}>Distance to next clue: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
+        {this.state.distToNext > 10 ?  null : this.props.navigation.navigate('AR') }
       </Container>
-    ) : (<View>{this.props.navigation.navigate('AR')}</View>)
+    )
   }
 }
 
 const initialRegion = {
   latitude: 41.895266,
   longitude: -87.639035,
-  latitudeDelta: 0.008,
-  longitudeDelta: 0.008,
+  latitudeDelta: 0.009,
+  longitudeDelta: 0.009,
 };
 
 const mapState = (state) => {

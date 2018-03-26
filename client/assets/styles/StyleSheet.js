@@ -85,9 +85,16 @@ export const styles = new StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  
+   // Map specific styling
+
   mapText: {
     flex: 1,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#ede9e9',
+    fontFamily: 'oswald-light',
+    fontSize: 20,
+    marginTop: 35
   },
 
   // Login specific styling
