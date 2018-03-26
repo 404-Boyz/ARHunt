@@ -22,7 +22,7 @@ class AR extends React.Component {
         this.state = {
             modalVisible: false,
             distToNext: NaN,
-            clue: this.props.locations.filter((loc) => loc.active === true)
+            clue: this.props.locations.filter((loc) => loc.active === true)[0]
         };
         this._onGLContextCreate = this._onGLContextCreate.bind(this);
         this.makeCube = this.makeCube.bind(this);
@@ -76,7 +76,6 @@ class AR extends React.Component {
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
             //audio fire here
-            console.log(this.state.clue)
             this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
             this.scene.remove.apply(this.scene, this.scene.children);
@@ -95,7 +94,7 @@ class AR extends React.Component {
         this.scene = new THREE.Scene();
         this.camera = ExpoTHREE.createARCamera(this.arSession, this.glWidth, this.glHeight, 0.01, 1000);
         this.renderer = ExpoTHREE.createRenderer({ gl });
-
+        console.log('ACTUAL CURRENT LOCATION!!!', this.state.clue)
         this.renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
         this.scene.background = ExpoTHREE.createARBackgroundTexture(this.arSession, this.renderer);
 
