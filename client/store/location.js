@@ -44,7 +44,7 @@ export const changeActiveStatus = (userId, adventureId, locationId) => dispatch 
       active: true
     })
     .then(res => {
-      dispatch(changeVisited(res.data))
+      dispatch(changeActive(res.data))
     })
     .catch(err => console.error(err))
 }

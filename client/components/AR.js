@@ -5,10 +5,8 @@ import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
 import { Container, Header, Left, Icon, Right, Button, Title, Body } from 'native-base';
 import { connect } from 'react-redux';
 import { styles } from '../assets/styles/StyleSheet';
-import { changeVisitedStatus } from '../store';
-
-
-import ARModal from './AR-Modal.js'
+import { changeVisitedStatus, changeActiveStatus } from '../store';
+import { ARModal } from './AR-Modal.js'
 
 import * as THREE from 'three'; // 0.87.1
 import ExpoTHREE from 'expo-three'; // 2.0.2
@@ -23,7 +21,8 @@ class AR extends React.Component {
         super(props);
         this.state = {
             modalVisible: false,
-            distToNext: NaN
+            distToNext: NaN,
+            clue: this.props.locations.filter((loc) => loc.active === true)
         };
         this._onGLContextCreate = this._onGLContextCreate.bind(this);
         this.makeCube = this.makeCube.bind(this);
@@ -37,9 +36,9 @@ class AR extends React.Component {
 
     locationFinder = () => {
         this.setState({
-            distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.props.currentClue.latitude, longitude: +this.props.currentClue.longitude }, 5),
+            distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }, 5),
         }, () => {
-            if (this.state.distToNext < 20 || this.props.currentClue.positionInHunt === 1) {
+            if (this.state.distToNext < 20 || this.state.clue.positionInHunt === 1) {
                 this.makeCube(this.gl)
             }
         });
@@ -59,16 +58,16 @@ class AR extends React.Component {
     // check the touch location against the raycaster and see if it matches our cube
 
     cubeTappedAudio = async () => {
-             const source = require("../assets/audio/171671__fins__success-1.wav")
-            console.log("audio function..............")
-            try {
-              await Audio.setIsEnabledAsync(true);
-              const sound = new Audio.Sound();
-              await sound.loadAsync(source);
-              await sound.playAsync();
-            } catch (error) {
-              console.error(error);
-            }
+        const source = require("../assets/audio/171671__fins__success-1.wav")
+        console.log("audio function..............")
+        try {
+            await Audio.setIsEnabledAsync(true);
+            const sound = new Audio.Sound();
+            await sound.loadAsync(source);
+            await sound.playAsync();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 
@@ -77,9 +76,9 @@ class AR extends React.Component {
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
             //audio fire here
+            console.log(this.state.clue)
             this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
-            this.props.changeStatus(this.props.user.id, 1, this.props.currentClue.id, true)
             this.scene.remove.apply(this.scene, this.scene.children);
         } else {
             Vibration.vibrate()
@@ -161,8 +160,8 @@ class AR extends React.Component {
 
     render() {
         let modal = null;
-        if (this.state.modalVisible && this.props.currentClue) {
-            modal = (<ARModal clue={this.props.currentClue} navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
+        if (this.state.modalVisible && this.state.clue) {
+            modal = (<ARModal user={this.props.user} clue={this.state.clue} navigation={this.props.navigation} change={this.props.changeStatus} activeChange={this.props.changeActive} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
             <Container style={styles.Container}>
@@ -198,7 +197,7 @@ class AR extends React.Component {
 const mapState = (state) => {
     return {
         geoPosition: state.geoPosition,
-        currentClue: state.location,
+        locations: state.location,
         user: state.authUser
     }
 }
@@ -207,6 +206,9 @@ const mapDispatch = (dispatch) => {
     return {
         changeStatus: (user, adventure, location, status) => {
             dispatch(changeVisitedStatus(user, adventure, location, status))
+        },
+        changeActive: (user, adventure, location, status) => {
+            dispatch(changeActiveStatus(user, adventure, location, status))
         }
     }
 }
