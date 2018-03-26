@@ -6,8 +6,9 @@ import store from './client/store'
 import { Provider } from 'react-redux'
 import io from 'socket.io-client'
 import { Font, AppLoading } from 'expo'
+import { Root } from 'native-base'
 
-export default class Root extends Component {
+export default class Main extends Component {
   constructor(props) {
     super(props)
 
@@ -31,9 +32,11 @@ export default class Root extends Component {
         />)
     } else {
       return (
-        <Provider store={store}>
-          <RootStack />
-        </Provider>
+        <Root>
+          <Provider store={store}>
+            <RootStack />
+          </Provider>
+        </Root>
       )
     }
   }
