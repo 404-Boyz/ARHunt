@@ -22,11 +22,13 @@ class AR extends React.Component {
         this.state = {
             modalVisible: false,
             distToNext: NaN,
-            clue: this.props.locations.filter((loc) => loc.active === true)[0]
+            clue: this.props.locations.find(loc => loc.visited === false)
         };
         this._onGLContextCreate = this._onGLContextCreate.bind(this);
         this.makeCube = this.makeCube.bind(this);
+
     }
+
 
     touch = new THREE.Vector2();
     raycaster = new THREE.Raycaster();
@@ -35,11 +37,9 @@ class AR extends React.Component {
     // checking current location and distance to clue
 
     locationFinder = () => {
-        console.log('INSIDE FIRST STEP')
         this.setState({
             distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }, 5),
         }, () => {
-            console.log('IN LOCATION FINDER!!!', this.state.distToNext)
             if (this.state.distToNext < 20 || this.state.clue.positionInHunt === 1) {
                 this.makeCube(this.gl)
             }
@@ -89,7 +89,7 @@ class AR extends React.Component {
     // set up the AR scene with scene, camera and render
 
     _onGLContextCreate = async (gl) => {
-        console.log('ACTUAL CURRENT LOCATION!!!', this.state.clue)
+        console.log('ACTUAL CURRENT LOCATION!!!', this.props.locations, this.state.clue)
         this.gl = gl;
         this.glWidth = gl.drawingBufferWidth;
         this.glHeight = gl.drawingBufferHeight;
@@ -162,7 +162,7 @@ class AR extends React.Component {
     render() {
         let modal = null;
         if (this.state.modalVisible && this.state.clue) {
-            modal = (<ARModal user={this.props.user} clue={this.state.clue} navigation={this.props.navigation} change={this.props.changeStatus} activeChange={this.props.changeActive} setModalVisible={this._setModalVisible.bind(this)} />)
+            modal = (<ARModal user={this.props.user} clue={this.state.clue} navigation={this.props.navigation} change={this.props.changeStatus} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
             <Container style={styles.Container}>
@@ -205,11 +205,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        changeStatus: (user, adventure, location, status) => {
-            dispatch(changeVisitedStatus(user, adventure, location, status))
-        },
-        changeActive: (user, adventure, location, status) => {
-            dispatch(changeActiveStatus(user, adventure, location, status))
+        changeStatus: (user, adventure, location) => {
+            dispatch(changeVisitedStatus(user, adventure, location))
         }
     }
 }

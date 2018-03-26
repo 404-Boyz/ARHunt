@@ -8,7 +8,7 @@ import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
 
 export const ARModal = (props) => {
-
+  props.change(1, 1, props.clue.id)
   return (
     <Modal
       animationType="slide"
@@ -20,9 +20,8 @@ export const ARModal = (props) => {
           <TouchableHighlight
             style={styles.modalButton}
             onPress={() => {
-              // this.props.setModalVisible(false);
-              this.props.navigation.navigate('MAP')
-              props.change(props.user.id, 1, props.clue.id, true)
+
+              props.navigation.navigate('MAP')
             }}>
             <Text style={styles.modalBT}>   On To The Next Clue!    </Text>
           </TouchableHighlight>

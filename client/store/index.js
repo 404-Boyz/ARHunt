@@ -10,7 +10,7 @@ import axios from 'axios'
 
 
 export const devAxios = axios.create({
-  baseURL: 'https://412c726f.ngrok.io'
+  baseURL: 'https://53fdd7ee.ngrok.io'
 })
 
 const reducer = combineReducers({ authUser, adventure, location, geoPosition })
