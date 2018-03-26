@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, TouchableOpacity, Alert } from 'react-native';
-import { getAllAdventures, fetchActiveLocation } from '../store';
+import { getAllAdventures, getAllLocations } from '../store';
 import { connect } from 'react-redux';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import { styles } from '../assets/styles/StyleSheet'
@@ -32,7 +32,7 @@ try {
 }
 
   render() {
-    console.log('PROPS NEW', this.props)
+    const user = this.props.user
     const adventures = this.props.adventures;
     return (
       <Container style={styles.Container}>
@@ -53,7 +53,7 @@ try {
           {adventures.map(adventure => {
             return (
               <TouchableOpacity key={adventure.id} onPress={() => {
-                this.props.getActive(1, 1)
+                this.props.getLocations(1, adventure.id);
                 Alert.alert(
                   'AR you ready to begin?',
                   `Starting ${adventure.name}`,
@@ -105,7 +105,8 @@ try {
 
 const mapState = (state) => {
   return {
-    adventures: state.adventure
+    adventures: state.adventure,
+    user: state.authUser
   }
 }
 
@@ -114,8 +115,8 @@ const mapDispatch = (dispatch) => {
     fetchAdventures: () => {
       dispatch(getAllAdventures())
     },
-    getActive: (user, adv) => {
-      dispatch(fetchActiveLocation(user, adv))
+    getLocations: (userId, adventureId) => {
+      dispatch((getAllLocations(userId, adventureId)))
     }
   }
 }

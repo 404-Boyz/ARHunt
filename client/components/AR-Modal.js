@@ -7,60 +7,64 @@ import { RootStack } from './Navigator.js'
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
 
-class ARModal extends Component {
-  constructor(props) {
-    super(props)
-  }
+export const ARModal = (props) => {
+  props.change(1, 1, props.clue.id)
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}>
+      <View style={styles.modalContainer}>
+        <View style={styles.modalInner}>
+          <Text style={styles.modalTitle}>CLUE #{props.clue.positionInHunt}</Text>
+          <Text style={styles.modalText}>{props.clue.clue}</Text>
+          <TouchableHighlight
+            style={styles.modalButton}
+            onPress={() => {
 
-  render(props) {
-
-    if (this.clue === undefined) {
-      console.log('NEW CLUE???????????', this.clue, this.props.clue)
-      this.clue = this.props.clue
-    }
-
-
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalInner}>
-            <Text style={styles.modalTitle}>CLUE #{this.clue.positionInHunt}</Text>
-            <Text style={styles.modalText}>{this.clue.clue}</Text>
-            <TouchableHighlight
-              style={styles.modalButton}
-              onPress={() => {
-                // this.props.setModalVisible(false);
-                this.props.navigation.navigate('MAP')
-              }}>
-              <Text style={styles.modalBT}>   On To The Next Clue!    </Text>
-            </TouchableHighlight>
-            <View style={styles.hintArea}>
-              <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
-              <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
-            </View>
+              props.navigation.navigate('MAP')
+            }}>
+            <Text style={styles.modalBT}>   On To The Next Clue!    </Text>
+          </TouchableHighlight>
+          <View style={styles.hintArea}>
+            <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+            <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
           </View>
         </View>
-      </Modal >
-    )
-  }
+      </View>
+    </Modal>
+  )
 }
 
-const mapState = (state) => {
-  return {
-    geoPosition: state.geoPosition,
-    currentClue: state.location,
-    user: state.authUser
-  }
-}
+// export const ARModal = (props) => {
+//   return (
+//     <Container>
+//       <Content><Card>
+//         <Modal
+//           animationType="slide"
+//           transparent={false}>
+//           <CardItem header>
+//             <Text style={styles.signInText}>Oh. Hello there.</Text>
+//           </CardItem>
+//           <CardItem>
+//             <Body>
+//               <Text>
+//                 No rest for the wicked my friend! Onward:
+//               </Text>
+//               <Text>{props.clue.clue}</Text>
 
-const mapDispatch = (dispatch) => {
-  return {
-    getActive: (user, adv) => {
-      dispatch(fetchActiveLocation(user, adv))
-    }
-  }
-}
+//             </Body>
+//           </CardItem>
+//           <CardItem style={{ alignSelf: 'center' }} footer>
+//             <Button transparent info onPress={() => {
+//               props.activeChange(1, 1, props.clue.id)
+//               props.navigation.navigate('TreasureMap')
+//             }}>
+//               <Text>Go!</Text>
+//             </Button>
+//           </CardItem>
+//         </Modal>
+//       </Card></Content>
+//     </Container>
+//   )
+// }
 
-export default connect(mapState, mapDispatch)(ARModal);
