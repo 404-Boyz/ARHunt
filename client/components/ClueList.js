@@ -56,7 +56,7 @@ class ClueList extends Component {
                   <CardItem style={styles.CardHeadFoot}>
                     <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
                   </CardItem>
-                  <CardItem style={styles.CardBody}>
+                  <CardItem style={styles.CardBody} git p>
                     <Body>
                       <Text style={styles.CardText}>
                         {location.clue}
