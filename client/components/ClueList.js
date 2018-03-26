@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Content, Text, Title } from 'native-base';
+import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Content, Text, Title, Thumbnail } from 'native-base';
 import { getAllLocations } from '../store';
-import geolib from 'geolib';
 import { styles } from '../assets/styles/StyleSheet';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,78 +21,116 @@ class ClueList extends Component {
 
   componentDidMount() {
     this.props.fetchLocations(1, 1);
+
   }
 
 
   render() {
-    return (
 
-      <Container style={styles.Container}>
+    const activeAdventures = this.props.adventures.filter(adv => adv.status === 'active');
+    if (activeAdventures.length) {
+      return this.props.allClues.length ? (
+        <Container style={styles.Container}>
+          <Header style={styles.Header} iosBarStyle="light-content" >
+            <Left />
+            <Body>
+              <Title style={styles.title}>Clue List</Title>
+            </Body>
+            <Right>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+                <Icon name="menu" style={styles.title} />
+              </Button>
+            </Right>
+          </Header>
+          <Content padder>
+            {this.props.allClues.sort((a, b) => {
+              return a.positionInHunt - b.positionInHunt
+            }).map(location => {
+              return (
+                location.visited ?
+                  <Card key={location.id}>
+                    <CardItem style={styles.CardHeadFoot}>
+                      <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+                    </CardItem>
+                    <CardItem style={styles.CardBody}>
+                      <Body>
+                        <Text style={styles.CardText}>
+                          {location.clue}
+                        </Text>
+                      </Body>
+                    </CardItem>
+                    <CardItem style={styles.clueListFooter}>
+                      <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
+                      <TouchableOpacity style={{ display: 'flex', flexDirection: 'row' }}>
+                        <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+                        <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
+                      </TouchableOpacity>
+                    </CardItem>
+                  </Card>
+                  :
+                  <Card key={location.id} >
+                    <CardItem style={styles.CardHeadFoot}>
+                      <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+                    </CardItem>
+                    <CardItem style={styles.CardBody}>
+                      <Body>
+  
+                        <Text style={styles.CardText}>
+                          Complete your current clue to continue!
+                  </Text>
+                      </Body>
+                    </CardItem>
+                    <CardItem style={styles.clueListFooter}>
+  
+                    </CardItem>
+                  </Card>
+              )
+            }
+            )}
+          </Content>
+        </Container>
+      ) : null;
+    } else {
+      return (
+        <Container style={styles.Container}>
+          <Header style={styles.Header} iosBarStyle="light-content" >
+            <Left />
+            <Body>
+              <Title style={styles.title}>Clue List</Title>
+            </Body>
+            <Right>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+                <Icon name="menu" style={styles.title} />
+              </Button>
+            </Right>
+          </Header>
+          <Content padder>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("ADVENTURES")}>
+            <Card style={styles.Card}>
+              <CardItem style={styles.CardHead}>
+                <Left>
+                  <Thumbnail source={require('../assets/img/SA-thumb.png')} />
+                  <Body>
+                    <Text>You Have No Adventures!!</Text>
+                  </Body>
+                </Left>
+              </CardItem>
+              <CardItem style={styles.CardBody}>
+              <Body>
+              <Text> Choose a new adventure to see the clues! </Text>
+            </Body>
+              </CardItem>
+            </Card>
+          </TouchableOpacity>
+          </Content>
+          </Container>
+      )
+    }
 
-        <Header style={styles.Header} iosBarStyle="light-content" >
-
-          <Left />
-          <Body>
-            <Title style={styles.title}>Clue List</Title>
-          </Body>
-          <Right>
-            <Button
-              transparent
-
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-              <Icon name="menu" style={styles.title} />
-            </Button>
-          </Right>
-        </Header>
-        <Content padder>
-          {this.props.allClues.sort((a, b) => {
-            return a.positionInHunt - b.positionInHunt
-          }).map(location => {
-            return (
-              location.visited ?
-
-                <Card key={location.id}>
-                  <CardItem style={styles.CardHeadFoot}>
-                    <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
-                  </CardItem>
-                  <CardItem style={styles.CardBody} git p>
-                    <Body>
-                      <Text style={styles.CardText}>
-                        {location.clue}
-                      </Text>
-                    </Body>
-                  </CardItem>
-                  <CardItem style={styles.clueListFooter}>
-                    <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
-                    <TouchableOpacity style={{ display: 'flex', flexDirection: 'row' }}>
-                      <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
-                      <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
-                    </TouchableOpacity>
-                  </CardItem>
-                </Card>
-                :
-                <Card key={location.id} >
-                  <CardItem style={styles.CardHeadFoot}>
-                    <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
-                  </CardItem>
-                  <CardItem style={styles.CardBody}>
-                    <Body>
-
-                      <Text style={styles.CardText}>
-                        Complete your current clue to continue!
-                </Text>
-                    </Body>
-                  </CardItem>
-                  <CardItem style={styles.clueListFooter}>
-
-                  </CardItem>
-                </Card>
-            )
-          }
-          )}
-        </Content>
-      </Container>
-    )
   }
 }
 
