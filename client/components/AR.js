@@ -60,15 +60,30 @@ class AR extends React.Component {
     // check the touch location against the raycaster and see if it matches our cube
 
     cubeTappedAudio = async () => {
-        const source = require("../assets/audio/171671__fins__success-1.wav")
-        console.log("audio function..............")
+
+             const source = require("../assets/audio/171671__fins__success-1.wav")
+            console.log("audio function..............")
+            const sound = new Audio.Sound();
         try {
             await Audio.setIsEnabledAsync(true);
-            const sound = new Audio.Sound();
             await sound.loadAsync(source);
             await sound.playAsync();
-        } catch (error) {
-            console.error(error);
+            } catch (error) {
+              console.error(error);
+            }
+
+    }
+
+    winningScreenAudio = async () => {
+        const source = require("../assets/audio/410578__yummie__game-win-screen-background-music.mp3")
+        const sound = new Audio.Sound();
+        try {
+            await Audio.setIsEnabledAsync(true);
+            await sound.loadAsync(source);
+            await sound.playAsync();
+            //   await sound.stopAsync();
+            } catch (error) {
+              console.error(error);
         }
     }
 
@@ -78,6 +93,7 @@ class AR extends React.Component {
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
             //audio fire here
+            //need logic to pay winningscreenaudio on final clue
             this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
             this.scene.remove.apply(this.scene, this.scene.children);

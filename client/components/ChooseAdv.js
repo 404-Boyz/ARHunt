@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
+import Expo, { Audio } from 'expo';
+
 
 class ChooseAdv extends Component {
   constructor(props) {
@@ -14,6 +16,20 @@ class ChooseAdv extends Component {
   componentDidMount() {
     this.props.fetchAdventures();
   }
+
+  beginAdventureAudio = async () => {
+    // const source = require("../assets/audio/241475__reitanna__and-so-it-begins.wav")
+    // const source = require("../assets/audio/234565__foolboymedia__announcement-begin.wav")
+    const source = require("../assets/audio/269194__mickleness__game-start.mp3")
+   const sound = new Audio.Sound();
+try {
+   await Audio.setIsEnabledAsync(true);
+   await sound.loadAsync(source);
+   await sound.playAsync();
+   } catch (error) {
+     console.error(error);
+   }
+}
 
   render() {
     const user = this.props.user
@@ -42,7 +58,9 @@ class ChooseAdv extends Component {
                   'AR you ready to begin?',
                   `Starting ${adventure.name}`,
                   [
-                    { text: 'Begin!', onPress: () => { this.props.navigation.navigate('CAMERA') } },
+                    { text: 'Begin!', onPress: async () => {
+                      await this.beginAdventureAudio();
+                      this.props.navigation.navigate('CAMERA') } },
                     { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
                   ],
                   { cancelable: false }
