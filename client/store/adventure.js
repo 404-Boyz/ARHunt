@@ -3,11 +3,13 @@ import { devAxios } from './index';
 
 const GET_ADVENTURE = 'GET_ADVENTURE';
 const GET_ALL_ADVENTURES = 'GET_ALL_ADVENTURES'
+const CHANGE_STATUS = 'CHANGE_STATUS'
 
 
 // --ACTION CREATORS--
 const getAdventure = adventure => ({ type: GET_ADVENTURE, adventure })
 const getAdventures = adventures => ({ type: GET_ALL_ADVENTURES, adventures })
+const changeStatus = status => ({type: CHANGE_STATUS, status})
 
 
 //THUNK CREATORS//
@@ -24,6 +26,17 @@ export const getSingleAdventure = (adventureId) => dispatch => {
     .catch(err => console.error(err))
 }
 
+export const changeAdventureStatus = (userId, adventureId, status) => dispatch => {
+  devAxios.put(`/api/user/${userId}/adventure/${adventureId}`, 
+  {
+    userId: userId,
+    adventureId: adventureId,
+    visited: status
+  })
+    .then(res => dispatch(changeStatus(res.data)))
+    .catch(err => console.error(err))
+}
+
 
 //  REDUCER ---
 
@@ -33,6 +46,8 @@ export default function (adventures = [], action) {
       return action.adventures
     case GET_ADVENTURE:
       return action.adventure
+    case CHANGE_STATUS:
+      return action.status
     default:
       return adventures
   }
