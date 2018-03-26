@@ -23,23 +23,24 @@ export default class Root extends Component {
 
   render() {
     if (this.state.isReady === false) {
-    return (
-      <AppLoading
+      return (
+        <AppLoading
           startAsync={this._cacheResourcesAsync}
           onFinish={() => this.setState({ isReady: true })}
           onError={console.warn}
         />)
     } else {
-     return (
-      <Provider store={store}>
-        <RootStack />
-      </Provider>
+      return (
+        <Provider store={store}>
+          <RootStack />
+        </Provider>
       )
+    }
   }
-}
   async _cacheResourcesAsync() {
-     await Font.loadAsync({
+    await Font.loadAsync({
       'oswald-light': require('./client/assets/fonts/Oswald-Light.ttf'),
+      'oswald-bold': require('./client/assets/fonts/Oswald-Bold.ttf')
     });
   }
 }

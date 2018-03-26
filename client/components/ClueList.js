@@ -26,6 +26,7 @@ class ClueList extends Component {
 
 
   render() {
+
     const activeAdventures = this.props.adventures.filter(adv => adv.status === 'active');
     if (activeAdventures.length) {
       return this.props.allClues.length ? (
@@ -129,6 +130,7 @@ class ClueList extends Component {
           </Container>
       )
     }
+
   }
 }
 
