@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { StackNavigator, navigationOptions } from 'react-navigation'
+import { StackNavigator, navigationOptions, NavigationActions } from 'react-navigation'
+import { devAxios } from './index'
+import { RootStack } from '../components/Navigator'
+
+
 
 /**
  * ACTION TYPES
@@ -23,31 +27,38 @@ const removeUser = () => ({ type: REMOVE_USER })
  */
 export const me = () =>
   dispatch => {
-    console.log('IN ME THUNK')
-    axios.get('/auth/me')
+    devAxios.get('/auth/me')
       .then(res =>
         dispatch(getUser(res.data || user)))
       .catch(err => console.log(err))
   }
 
-export const auth = (userName, password, method) =>
+
+export const authLogIn = (userName, password) =>
   dispatch => {
-    console.log(userName, password, method)
-    axios.post(`/auth/${method}`, { userName, password })
+    devAxios.post('/auth/login', { userName, password })
       .then(res => {
-        console.log('THUNKING IT UP')
-        dispatch(getUser(res.data))
-        props.this.props.navigation.navigate('Home')
+        dispatch(getUser(res.data));
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
         dispatch(getUser({ error: authError }))
       })
       .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr))
   }
 
+export const authSignUp = (info) =>
+  dispatch => {
+    devAxios.post('/auth/signup', info)
+      .then(res => {
+        dispatch(getUser(res.data));
+      }, authError => { // rare example: a good use case for parallel (non-catch) error handler
+        dispatch(getUser({ error: authError }))
+      })
+      .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr))
+  }
 
 export const logout = () =>
   dispatch =>
-    axios.post('/auth/logout')
+    devAxios.post('/auth/logout')
       .then(_ => {
         dispatch(removeUser())
         history.push('/login')
@@ -60,7 +71,6 @@ export const logout = () =>
 export default function (state = user, action) {
   switch (action.type) {
     case GET_USER:
-      console.log('IN REDUCER!!!', action)
       return action.user
     case REMOVE_USER:
       return user

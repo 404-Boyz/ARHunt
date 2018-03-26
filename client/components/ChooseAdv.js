@@ -1,18 +1,106 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
-import { StackNavigator, navigationOptions } from 'react-navigation';
+import { Image, TouchableOpacity, Alert } from 'react-native';
+import { getAllAdventures, fetchActiveLocation } from '../store';
+import { connect } from 'react-redux';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
+import { styles } from '../assets/styles/StyleSheet'
+import { Ionicons } from '@expo/vector-icons';
 
-
-export default class ChooseAdv extends Component {
+class ChooseAdv extends Component {
   constructor(props) {
     super(props)
   }
+
+  componentDidMount() {
+    this.props.fetchAdventures();
+  }
+
   render() {
+    console.log('PROPS NEW', this.props)
+    const adventures = this.props.adventures;
     return (
-      <View>
-        <Text>Choose Your Adventure!</Text>
-        <Button title='Hit me' onPress={() => this.props.navigation.navigate('Home')} />
-      </View>
+      <Container style={styles.Container}>
+        <Header style={styles.Header} iosBarStyle="light-content">
+          <Left />
+          <Body>
+            <Title style={styles.title}>ADVENTURES</Title>
+          </Body>
+          <Right>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+              <Icon style={styles.title} name="menu" />
+            </Button>
+          </Right>
+        </Header>
+        <Content padder>
+          {adventures.map(adventure => {
+            return (
+              <TouchableOpacity key={adventure.id} onPress={() => {
+                this.props.getActive(1, 1)
+                Alert.alert(
+                  'AR you ready to begin?',
+                  `Starting ${adventure.name}`,
+                  [
+                    { text: 'Begin!', onPress: () => { this.props.navigation.navigate('CAMERA') } },
+                    { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
+                  ],
+                  { cancelable: false }
+                )
+              }}>
+                <Card style={styles.Card}>
+                  <CardItem style={styles.CardHeadFoot}>
+                    <Left>
+                      <Thumbnail source={{ uri: `${adventure.photoUrl}` }} />
+                      <Body>
+                        <Text style={styles.CardTitle}>{adventure.name}</Text>
+                        <Text note style={styles.CardNote}>Chicago, Il</Text>
+                      </Body>
+                    </Left>
+                  </CardItem>
+                  <CardItem style={styles.CardBody}>
+                    <Body>
+                      <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
+                      <Text style={styles.CardText}>
+                        {adventure.description}
+                      </Text>
+                    </Body>
+                  </CardItem>
+                  <CardItem style={styles.CardHeadFoot}>
+                    <Left>
+                      <Ionicons name="md-heart" size={22} color="#09b9b8" />
+                      <Text style={styles.CardHunts}>1,926 Hunts Completed</Text>
+                    </Left>
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>
+            )
+          }
+          )}
+
+        </Content>
+      </Container>
     )
   }
 }
+
+
+const mapState = (state) => {
+  return {
+    adventures: state.adventure
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    fetchAdventures: () => {
+      dispatch(getAllAdventures())
+    },
+    getActive: (user, adv) => {
+      dispatch(fetchActiveLocation(user, adv))
+    }
+  }
+}
+
+
+export default connect(mapState, mapDispatch)(ChooseAdv);

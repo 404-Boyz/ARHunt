@@ -5,8 +5,15 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import adventure from './adventure'
 import location from './location'
 import authUser from './authUser'
+import geoPosition from './geoPosition'
+import axios from 'axios'
 
-const reducer = combineReducers({ authUser, adventure, location })
+
+export const devAxios = axios.create({
+  baseURL: 'https://peaceful-dawn-66038.herokuapp.com'
+})
+
+const reducer = combineReducers({ authUser, adventure, location, geoPosition })
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -19,3 +26,5 @@ export default store;
 export * from './authUser'
 export * from './adventure'
 export * from './location'
+export * from './geoPosition'
+

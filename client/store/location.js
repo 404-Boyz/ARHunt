@@ -12,8 +12,8 @@ const changeActive = location => ({ type: CHANGE_ACTIVE_STATUS, location })
 
 //THUNK CREATORS//
 
-export const getAllLocations = () => dispatch => {
-  axios.get('/api/user/:userId/location')
+export const getAllLocations = (userId, adventureId) => dispatch => {
+  devAxios.get(`/api/user/${userId}/adventure/${adventureId}/location`)
     .then(res => dispatch(getLocations(res.data)))
     .catch(err => console.error(err))
 }
@@ -41,11 +41,15 @@ export const changeActiveStatus = (userId, adventureId, locationId) => dispatch 
       userId: userId,
       adventureId: adventureId,
       id: locationId,
-      active: true
+      visited: status
     })
     .then(res => {
-      console.log('CHANGING ACTIVE', res.data);
-      dispatch(changeActive(res.data))
+      dispatch(changeVisited({
+        userId: userId,
+        adventureId: adventureId,
+        id: locationId,
+        visited: status
+      }))
     })
     .catch(err => console.error(err))
 }
