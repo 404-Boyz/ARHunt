@@ -38,6 +38,7 @@ class AR extends React.Component {
         this.setState({
             distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }, 5),
         }, () => {
+            // console.log('ACTUAL CURRENT LOCATION!!!', this.state.clue)
             if (this.state.distToNext < 20 || this.state.clue.positionInHunt === 1) {
                 this.makeCube(this.gl)
             }
@@ -94,7 +95,6 @@ class AR extends React.Component {
         this.scene = new THREE.Scene();
         this.camera = ExpoTHREE.createARCamera(this.arSession, this.glWidth, this.glHeight, 0.01, 1000);
         this.renderer = ExpoTHREE.createRenderer({ gl });
-        console.log('ACTUAL CURRENT LOCATION!!!', this.state.clue)
         this.renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
         this.scene.background = ExpoTHREE.createARBackgroundTexture(this.arSession, this.renderer);
 

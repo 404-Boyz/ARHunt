@@ -37,7 +37,7 @@ class ChooseAdv extends Component {
           {adventures.map(adventure => {
             return (
               <TouchableOpacity key={adventure.id} onPress={() => {
-                this.props.getLocations(user.id, adventure.id);
+                this.props.getLocations(1, adventure.id);
                 Alert.alert(
                   'AR you ready to begin?',
                   `Starting ${adventure.name}`,

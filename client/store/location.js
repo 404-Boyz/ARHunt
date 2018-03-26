@@ -1,5 +1,5 @@
 import axios from 'axios';
-import devAxios from './index'
+import { devAxios } from './index'
 
 const GET_ALL_LOCATIONS = 'GET_ALL_LOCATIONS';
 const CHANGE_VISITED_STATUS = 'CHANGE_VISITED_STATUS';
