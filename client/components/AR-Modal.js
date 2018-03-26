@@ -1,38 +1,71 @@
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableHighlight } from 'react-native';
+import { Modal, View, Text, TouchableHighlight, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchActiveLocation, changeVisitedStatus } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
+import { ActionSheet } from 'native-base'
 
-export const ARModal = (props) => {
-  props.change(1, 1, props.clue.id)
-  return (
-    <Modal
-      animationType="slide"
-      transparent={true}>
-      <View style={styles.modalContainer}>
-        <View style={styles.modalInner}>
-          <Text style={styles.modalTitle}>CLUE #{props.clue.positionInHunt}</Text>
-          <Text style={styles.modalText}>{props.clue.clue}</Text>
-          <TouchableHighlight
-            style={styles.modalButton}
-            onPress={() => {
+const BUTTONS = ["Hint #1", "Hint #2", "Cancel"];
+const CANCEL_INDEX = 2;
 
-              props.navigation.navigate('MAP')
-            }}>
-            <Text style={styles.modalBT}>   On To The Next Clue!    </Text>
-          </TouchableHighlight>
-          <View style={styles.hintArea}>
-            <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
-            <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
+export class ARModal extends Component {
+
+  constructor(props) {
+    super(props);
+    this.props.change(1, 1, props.clue.id)
+    this.state = {}
+  }
+  render() {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalInner}>
+            <Text style={styles.modalTitle}>CLUE #{this.props.clue.positionInHunt}</Text>
+            <Text style={styles.modalText}>{this.props.clue.clue}</Text>
+            <TouchableHighlight
+              style={styles.modalButton}
+              onPress={() => {
+
+                this.props.navigation.navigate('MAP')
+              }}>
+              <Text style={styles.modalBT}>   On To The Next Clue!    </Text>
+            </TouchableHighlight>
+            <View style={styles.hintArea}>
+              <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+              <Text
+                onPress={() =>
+                  ActionSheet.show(
+                    {
+                      options: BUTTONS,
+                      cancelButtonIndex: CANCEL_INDEX,
+                      title: `Clue #${this.props.clue.positionInHunt} Hints`
+                    },
+                    buttonIndex => {
+                      this.setState({ clicked: BUTTONS[buttonIndex] }, () => {
+                        if (this.state.clicked === 'Cancel') return
+                        Alert.alert(
+                          `${this.state.clicked}`,
+                          `${this.props.clue.hints[(+this.state.clicked.slice(-1)) - 1]}`,
+                          [
+                            { text: 'Got it!', onPress: () => console.log('Saw Hint') }
+                          ],
+                          { cancelable: false }
+                        )
+                      });
+                    }
+                  )}
+                style={styles.CardHunts}> Stuck? Get A Hint! </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
-  )
+      </Modal>
+    )
+  }
 }
 
 // export const ARModal = (props) => {
