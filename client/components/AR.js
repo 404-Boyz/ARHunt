@@ -35,10 +35,11 @@ class AR extends React.Component {
     // checking current location and distance to clue
 
     locationFinder = () => {
+        console.log('INSIDE FIRST STEP')
         this.setState({
             distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }, 5),
         }, () => {
-            // console.log('ACTUAL CURRENT LOCATION!!!', this.state.clue)
+            console.log('IN LOCATION FINDER!!!', this.state.distToNext)
             if (this.state.distToNext < 20 || this.state.clue.positionInHunt === 1) {
                 this.makeCube(this.gl)
             }
@@ -88,6 +89,7 @@ class AR extends React.Component {
     // set up the AR scene with scene, camera and render
 
     _onGLContextCreate = async (gl) => {
+        console.log('ACTUAL CURRENT LOCATION!!!', this.state.clue)
         this.gl = gl;
         this.glWidth = gl.drawingBufferWidth;
         this.glHeight = gl.drawingBufferHeight;

@@ -22,7 +22,7 @@ export const getCurrentPosition = () => dispatch => {
         Location.getCurrentPositionAsync({ enableHighAccuracy: true })
             .then(res => dispatch(getUpdatedPosition({ latitude: res.coords.latitude, longitude: res.coords.longitude })))
             .catch(err => console.error(err))
-    }, 30000);
+    }, 2000);
 };
 
 
