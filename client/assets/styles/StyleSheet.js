@@ -174,8 +174,53 @@ export const styles = new StyleSheet.create({
   },
 
   //modal styling
+
   modalContainer: {
-    marginTop: 60,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(44,48,57,0.8)'
+  },
+  modalInner: {
+    width: '80%',
+    height: '62%',
+    borderRadius: 10,
+    paddingTop: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 40,
+    backgroundColor: '#dfdce3',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontFamily: 'oswald-bold',
+    fontSize: 36,
+    color: '#222A33',
+    marginBottom: 20
+  },
+  modalText: {
+    fontFamily: 'oswald-light',
+    fontSize: 20,
+    color: '#807e83',
+    marginBottom: 20
+  },
+  modalButton: {
+    backgroundColor: '#09b9b8',
+    justifyContent: 'center',
+    padding: 10,
+    borderRadius: 20
+  },
+  modalBT: {
+    color: '#ffffff',
+    fontFamily: 'oswald-light',
+    fontSize: 16,
+  },
+  hintArea: {
+    marginTop: 30,
+    display: 'flex',
+    flexDirection: 'row'
   },
 
   //clueList styling

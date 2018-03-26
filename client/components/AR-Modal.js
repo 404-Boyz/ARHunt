@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableHighlight } from 'react-native';
-import { Container, Content, CardItem, Card, Header, Button, Body } from 'native-base';
 import { connect } from 'react-redux';
 import { fetchActiveLocation, changeVisitedStatus } from '../store';
 import { StackNavigator, navigationOptions } from 'react-navigation';
 import { RootStack } from './Navigator.js'
 import { styles } from '../assets/styles/StyleSheet'
+import { Ionicons } from '@expo/vector-icons';
 
 class ARModal extends Component {
   constructor(props) {
@@ -14,41 +14,35 @@ class ARModal extends Component {
 
   render(props) {
 
-if (this.clue === undefined) {
-  console.log('NEW CLUE???????????', this.clue, this.props.clue)
-this.clue = this.props.clue
-}
+    if (this.clue === undefined) {
+      console.log('NEW CLUE???????????', this.clue, this.props.clue)
+      this.clue = this.props.clue
+    }
 
 
     return (
       <Modal
         animationType="slide"
         transparent={true}>
-        <View style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(44,48,57,0.8)'}} >
-            <View style={{
-              width: 300,
-              height: 500,
-              borderRadius: 10,
-              backgroundColor: '#dfdce3'}} >
-              <Text>Clue # {this.clue.positionInHunt}</Text>
-              <Text>{this.clue.clue}</Text>
-                <Button>
-                  <TouchableHighlight
-                    onPress={() => {
-                      // this.props.setModalVisible(false);
-                      this.props.navigation.navigate('MAP')
-                    }}>
-                    <Text>  Continue To Next Location  </Text>
-                  </TouchableHighlight>
-                </Button>
-                </View>
-                </View>
-            </Modal >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalInner}>
+            <Text style={styles.modalTitle}>CLUE #{this.clue.positionInHunt}</Text>
+            <Text style={styles.modalText}>{this.clue.clue}</Text>
+            <TouchableHighlight
+              style={styles.modalButton}
+              onPress={() => {
+                // this.props.setModalVisible(false);
+                this.props.navigation.navigate('MAP')
+              }}>
+              <Text style={styles.modalBT}>   On To The Next Clue!    </Text>
+            </TouchableHighlight>
+            <View style={styles.hintArea}>
+              <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+              <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
+            </View>
+          </View>
+        </View>
+      </Modal >
     )
   }
 }
