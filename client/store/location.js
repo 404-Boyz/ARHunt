@@ -41,15 +41,10 @@ export const changeActiveStatus = (userId, adventureId, locationId) => dispatch 
       userId: userId,
       adventureId: adventureId,
       id: locationId,
-      visited: status
+      active: true
     })
     .then(res => {
-      dispatch(changeVisited({
-        userId: userId,
-        adventureId: adventureId,
-        id: locationId,
-        visited: status
-      }))
+      dispatch(changeVisited(res.data))
     })
     .catch(err => console.error(err))
 }
