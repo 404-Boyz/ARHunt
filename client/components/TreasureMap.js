@@ -5,7 +5,7 @@ import { MapView, Location } from 'expo';
 import geolib from 'geolib';
 import { styles } from '../assets/styles/StyleSheet'
 import { connect } from 'react-redux';
-import { fetchActiveLocation } from '../store';
+import { changeVisitedStatus } from '../store';
 
 
 class TreasureMap extends Component {
@@ -22,7 +22,8 @@ class TreasureMap extends Component {
       },
       distToNext: 0,
       isInside: false,
-      markers: []
+      markers: [],
+      clue: this.props.locations.find(loc => loc.visited === false)
     }
 
     // let locationFinder;
@@ -30,7 +31,7 @@ class TreasureMap extends Component {
 
 
   async componentDidMount() {
-    await this.props.getActive(this.props.user, 1);
+
     this.locationFinder = await Location.watchPositionAsync({ enableHighAccuracy: true, distanceInterval: 1 },
       (position) => {
 
@@ -46,7 +47,7 @@ class TreasureMap extends Component {
   }
 
   render() {
-    console.log('current clue///////////', this.props.currentClue)
+    console.log('current clue///////////', this.state.clue)
 
     return !this.state.isInside ? (
       <Container style={styles.Container}>
@@ -70,12 +71,12 @@ class TreasureMap extends Component {
           showsUserLocation={true}
           initialRegion={initialRegion}
         >
-        <MapView.Circle
-          center={testMarker.coordinate}
-          radius={300}
-          strokeColor="rgba(16,187,186, .2)"
-          fillColor="rgba(16,187,186, .2)"
-      />
+          <MapView.Circle
+            center={testMarker.coordinate}
+            radius={300}
+            strokeColor="rgba(16,187,186, .2)"
+            fillColor="rgba(16,187,186, .2)"
+          />
         </MapView>
         <Text style={styles.mapText}>Distance to next clue: {this.state.distToNext} meters</Text>
 
@@ -104,7 +105,7 @@ const testMarker = {
 
 const mapState = (state) => {
   return {
-    currentClue: state.location,
+    locations: state.location,
     adventures: state.adventure,
     geoPosition: state.geoPosition,
     user: state.authUser
@@ -113,9 +114,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getActive: (user, adv) => {
-      dispatch(fetchActiveLocation(user, adv))
-    }
+    changeStatus: (user, adventure, location) => {
+      dispatch(changeVisitedStatus(user, adventure, location))
+    },
   }
 }
 

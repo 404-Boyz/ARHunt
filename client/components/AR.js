@@ -5,10 +5,8 @@ import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
 import { Container, Header, Left, Icon, Right, Button, Title, Body } from 'native-base';
 import { connect } from 'react-redux';
 import { styles } from '../assets/styles/StyleSheet';
-import { changeVisitedStatus } from '../store';
-
-
-import ARModal from './AR-Modal.js'
+import { changeVisitedStatus, changeActiveStatus } from '../store';
+import { ARModal } from './AR-Modal.js'
 
 import * as THREE from 'three'; // 0.87.1
 import ExpoTHREE from 'expo-three'; // 2.0.2
@@ -23,11 +21,14 @@ class AR extends React.Component {
         super(props);
         this.state = {
             modalVisible: false,
-            distToNext: NaN
+            distToNext: NaN,
+            clue: this.props.locations.find(loc => loc.visited === false)
         };
         this._onGLContextCreate = this._onGLContextCreate.bind(this);
         this.makeCube = this.makeCube.bind(this);
+
     }
+
 
     touch = new THREE.Vector2();
     raycaster = new THREE.Raycaster();
@@ -37,9 +38,9 @@ class AR extends React.Component {
 
     locationFinder = () => {
         this.setState({
-            distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.props.currentClue.latitude, longitude: +this.props.currentClue.longitude }, 5),
+            distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }, 5),
         }, () => {
-            if (this.state.distToNext < 20 || this.props.currentClue.positionInHunt === 1) {
+            if (this.state.distToNext < 20 || this.state.clue.positionInHunt === 1) {
                 this.makeCube(this.gl)
             }
         });
@@ -59,6 +60,7 @@ class AR extends React.Component {
     // check the touch location against the raycaster and see if it matches our cube
 
     cubeTappedAudio = async () => {
+
              const source = require("../assets/audio/171671__fins__success-1.wav")
             
             const sound = new Audio.Sound();
@@ -69,6 +71,7 @@ class AR extends React.Component {
             } catch (error) {
               console.error(error);
             }
+
     }
 
     winningScreenAudio = async () => {
@@ -93,7 +96,6 @@ class AR extends React.Component {
             //need logic to pay winningscreenaudio on final clue
             this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
-            this.props.changeStatus(this.props.user.id, 1, this.props.currentClue.id, true)
             this.scene.remove.apply(this.scene, this.scene.children);
         } else {
             Vibration.vibrate()
@@ -103,6 +105,7 @@ class AR extends React.Component {
     // set up the AR scene with scene, camera and render
 
     _onGLContextCreate = async (gl) => {
+        console.log('ACTUAL CURRENT LOCATION!!!', this.props.locations, this.state.clue)
         this.gl = gl;
         this.glWidth = gl.drawingBufferWidth;
         this.glHeight = gl.drawingBufferHeight;
@@ -110,7 +113,6 @@ class AR extends React.Component {
         this.scene = new THREE.Scene();
         this.camera = ExpoTHREE.createARCamera(this.arSession, this.glWidth, this.glHeight, 0.01, 1000);
         this.renderer = ExpoTHREE.createRenderer({ gl });
-
         this.renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
         this.scene.background = ExpoTHREE.createARBackgroundTexture(this.arSession, this.renderer);
 
@@ -175,8 +177,8 @@ class AR extends React.Component {
 
     render() {
         let modal = null;
-        if (this.state.modalVisible && this.props.currentClue) {
-            modal = (<ARModal clue={this.props.currentClue} navigation={this.props.navigation} setModalVisible={this._setModalVisible.bind(this)} />)
+        if (this.state.modalVisible && this.state.clue) {
+            modal = (<ARModal user={this.props.user} clue={this.state.clue} navigation={this.props.navigation} change={this.props.changeStatus} setModalVisible={this._setModalVisible.bind(this)} />)
         }
         return (
             <Container style={styles.Container}>
@@ -212,15 +214,15 @@ class AR extends React.Component {
 const mapState = (state) => {
     return {
         geoPosition: state.geoPosition,
-        currentClue: state.location,
+        locations: state.location,
         user: state.authUser
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
-        changeStatus: (user, adventure, location, status) => {
-            dispatch(changeVisitedStatus(user, adventure, location, status))
+        changeStatus: (user, adventure, location) => {
+            dispatch(changeVisitedStatus(user, adventure, location))
         }
     }
 }
