@@ -54,7 +54,7 @@ class TreasureMap extends Component {
             fillColor="rgba(16,187,186, .2)"
           />
         </MapView>
-        <Text style={styles.mapText}>Distance to next clue: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
+        <Text style={styles.mapText}>Distance to clue number {(this.state.clue.positionInHunt) - 1}: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
         {this.state.distToNext > 10 ?  null : this.props.navigation.navigate('AR') }
       </Container>
     )

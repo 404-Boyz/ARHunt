@@ -47,7 +47,7 @@ export default function (adventures = [], action) {
     case GET_ADVENTURE:
       return action.adventure
     case CHANGE_STATUS:
-      return adventures.map(adv => (adv.id === status.id ? action.status : adv))
+      return adventures.map(adv => (adv.id === action.status.id ? action.status : adv))
     default:
       return adventures
   }

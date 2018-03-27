@@ -105,7 +105,6 @@ class AR extends React.Component {
     // set up the AR scene with scene, camera and render
 
     _onGLContextCreate = async (gl) => {
-        console.log('ACTUAL CURRENT LOCATION!!!', this.props.locations, this.state.clue)
         this.gl = gl;
         this.glWidth = gl.drawingBufferWidth;
         this.glHeight = gl.drawingBufferHeight;

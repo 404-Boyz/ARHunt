@@ -58,7 +58,6 @@ try {
                   `Starting ${adventure.name}`,
                   [
                     { text: 'Begin!', onPress: async () => {
-                      console.log("HIT BEGINE!!!!!")
                       this.props.changeActive(1, 1, 'active');
                       await this.beginAdventureAudio();
                       this.props.navigation.navigate('CAMERA') } },
