@@ -6,3 +6,6 @@ export { Login } from './LogIn'
 export { default as TreasureMap } from './TreasureMap'
 export { Profile } from './Profile'
 export { default as SignUp } from './SignUp'
+export { Intro } from './Intro'
+export { IntroSlides } from './IntroSlides'
+

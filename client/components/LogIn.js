@@ -66,7 +66,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleLogIn(name, password) {
       dispatch(authLogIn(name, password, 'login'))
-      this.props.navigation.navigate('MY PROFILE')
+      this.props.navigation.navigate('Intro')
     }
   }
 }

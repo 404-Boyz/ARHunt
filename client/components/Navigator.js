@@ -11,6 +11,7 @@ import ChooseAdv from './ChooseAdv'
 import AR from './AR'
 import SideBar from './SideBar'
 import ClueList from './ClueList'
+import Intro from './Intro'
 
 let width = Dimensions.get('window').width / 2
 
@@ -59,6 +60,9 @@ const RootStack = DrawerNavigator({
     },
     CAMERA: {
         screen: AR
+    },
+    Intro: {
+        screen: Intro
     }
 },
     {

@@ -9,7 +9,7 @@ const CHANGE_STATUS = 'CHANGE_STATUS'
 // --ACTION CREATORS--
 const getAdventure = adventure => ({ type: GET_ADVENTURE, adventure })
 const getAdventures = adventures => ({ type: GET_ALL_ADVENTURES, adventures })
-const changeStatus = status => ({type: CHANGE_STATUS, status})
+const changeStatus = status => ({ type: CHANGE_STATUS, status })
 
 
 //THUNK CREATORS//
@@ -28,11 +28,11 @@ export const getSingleAdventure = (adventureId) => dispatch => {
 
 export const changeAdventureStatus = (userId, adventureId, status) => dispatch => {
   devAxios.put(`/api/user/${userId}/adventure/${adventureId}`,
-  {
-    userId: userId,
-    id: adventureId,
-    status: status
-  })
+    {
+      userId: userId,
+      id: adventureId,
+      status: status
+    })
     .then(res => dispatch(changeStatus(res.data)))
     .catch(err => console.error(err))
 }
