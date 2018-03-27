@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, TouchableOpacity, Alert } from 'react-native';
-import { getAllAdventures, getAllLocations } from '../store';
+import { getAllAdventures, getAllLocations, changeAdventureStatus } from '../store';
 import { connect } from 'react-redux';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import { styles } from '../assets/styles/StyleSheet'
@@ -58,6 +58,8 @@ try {
                   `Starting ${adventure.name}`,
                   [
                     { text: 'Begin!', onPress: async () => {
+                      console.log("HIT BEGINE!!!!!")
+                      this.props.changeActive(1, 1, 'active');
                       await this.beginAdventureAudio();
                       this.props.navigation.navigate('CAMERA') } },
                     { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
@@ -116,6 +118,9 @@ const mapDispatch = (dispatch) => {
     },
     getLocations: (userId, adventureId) => {
       dispatch((getAllLocations(userId, adventureId)))
+    },
+    changeActive: (userId, adventureId, status) => {
+      dispatch(changeAdventureStatus(userId, adventureId, status))
     }
   }
 }

@@ -30,7 +30,7 @@ export const changeAdventureStatus = (userId, adventureId, status) => dispatch =
   devAxios.put(`/api/user/${userId}/adventure/${adventureId}`,
   {
     userId: userId,
-    adventureId: adventureId,
+    id: adventureId,
     status: status
   })
     .then(res => dispatch(changeStatus(res.data)))
