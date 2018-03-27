@@ -46,13 +46,14 @@ class SideBar extends React.Component {
                                         <Text style={styles.NavText}>{data}</Text>
                                     </ListItem>
                                 );
-                            }}>
+                            }} />
+                        <List>
                             <ListItem
-                                style={styles.NavItem}
+                                style={{ borderBottomWidth: 0, marginLeft: -12 }}
                                 button
-                                onPress={() => this.props.handleLogOut()}>
+                                onPress={this.props.handleLogOut.bind(this)}>
                                 <Ionicons name={icons['logout']} size={32} color="#ede9e9" />
-                                <Text style={styles.NavText}>Log out</Text>
+                                <Text style={styles.NavText}>LOG OUT</Text>
                             </ListItem>
                         </List>
                     </Body>
