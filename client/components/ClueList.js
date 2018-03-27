@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Content, Text, Title, Thumbnail } from 'native-base';
+import { Container, Card, CardItem, Body, Header, Left, Icon, Right, Button, Content, Text, Title, Thumbnail, ActionSheet } from 'native-base';
 import { getAllLocations } from '../store';
 import { styles } from '../assets/styles/StyleSheet';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigator, navigationOptions } from 'react-navigation';
+
+const BUTTONS = ["Hint #1", "Hint #2", "Cancel"];
+const CANCEL_INDEX = 2;
 
 
 class ClueList extends Component {
@@ -61,10 +64,32 @@ class ClueList extends Component {
                     </CardItem>
                     <CardItem style={styles.clueListFooter}>
                       <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
-                      <TouchableOpacity style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
-                        <Text style={styles.CardHunts}> Stuck? Get A Hint! </Text>
-                      </TouchableOpacity>
+                      <View style={styles.hintArea}>
+                      <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+                      <Text
+                        onPress={() =>
+                          ActionSheet.show(
+                            {
+                              options: BUTTONS,
+                              cancelButtonIndex: CANCEL_INDEX,
+                              title: `Clue #${location.positionInHunt} Hints`
+                            },
+                            buttonIndex => {
+                              this.setState({ clicked: BUTTONS[buttonIndex] }, () => {
+                                if (this.state.clicked === 'Cancel') return
+                                Alert.alert(
+                                  `${this.state.clicked}`,
+                                  `${location.hints[(+this.state.clicked.slice(-1)) - 1]}`,
+                                  [
+                                    { text: 'Got it!', onPress: () => console.log('Saw Hint') }
+                                  ],
+                                  { cancelable: false }
+                                )
+                              });
+                            }
+                          )}
+                        style={styles.CardHunts}> Stuck? Get A Hint! </Text>
+                    </View>
                     </CardItem>
                   </Card>
                   :
