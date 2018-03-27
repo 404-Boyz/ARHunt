@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { Container, Content, Text, List, ListItem, Body } from "native-base";
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
-import { logout } from '../store'
+import { logout, stopTracking } from '../store'
 import { connect } from 'react-redux'
 
 const routes = ["MY PROFILE", "CLUE LIST", "MAP", "CAMERA", "ADVENTURES"];
@@ -67,7 +67,8 @@ const mapDispatch = (dispatch) => {
 
     return {
         handleLogOut() {
-            dispatch(logout())
+            dispatch(logout());
+            dispatch(stopTracking());
             this.props.navigation.navigate('Login')
         }
     }
