@@ -10,7 +10,7 @@ import axios from 'axios'
 
 
 export const devAxios = axios.create({
-  baseURL: 'https://0b865010.ngrok.io'
+  baseURL: 'https://peaceful-dawn-66038.herokuapp.com'
 })
 
 const reducer = combineReducers({ authUser, adventure, location, geoPosition })
