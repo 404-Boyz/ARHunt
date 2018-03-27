@@ -85,8 +85,8 @@ export const styles = new StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  
-   // Map specific styling
+
+  // Map specific styling
 
   mapText: {
     flex: 1,
@@ -231,6 +231,7 @@ export const styles = new StyleSheet.create({
   },
 
   //clueList styling
+
   clueListFooter: {
     backgroundColor: '#d4d0d9',
     paddingTop: 10,
@@ -238,5 +239,65 @@ export const styles = new StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+
+  // intro specific slides
+
+  slidesWrapper: {
+    display: 'flex',
+    flex: 1,
+  },
+  slides: {
+    top: 40,
+    alignSelf: 'center'
+  },
+  slideHeader: {
+    height: 0,
+    backgroundColor: '#2C3039',
+    borderBottomWidth: 0
+  },
+  CardImage: {
+    flex: 1,
+    // remove width and height to override fixed static size
+    width: null,
+    height: null
+  },
+  slideContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  slideIcon: {
+    width: 180,
+    height: 180,
+    marginTop: 50,
+    marginBottom: 30
+  },
+  slideTitle: {
+    fontFamily: 'oswald-bold',
+    color: '#dfdce3',
+    letterSpacing: 1,
+    fontSize: 28,
+    marginBottom: 20
+  },
+  slideText: {
+    fontFamily: 'oswald-light',
+    color: '#dfdce3',
+    letterSpacing: 1,
+    fontSize: 20,
+    textAlign: 'center'
+  },
+  slideButton: {
+    backgroundColor: '#dfdce3',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 100
+  },
+  slideButtonTxt: {
+    fontFamily: 'oswald-light',
+    color: '#09b9b8',
+    fontSize: 14,
+    letterSpacing: 1,
   }
 })
