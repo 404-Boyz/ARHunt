@@ -1,12 +1,14 @@
 
 import Expo, { Location, Audio, Constants } from 'expo';
 import React from 'react';
-import { TouchableOpacity, Dimensions, Vibration } from 'react-native'
+import { TouchableOpacity, Dimensions, View, Vibration, Text } from 'react-native'
 import { Container, Header, Left, Icon, Right, Button, Title, Body } from 'native-base';
 import { connect } from 'react-redux';
 import { styles } from '../assets/styles/StyleSheet';
 import { changeVisitedStatus, changeActiveStatus } from '../store';
 import { ARModal } from './AR-Modal.js'
+import SlidingUpPanel from 'rn-sliding-up-panel';
+import { Ionicons } from '@expo/vector-icons';
 
 import * as THREE from 'three'; // 0.87.1
 import ExpoTHREE from 'expo-three'; // 2.0.2
@@ -21,6 +23,7 @@ class AR extends React.Component {
         super(props);
         this.state = {
             modalVisible: false,
+            noteVisible: false,
             distToNext: NaN,
             clue: this.props.locations.find(loc => loc.visited === false)
         };
@@ -42,6 +45,7 @@ class AR extends React.Component {
         }, () => {
             if (this.state.distToNext < 20 || this.state.clue.positionInHunt === 1) {
                 this.makeCube(this.gl)
+                this.setState({ noteVisible: true })
             }
         });
     }
@@ -61,16 +65,16 @@ class AR extends React.Component {
 
     cubeTappedAudio = async () => {
 
-             const source = require("../assets/audio/171671__fins__success-1.wav")
-            
-            const sound = new Audio.Sound();
+        const source = require("../assets/audio/171671__fins__success-1.wav")
+
+        const sound = new Audio.Sound();
         try {
             await Audio.setIsEnabledAsync(true);
             await sound.loadAsync(source);
             await sound.playAsync();
-            } catch (error) {
-              console.error(error);
-            }
+        } catch (error) {
+            console.error(error);
+        }
 
     }
 
@@ -82,8 +86,8 @@ class AR extends React.Component {
             await sound.loadAsync(source);
             await sound.playAsync();
             //   await sound.stopAsync();
-            } catch (error) {
-              console.error(error);
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -129,7 +133,7 @@ class AR extends React.Component {
 
     makeCube = async (gl) => {
         let animate;
-        const geometry = new THREE.BoxGeometry(1.4, 1.4, 1.4);
+        const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
 
         // randomizing the cube colors and creating the 3D/AR shape
 
@@ -150,10 +154,11 @@ class AR extends React.Component {
 
         const cube = new THREE.Mesh(geometry, material);
 
-        cube.position.z = -8;
-        cube.position.y = 0.8;
+        cube.position.z = -1;
+        cube.position.y = 0.2;
 
         this.scene.add(cube);
+
 
         // run the AR scene & camera with the cube
 
@@ -203,6 +208,17 @@ class AR extends React.Component {
                     />
                     {modal}
                 </TouchableOpacity>
+                <SlidingUpPanel
+                    ref={c => this._panel = c}
+                    visible={this.state.noteVisible}
+                    onRequestClose={() => this.setState({ noteVisible: false })}>
+                    <View style={styles.noteContainer}>
+                        <Text style={styles.noteTitle}>YOU FOUND THE {this.state.clue.name.toUpperCase()}!</Text>
+                        <Text style={styles.noteText}>Lorem ipsum dolor sit amet, graeci aliquip vim ei, utinam persequeris sit et, has tota expetendis et. Mea agam ubique ne, ad per magna labores.</Text>
+                        <Text style={styles.noteRemove}><Ionicons name={'md-arrow-dropdown-circle'} size={16} color="#898c93" />  Swipe down to hide this and find your next clue</Text>
+                        <Button title='hide' onPress={() => this._panel.transitionTo(0)} />
+                    </View>
+                </SlidingUpPanel>
             </Container>
 
         );

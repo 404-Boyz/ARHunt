@@ -299,5 +299,39 @@ export const styles = new StyleSheet.create({
     color: '#09b9b8',
     fontSize: 14,
     letterSpacing: 1,
+  },
+
+  // AR specific styling
+
+  noteContainer: {
+    height: 200,
+    padding: 30,
+    paddingTop: 30,
+    paddingBottom: 0,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    justifyContent: 'center',
+    backgroundColor: '#222A33',
+    textAlign: 'center'
+  },
+  noteTitle: {
+    fontFamily: 'oswald-bold',
+    color: '#dfdce3',
+    letterSpacing: 1,
+    marginBottom: 10,
+    marginTop: 10,
+    fontSize: 20
+  },
+  noteText: {
+    fontFamily: 'oswald-light',
+    letterSpacing: 1,
+    color: '#dfdce3',
+    fontSize: 14,
+    marginBottom: 20
+  },
+  noteRemove: {
+    fontFamily: 'oswald-light',
+    color: '#898c93'
   }
 })

@@ -49,6 +49,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "rn-sliding-up-panel": "^1.1.10",
     "socket.io-client": "^2.0.4",
     "three": "^0.91.0"
   }

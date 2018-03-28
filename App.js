@@ -5,7 +5,7 @@ import RootStack from './client/components/Navigator.js'
 import store from './client/store'
 import { Provider } from 'react-redux'
 import io from 'socket.io-client'
-import { Font, AppLoading } from 'expo'
+import Expo, { Font, AppLoading } from 'expo'
 import { Root } from 'native-base'
 
 export default class Main extends Component {
