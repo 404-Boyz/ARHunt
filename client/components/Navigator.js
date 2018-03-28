@@ -65,7 +65,7 @@ const RootStack = DrawerNavigator({
     Intro: {
         screen: Intro
     },
-    'TEMP WINNING': {
+    'Winning': {
         screen: Winning
     }
 },

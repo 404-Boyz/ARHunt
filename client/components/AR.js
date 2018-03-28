@@ -79,7 +79,8 @@ class AR extends React.Component {
         if (intersects.length > 0) {
             //audio fire here
             this.cubeTappedAudio();
-            this._setModalVisible(!this.state.modalVisible)
+            //if last clue, redirect to winner page
+            (this.state.clue.name === 'WINNER') ? this.props.navigation.navigate('Winning') : this._setModalVisible(!this.state.modalVisible)
             this.scene.remove.apply(this.scene, this.scene.children);
         } else {
             Vibration.vibrate()

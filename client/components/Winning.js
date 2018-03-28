@@ -56,7 +56,7 @@ class Winning extends React.Component {
           <ImageBackground style={styles.profileHead} source={require('../assets/img/SA-pattern.png')}>
             <Thumbnail style={{ marginBottom: 10 }} large source={require('../assets/img/SA-thumb.png')} />
             <Text style={styles.profileName}>Congratulations {user.firstName}!</Text>
-            <Text style={styles.profilePoints}>You earned <Counter end={975} start={0} time={5000} digits={0} easing="linear" style={styles.profilePoints} /> Points!!!
+            <Text style={styles.profilePoints}>You earned  <Counter end={975} start={0} time={5000} digits={0} easing="linear" style={styles.profilePoints} /> Points!!!
             </Text>
           </ImageBackground>
           <Card style={styles.Card}>
