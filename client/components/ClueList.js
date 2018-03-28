@@ -6,6 +6,7 @@ import { styles } from '../assets/styles/StyleSheet';
 import { TouchableOpacity, View, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StackNavigator, navigationOptions } from 'react-navigation';
+import geolib from 'geolib';
 
 const BUTTONS = ["Hint #1", "Hint #2", "Cancel"];
 const CANCEL_INDEX = 2;
@@ -18,12 +19,16 @@ class ClueList extends Component {
     super(props)
 
     this.state = {
-      distToNext: 0
+      distToNext: null,
+      clue: this.props.allClues.find(loc => loc.visited === false)
     }
   }
 
   componentDidMount() {
     this.props.fetchLocations(1, 1);
+    setInterval(() => {
+      this.setState({ distToNext: geolib.getDistance(this.props.geoPosition, {latitude: this.state.clue.latitude, longitude: this.state.clue.longitude}) });
+    }, 3000);
   }
 
   render() {
@@ -53,7 +58,7 @@ class ClueList extends Component {
                 location.visited ?
                   <Card key={location.id}>
                     <CardItem style={styles.CardHeadFoot}>
-                      <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+                      <Text style={styles.CardTitle}>{activeAdventures[0].name}: Clue {location.positionInHunt}</Text>
                     </CardItem>
                     <CardItem style={styles.CardBody}>
                       <Body>
@@ -63,7 +68,7 @@ class ClueList extends Component {
                       </Body>
                     </CardItem>
                     <CardItem style={styles.clueListFooter}>
-                      <Text style={styles.CardHunts}>Distance To Go: 86m</Text>
+                      <Text style={styles.CardHunts}>Distance to clue number {(this.state.clue.positionInHunt) - 1}: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
                       <View style={styles.hintArea}>
                       <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
                       <Text
@@ -95,7 +100,7 @@ class ClueList extends Component {
                   :
                   <Card key={location.id} >
                     <CardItem style={styles.CardHeadFoot}>
-                      <Text style={styles.CardTitle}>{this.props.adventures[0].name}: Clue {location.positionInHunt}</Text>
+                      <Text style={styles.CardTitle}>{activeAdventures[0].name}: Clue {location.positionInHunt}</Text>
                     </CardItem>
                     <CardItem style={styles.CardBody}>
                       <Body>
