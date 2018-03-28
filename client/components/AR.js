@@ -60,26 +60,24 @@ class AR extends React.Component {
     // check the touch location against the raycaster and see if it matches our cube
 
     cubeTappedAudio = async () => {
-
         const source = require("../assets/audio/171671__fins__success-1.wav")
-
-        const sound = new Audio.Sound();
+        console.log("audio function..............")
         try {
             await Audio.setIsEnabledAsync(true);
+            const sound = new Audio.Sound();
             await sound.loadAsync(source);
             await sound.playAsync();
         } catch (error) {
             console.error(error);
         }
-
     }
+
 
     runHitTest = () => {
         this.raycaster.setFromCamera(this.touch, this.camera);
         const intersects = this.raycaster.intersectObjects(this.scene.children);
         if (intersects.length > 0) {
             //audio fire here
-            //need logic to pay winningscreenaudio on final clue
             this.cubeTappedAudio();
             this._setModalVisible(!this.state.modalVisible)
             this.scene.remove.apply(this.scene, this.scene.children);
@@ -91,6 +89,7 @@ class AR extends React.Component {
     // set up the AR scene with scene, camera and render
 
     _onGLContextCreate = async (gl) => {
+        console.log('ACTUAL CURRENT LOCATION!!!', this.props.locations, this.state.clue)
         this.gl = gl;
         this.glWidth = gl.drawingBufferWidth;
         this.glHeight = gl.drawingBufferHeight;

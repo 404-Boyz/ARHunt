@@ -6,6 +6,7 @@ import { TouchableOpacity, View, Image, ImageBackground, Alert } from 'react-nat
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo'
+import Counter from 'react-native-counter'
 
 class Winning extends React.Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class Winning extends React.Component {
       await Audio.setIsEnabledAsync(true);
       await sound.loadAsync(source);
       await sound.playAsync();
-      //   await sound.stopAsync();
     } catch (error) {
       console.error(error);
     }
@@ -28,14 +28,14 @@ class Winning extends React.Component {
 
   componentDidMount() {
     this.winningScreenAudio();
-
   }
   render() {
 
-    const adventure = this.props.adventures.filter(adv => adv.status === 'active');
+    const adventure = this.props.adventures.filter(adv => adv.status === 'active')[0];
     const user = this.props.user;
     const winData = this.props.locations.find(location => location.name === 'WINNER')
-    const completedAdventures = this.props.adventures.filter(adv => adv.status === 'completed');
+    const completedAdventures = this.props.adventures.filter(adv => adv.status === 'inactive');
+    console.log('ADVENTURE!!!!!', adventure)
 
     return (
       <Container style={styles.Container}>
@@ -55,16 +55,19 @@ class Winning extends React.Component {
         <Content>
           <ImageBackground style={styles.profileHead} source={require('../assets/img/SA-pattern.png')}>
             <Thumbnail style={{ marginBottom: 10 }} large source={require('../assets/img/SA-thumb.png')} />
-            <Text style={styles.profileName}>{user.fullName}</Text>
-            <Text style={styles.profilePoints}>1,050 Points</Text>
+            <Text style={styles.profileName}>Congratulations {user.firstName}!</Text>
+            <Text style={styles.profilePoints}>You earned <Counter end={975} start={0} time={5000} digits={0} easing="linear" style={styles.profilePoints} /> Points!!!
+            </Text>
           </ImageBackground>
           <Card style={styles.Card}>
             <CardItem style={styles.CardHeadFoot}>
               <Left>
                 <Thumbnail source={require('../assets/img/SA-thumb.png')} />
                 <Body>
-                  <Text style={styles.CardTitle}>{adventure.name}</Text>
-                  <Text note style={styles.CardNote}>Chicago, Il</Text>
+                  <Text style={styles.CardTitle}>
+                    <Ionicons name={'ios-checkmark-circle'} size={22} color="#09b9b8" /> {adventure.name}
+                  </Text>
+                  <Text note style={styles.CardNote}>Completed!</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -72,7 +75,7 @@ class Winning extends React.Component {
               <Body>
                 <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
                 <Text style={styles.CardText}>
-                  {adventure.description}
+                  {winData.description}
                 </Text>
               </Body>
             </CardItem>
@@ -84,7 +87,6 @@ class Winning extends React.Component {
                   <Text style={styles.CardHunts}>{completedAdventures.length} Hunt Completed</Text>
                   :
                   <Text style={styles.CardHunts}>{completedAdventures.length} Hunts Completed</Text>}
-
               </Left>
             </CardItem>
           </Card>
@@ -104,8 +106,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    changeStatus: (userId, adventureId, status) => {
-      dispatch(changeAdventureStatus(userId, adventureId, status))
+    changeStatus: () => {
+      dispatch(changeAdventureStatus(1, 1, status))
     }
   }
 }
