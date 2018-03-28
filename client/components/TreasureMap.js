@@ -19,7 +19,7 @@ class TreasureMap extends Component {
 
   componentDidMount() {
     setInterval(() => {
-      this.setState({ distToNext: geolib.getDistance(this.props.geoPosition, {latitude: this.state.clue.latitude, longitude: this.state.clue.longitude}) });
+      this.setState({ distToNext: geolib.getDistance(this.props.geoPosition, { latitude: this.state.clue.latitude, longitude: this.state.clue.longitude }) });
     }, 3000);
   }
 
@@ -48,14 +48,14 @@ class TreasureMap extends Component {
           initialRegion={initialRegion}
         >
           <MapView.Circle
-            center={{latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude}}
+            center={{ latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }}
             radius={300}
             strokeColor="rgba(16,187,186, .2)"
             fillColor="rgba(16,187,186, .2)"
           />
         </MapView>
         <Text style={styles.mapText}>Distance to clue number {(this.state.clue.positionInHunt) - 1}: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
-        {this.state.distToNext > 10 ?  null : this.props.navigation.navigate('AR') }
+        {this.state.distToNext > 30 || typeof this.state.distToNext !== 'number' ? null : this.props.navigation.navigate('CAMERA')}
       </Container>
     )
   }

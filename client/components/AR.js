@@ -43,9 +43,11 @@ class AR extends React.Component {
         this.setState({
             distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }, 5),
         }, () => {
-            if (this.state.distToNext < 20 || this.state.clue.positionInHunt === 1) {
-                this.makeCube(this.gl)
+            if (this.state.distToNext < 30 && this.state.clue.positionInHunt > 1) {
                 this.setState({ noteVisible: true })
+                this.makeCube(this.gl)
+            } else if (this.state.clue.positionInHunt === 1) {
+                this.makeCube(this.gl)
             }
         });
     }
@@ -184,6 +186,12 @@ class AR extends React.Component {
         if (this.state.modalVisible && this.state.clue) {
             modal = (<ARModal user={this.props.user} clue={this.state.clue} navigation={this.props.navigation} change={this.props.changeStatus} setModalVisible={this._setModalVisible.bind(this)} />)
         }
+        // let info;
+        // if (this.state.clue.positionInHunt !== 1) {
+        //     info = this.props.locations.filter(loc => loc.positionInHunt === (+this.state.clue.positionInHunt) - 1)
+        //     console.log('INFO', this.info)
+        // }
+        console.log('INFO2', this.info)
         return (
             <Container style={styles.Container}>
                 <Header style={styles.Header} iosBarStyle="light-content">
@@ -208,17 +216,19 @@ class AR extends React.Component {
                     />
                     {modal}
                 </TouchableOpacity>
-                <SlidingUpPanel
-                    ref={c => this._panel = c}
-                    visible={this.state.noteVisible}
-                    onRequestClose={() => this.setState({ noteVisible: false })}>
-                    <View style={styles.noteContainer}>
-                        <Text style={styles.noteTitle}>YOU FOUND THE {this.state.clue.name.toUpperCase()}!</Text>
-                        <Text style={styles.noteText}>Lorem ipsum dolor sit amet, graeci aliquip vim ei, utinam persequeris sit et, has tota expetendis et. Mea agam ubique ne, ad per magna labores.</Text>
-                        <Text style={styles.noteRemove}><Ionicons name={'md-arrow-dropdown-circle'} size={16} color="#898c93" />  Swipe down to hide this and find your next clue</Text>
-                        <Button title='hide' onPress={() => this._panel.transitionTo(0)} />
-                    </View>
-                </SlidingUpPanel>
+                {this.state.clue.positionInHunt > 1 ?
+                    <SlidingUpPanel
+                        ref={c => this._panel = c}
+                        visible={this.state.noteVisible}
+                        onRequestClose={() => this.setState({ noteVisible: false })}>
+                        <View style={styles.noteContainer}>
+                            <Text style={styles.noteTitle}>YOU FOUND THE {this.state.clue.name.toUpperCase()}!</Text>
+                            <Text style={styles.noteText}>Lorem ipsum dolor sit amet, graeci aliquip vim ei, utinam persequeris sit et, has tota expetendis et. Mea agam ubique ne, ad per magna labores.</Text>
+                            <Text style={styles.noteRemove}><Ionicons name={'md-arrow-dropdown-circle'} size={16} color="#898c93" />  Swipe down to hide this and find your next clue</Text>
+                            <Button title='hide' onPress={() => this._panel.transitionTo(0)} />
+                        </View>
+                    </SlidingUpPanel>
+                    : null}
             </Container>
 
         );
