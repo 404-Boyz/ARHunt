@@ -75,7 +75,7 @@ class Profile extends React.Component {
                           [
                             {
                               text: 'Begin!', onPress: async () => {
-                                // await this.beginAdventureAudio();
+                                await this.beginAdventureAudio();
                                 this.props.navigation.navigate('CAMERA')
                               }
                             },
