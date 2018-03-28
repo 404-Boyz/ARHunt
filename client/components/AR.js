@@ -61,32 +61,18 @@ class AR extends React.Component {
 
     cubeTappedAudio = async () => {
 
-             const source = require("../assets/audio/171671__fins__success-1.wav")
-            
-            const sound = new Audio.Sound();
-        try {
-            await Audio.setIsEnabledAsync(true);
-            await sound.loadAsync(source);
-            await sound.playAsync();
-            } catch (error) {
-              console.error(error);
-            }
+        const source = require("../assets/audio/171671__fins__success-1.wav")
 
-    }
-
-    winningScreenAudio = async () => {
-        const source = require("../assets/audio/410578__yummie__game-win-screen-background-music.mp3")
         const sound = new Audio.Sound();
         try {
             await Audio.setIsEnabledAsync(true);
             await sound.loadAsync(source);
             await sound.playAsync();
-            //   await sound.stopAsync();
-            } catch (error) {
-              console.error(error);
+        } catch (error) {
+            console.error(error);
         }
-    }
 
+    }
 
     runHitTest = () => {
         this.raycaster.setFromCamera(this.touch, this.camera);

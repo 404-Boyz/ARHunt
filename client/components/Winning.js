@@ -5,31 +5,30 @@ import { connect } from 'react-redux';
 import { TouchableOpacity, View, Image, ImageBackground, Alert } from 'react-native';
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo';
+import { Audio } from 'expo'
 
-class Profile extends React.Component {
+class Winning extends React.Component {
   constructor(props) {
     super(props)
 
   }
 
-  componentDidMount() {
-    this.props.fetchInitialData();
-  }
-
-  beginAdventureAudio = async () => {
-
-    const source = require("../assets/audio/269194__mickleness__game-start.mp3")
+  winningScreenAudio = async () => {
+    const source = require("../assets/audio/410578__yummie__game-win-screen-background-music.mp3")
     const sound = new Audio.Sound();
     try {
       await Audio.setIsEnabledAsync(true);
       await sound.loadAsync(source);
       await sound.playAsync();
+      //   await sound.stopAsync();
     } catch (error) {
       console.error(error);
     }
   }
 
+  componentDidMount() {
+    this.winningScreenAudio();
+  }
   render() {
 
     const adventures = this.props.adventures.filter(adventure => adventure.status === 'active');
