@@ -55,7 +55,7 @@ class TreasureMap extends Component {
           />
         </MapView>
         <Text style={styles.mapText}>Distance to clue number {(this.state.clue.positionInHunt) - 1}: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
-        {this.state.distToNext > 100 ? null : this.props.navigation.navigate('AR')}
+        {this.state.distToNext > 10 ? null : this.props.navigation.navigate('AR')}
       </Container>
     )
   }
