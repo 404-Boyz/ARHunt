@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { logout, stopTracking } from '../store'
 import { connect } from 'react-redux'
 
-const routes = ["MY PROFILE", "CLUE LIST", "MAP", "CAMERA", "ADVENTURES", "Winning"];
+const routes = ["MY PROFILE", "CLUE LIST", "MAP", "CAMERA", "ADVENTURES"];
 const icons = {
     'MY PROFILE': 'ios-contact',
     'CLUE LIST': 'ios-list-box-outline',
@@ -14,7 +14,7 @@ const icons = {
     'CAMERA': 'ios-qr-scanner',
     'ADVENTURES': 'ios-images-outline',
     'logout': 'ios-log-out',
-    'Winning': 'ios-contact'
+    
 }
 
 

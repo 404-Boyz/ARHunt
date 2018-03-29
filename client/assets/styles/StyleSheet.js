@@ -240,6 +240,19 @@ export const styles = new StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  hintArea2: {
+    marginTop: 10,
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  CardTextClues: {
+    fontFamily: 'oswald-light',
+    color: '#807e83',
+    marginTop: 0
+  },
+  getHints: {
+    marginTop: -5
+  },
 
   // intro specific slides
 

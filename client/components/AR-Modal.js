@@ -36,7 +36,7 @@ export class ARModal extends Component {
               <Text style={styles.modalBT}>   On To The Next Clue!    </Text>
             </TouchableHighlight>
             <View style={styles.hintArea}>
-              <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+              <Ionicons style={styles.getHints} name="ios-help-circle" size={32} color="#09b9b8" />
               <Text
                 onPress={() =>
                   ActionSheet.show(
