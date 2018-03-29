@@ -18,7 +18,7 @@ class Profile extends React.Component {
 
   beginAdventureAudio = async () => {
 
-    const source = require("../assets/audio/269194__mickleness__game-start.mp3")
+    const source = require("../assets/audio/351878__theatomicbrain__computer-chimes-program-start.aiff")
      const sound = new Audio.Sound();
   try {
      await Audio.setIsEnabledAsync(true);
@@ -59,8 +59,8 @@ class Profile extends React.Component {
           <View style={styles.Content}>
               {adventures.length ? adventures.map(adventure => {
               return (
-                <TouchableOpacity 
-                  key={adventure.id} 
+                <TouchableOpacity
+                  key={adventure.id}
                   onPress={() => {
                     this.props.getLocations(1, adventure.id);
                     (activeClue.positionInHunt !== 1) ?
@@ -71,7 +71,8 @@ class Profile extends React.Component {
                       `Starting ${adventure.name}`,
                       [
                         { text: 'Begin!', onPress: async () => {
-                         // await this.beginAdventureAudio();
+                          this.props.changeActive(1, 1, 'active');
+                          await this.beginAdventureAudio();
                           this.props.navigation.navigate('CAMERA')
                         }},
                         { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
@@ -79,7 +80,7 @@ class Profile extends React.Component {
                       { cancelable: false }
                     )
                   }}>
-                
+
                   <Card style={styles.Card}>
                     <CardItem style={styles.CardHeadFoot}>
                       <Left>
