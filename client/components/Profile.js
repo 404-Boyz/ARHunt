@@ -18,15 +18,15 @@ class Profile extends React.Component {
 
   beginAdventureAudio = async () => {
 
-    const source = require("../assets/audio/269194__mickleness__game-start.mp3")
-     const sound = new Audio.Sound();
-  try {
-     await Audio.setIsEnabledAsync(true);
-     await sound.loadAsync(source);
-     await sound.playAsync();
-     } catch (error) {
-       console.error(error);
-     }
+    // const source = require("../assets/audio/269194__mickleness__game-start.mp3")
+    const sound = new Audio.Sound();
+    try {
+      await Audio.setIsEnabledAsync(true);
+      await sound.loadAsync(source);
+      await sound.playAsync();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -57,29 +57,31 @@ class Profile extends React.Component {
             <Text style={styles.profilePoints}>1,050 Points</Text>
           </ImageBackground>
           <View style={styles.Content}>
-              {adventures.length ? adventures.map(adventure => {
+            {adventures.length ? adventures.map(adventure => {
               return (
-                <TouchableOpacity 
-                  key={adventure.id} 
+                <TouchableOpacity
+                  key={adventure.id}
                   onPress={() => {
                     this.props.getLocations(1, adventure.id);
                     (activeClue.positionInHunt !== 1) ?
-                    this.props.navigation.navigate('MAP')
-                    :
-                    Alert.alert(
-                      'AR you ready to begin?',
-                      `Starting ${adventure.name}`,
-                      [
-                        { text: 'Begin!', onPress: async () => {
-                         // await this.beginAdventureAudio();
-                          this.props.navigation.navigate('CAMERA')
-                        }},
-                        { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
-                      ],
-                      { cancelable: false }
-                    )
+                      this.props.navigation.navigate('MAP')
+                      :
+                      Alert.alert(
+                        'AR you ready to begin?',
+                        `Starting ${adventure.name}`,
+                        [
+                          {
+                            text: 'Begin!', onPress: async () => {
+                              // await this.beginAdventureAudio();
+                              this.props.navigation.navigate('CAMERA')
+                            }
+                          },
+                          { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
+                        ],
+                        { cancelable: false }
+                      )
                   }}>
-                
+
                   <Card style={styles.Card}>
                     <CardItem style={styles.CardHeadFoot}>
                       <Left>
@@ -108,23 +110,23 @@ class Profile extends React.Component {
                 </TouchableOpacity>
               )
             }) :
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("ADVENTURES")}>
-            <Card style={styles.Card}>
-              <CardItem style={styles.CardHead}>
-                <Left>
-                  <Thumbnail source={require('../assets/img/SA-thumb.png')} />
-                  <Body>
-                    <Text>You Have No Adventures</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem style={styles.CardBody}>
-              <Body>
-              <Text> Choose a new adventure! </Text>
-            </Body>
-              </CardItem>
-            </Card>
-          </TouchableOpacity>}
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("ADVENTURES")}>
+                <Card style={styles.Card}>
+                  <CardItem style={styles.CardHead}>
+                    <Left>
+                      <Thumbnail source={require('../assets/img/SA-thumb.png')} />
+                      <Body>
+                        <Text>You Have No Adventures</Text>
+                      </Body>
+                    </Left>
+                  </CardItem>
+                  <CardItem style={styles.CardBody}>
+                    <Body>
+                      <Text> Choose a new adventure! </Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>}
           </View>
         </Content>
       </Container>
