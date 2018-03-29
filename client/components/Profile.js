@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { TouchableOpacity, View, Image, ImageBackground, Alert } from 'react-native';
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
+import { Audio } from 'expo';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -19,14 +20,14 @@ class Profile extends React.Component {
   beginAdventureAudio = async () => {
 
     const source = require("../assets/audio/269194__mickleness__game-start.mp3")
-     const sound = new Audio.Sound();
-  try {
-     await Audio.setIsEnabledAsync(true);
-     await sound.loadAsync(source);
-     await sound.playAsync();
-     } catch (error) {
-       console.error(error);
-     }
+    const sound = new Audio.Sound();
+    try {
+      await Audio.setIsEnabledAsync(true);
+      await sound.loadAsync(source);
+      await sound.playAsync();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -57,74 +58,78 @@ class Profile extends React.Component {
             <Text style={styles.profilePoints}>1,050 Points</Text>
           </ImageBackground>
           <View style={styles.Content}>
-              {adventures.length ? adventures.map(adventure => {
-              return (
-                <TouchableOpacity 
-                  key={adventure.id} 
-                  onPress={() => {
-                    this.props.getLocations(1, adventure.id);
-                    (activeClue.positionInHunt !== 1) ?
-                    this.props.navigation.navigate('MAP')
-                    :
-                    Alert.alert(
-                      'AR you ready to begin?',
-                      `Starting ${adventure.name}`,
-                      [
-                        { text: 'Begin!', onPress: async () => {
-                         // await this.beginAdventureAudio();
-                          this.props.navigation.navigate('CAMERA')
-                        }},
-                        { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
-                      ],
-                      { cancelable: false }
-                    )
-                  }}>
-                
-                  <Card style={styles.Card}>
-                    <CardItem style={styles.CardHeadFoot}>
-                      <Left>
-                        <Thumbnail source={require('../assets/img/SA-thumb.png')} />
+            {adventures.length
+              ?
+              adventures.map(adventure => {
+                return (
+                  <TouchableOpacity
+                    key={adventure.id}
+                    onPress={() => {
+                      this.props.getLocations(1, adventure.id);
+                      (activeClue.positionInHunt !== 1) ?
+                        this.props.navigation.navigate('MAP')
+                        :
+                        Alert.alert(
+                          'AR you ready to begin?',
+                          `Starting ${adventure.name}`,
+                          [
+                            {
+                              text: 'Begin!', onPress: async () => {
+                                await this.beginAdventureAudio();
+                                this.props.navigation.navigate('CAMERA')
+                              }
+                            },
+                            { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
+                          ],
+                          { cancelable: false }
+                        )
+                    }}>
+
+                    <Card style={styles.Card}>
+                      <CardItem style={styles.CardHeadFoot}>
+                        <Left>
+                          <Thumbnail source={require('../assets/img/SA-thumb.png')} />
+                          <Body>
+                            <Text style={styles.CardTitle}>{adventure.name}</Text>
+                            <Text note style={styles.CardNote}>Chicago, Il</Text>
+                          </Body>
+                        </Left>
+                      </CardItem>
+                      <CardItem style={styles.CardBody}>
                         <Body>
-                          <Text style={styles.CardTitle}>{adventure.name}</Text>
-                          <Text note style={styles.CardNote}>Chicago, Il</Text>
+                          <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
+                          <Text style={styles.CardText}>
+                            {adventure.description}
+                          </Text>
                         </Body>
-                      </Left>
-                    </CardItem>
-                    <CardItem style={styles.CardBody}>
+                      </CardItem>
+                      <CardItem style={styles.CardHeadFoot}>
+                        <Left>
+                          <Ionicons name="md-heart" size={22} color="#09b9b8" />
+                          <Text style={styles.CardHunts}>1,926 Hunts Completed</Text>
+                        </Left>
+                      </CardItem>
+                    </Card>
+                  </TouchableOpacity>
+                )
+              }) :
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("ADVENTURES")}>
+                <Card style={styles.Card}>
+                  <CardItem style={styles.CardHead}>
+                    <Left>
+                      <Thumbnail source={require('../assets/img/SA-thumb.png')} />
                       <Body>
-                        <Image source={{ uri: `${adventure.photoUrl}` }} style={{ height: 200, width: '100%', flex: 1 }} />
-                        <Text style={styles.CardText}>
-                          {adventure.description}
-                        </Text>
+                        <Text>You Have No Adventures</Text>
                       </Body>
-                    </CardItem>
-                    <CardItem style={styles.CardHeadFoot}>
-                      <Left>
-                        <Ionicons name="md-heart" size={22} color="#09b9b8" />
-                        <Text style={styles.CardHunts}>1,926 Hunts Completed</Text>
-                      </Left>
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>
-              )
-            }) :
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("ADVENTURES")}>
-            <Card style={styles.Card}>
-              <CardItem style={styles.CardHead}>
-                <Left>
-                  <Thumbnail source={require('../assets/img/SA-thumb.png')} />
-                  <Body>
-                    <Text>You Have No Adventures</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem style={styles.CardBody}>
-              <Body>
-              <Text> Choose a new adventure! </Text>
-            </Body>
-              </CardItem>
-            </Card>
-          </TouchableOpacity>}
+                    </Left>
+                  </CardItem>
+                  <CardItem style={styles.CardBody}>
+                    <Body>
+                      <Text> Choose a new adventure! </Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>}
           </View>
         </Content>
       </Container>
