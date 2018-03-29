@@ -40,7 +40,7 @@ class ClueList extends Component {
           <Header style={styles.Header} iosBarStyle="light-content" >
             <Left />
             <Body>
-              <Title style={styles.title}>Clue List</Title>
+              <Title style={styles.title}>CLUE LIST</Title>
             </Body>
             <Right>
               <Button
@@ -62,15 +62,15 @@ class ClueList extends Component {
                     </CardItem>
                     <CardItem style={styles.CardBody}>
                       <Body>
-                        <Text style={styles.CardText}>
+                        <Text style={styles.CardTextClues}>
                           {location.clue}
                         </Text>
                       </Body>
                     </CardItem>
                     <CardItem style={styles.clueListFooter}>
                       <Text style={styles.CardHunts}>Distance to clue number {(this.state.clue.positionInHunt) - 1}: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
-                      <View style={styles.hintArea}>
-                      <Ionicons name="ios-help-circle" size={32} color="#09b9b8" />
+                      <View style={styles.hintArea2}>
+                      <Ionicons style={styles.getHints} name="ios-help-circle" size={32} color="#09b9b8" />
                       <Text
                         onPress={() =>
                           ActionSheet.show(
