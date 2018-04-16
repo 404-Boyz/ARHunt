@@ -1,5 +1,5 @@
 'use strict'
-import { Location } from 'expo';
+import { Location, Permissions } from 'expo';
 let positionTracker = null;
 
 // ACTION TYPES
@@ -16,8 +16,9 @@ export const stopTracking = () => ({ type: STOP_TRACKING });
 
 // THUNK CREATORS
 
-export const getCurrentPosition = () => dispatch => {
+export const getCurrentPosition = () => async dispatch => {
     clearInterval(positionTracker);
+    let { status } = await Permissions.askAsync(Permissions.LOCATION)
     positionTracker = setInterval(() => {
         Location.getCurrentPositionAsync({ enableHighAccuracy: true })
             .then(res => dispatch(getUpdatedPosition({ latitude: res.coords.latitude, longitude: res.coords.longitude })))
