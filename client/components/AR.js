@@ -225,7 +225,7 @@ class AR extends React.Component {
                         onRequestClose={() => this.setState({ noteVisible: false })}>
                         <View style={styles.noteContainer}>
                             <Text style={styles.noteTitle}>YOU FOUND {this.state.clue.name.toUpperCase()}</Text>
-                            <Text style={styles.noteText}>{this.state.clue.success}</Text>
+                            <Text style={styles.noteText}>{this.state.locations.find(loc => loc.positionInHunt === this.state.clue.positionInHunt - 1).success}</Text>
                             <Text style={styles.noteRemove}><Ionicons name={'md-arrow-dropdown-circle'} size={16} color="#898c93" />  Swipe down to hide this and find your next clue</Text>
                             <Button title='hide' onPress={() => this._panel.transitionTo(0)} />
                         </View>
