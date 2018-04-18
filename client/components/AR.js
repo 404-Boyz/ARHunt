@@ -224,8 +224,8 @@ class AR extends React.Component {
                         visible={this.state.noteVisible}
                         onRequestClose={() => this.setState({ noteVisible: false })}>
                         <View style={styles.noteContainer}>
-                            <Text style={styles.noteTitle}>YOU FOUND THE DRIFTER!</Text>
-                            <Text style={styles.noteText}>The Drifter lies beneath Green Door Tavern. Head to the basement via the back stairs where you will find the authentic 20s-era speakeasy.</Text>
+                            <Text style={styles.noteTitle}>YOU FOUND {this.state.clue.name.toUpperCase()}</Text>
+                            <Text style={styles.noteText}>{this.state.clue.success}</Text>
                             <Text style={styles.noteRemove}><Ionicons name={'md-arrow-dropdown-circle'} size={16} color="#898c93" />  Swipe down to hide this and find your next clue</Text>
                             <Button title='hide' onPress={() => this._panel.transitionTo(0)} />
                         </View>
