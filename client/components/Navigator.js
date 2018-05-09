@@ -13,6 +13,7 @@ import SideBar from './SideBar'
 import ClueList from './ClueList'
 import Intro from './Intro'
 import Winning from './Winning'
+import { Placeholder } from './index'
 
 let width = Dimensions.get('window').width / 2
 
@@ -41,6 +42,9 @@ const transitionConfig = () => {
 }
 
 const RootStack = DrawerNavigator({
+    Placeholder: {
+        screen: Placeholder
+    },
     ADVENTURES: {
         screen: ChooseAdv
     },
@@ -70,7 +74,7 @@ const RootStack = DrawerNavigator({
     }
 },
     {
-        initialRouteName: 'Login',
+        initialRouteName: 'Placeholder',
         transitionConfig,
         drawerPosition: 'right',
         drawerWidth: width,
