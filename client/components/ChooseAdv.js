@@ -19,16 +19,16 @@ class ChooseAdv extends Component {
 
   beginAdventureAudio = async () => {
 
-  const source = require("../assets/audio/351878__theatomicbrain__computer-chimes-program-start.aiff")
-   const sound = new Audio.Sound();
-try {
-   await Audio.setIsEnabledAsync(true);
-   await sound.loadAsync(source);
-   await sound.playAsync();
-   } catch (error) {
-     console.error(error);
-   }
-}
+    const source = require("../assets/audio/351878__theatomicbrain__computer-chimes-program-start.aiff")
+    const sound = new Audio.Sound();
+    try {
+      await Audio.setIsEnabledAsync(true);
+      await sound.loadAsync(source);
+      await sound.playAsync();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   render() {
     const user = this.props.user
@@ -57,10 +57,13 @@ try {
                   'AR you ready to begin?',
                   `Starting ${adventure.name}`,
                   [
-                    { text: 'Begin!', onPress: async () => {
-                      this.props.changeActive(1, 1, 'active');
-                      await this.beginAdventureAudio();
-                      this.props.navigation.navigate('CAMERA') } },
+                    {
+                      text: 'Begin!', onPress: async () => {
+                        this.props.changeActive(1, adventure.id, 'active');
+                        await this.beginAdventureAudio();
+                        this.props.navigation.navigate('CAMERA')
+                      }
+                    },
                     { text: 'Cancel', onPress: () => console.log('Cancel Pressed') }
                   ],
                   { cancelable: false }

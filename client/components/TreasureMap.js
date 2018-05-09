@@ -45,7 +45,14 @@ class TreasureMap extends Component {
         <MapView
           style={{ flex: 10 }}
           showsUserLocation={true}
-          initialRegion={initialRegion}
+          initialRegion={
+            {
+              latitude: this.props.geoPosition.latitude,
+              longitude: this.props.geoPosition.longitude,
+              latitudeDelta: 0.009,
+              longitudeDelta: 0.009
+            }
+          }
         >
           <MapView.Circle
             center={{ latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }}
@@ -56,19 +63,14 @@ class TreasureMap extends Component {
         </MapView>
         <Text style={styles.mapText}>Distance to clue number {(this.state.clue.positionInHunt) - 1}: {this.state.distToNext ? `${this.state.distToNext * 3} feet` : `Calculating...`}</Text>
 
-        {this.state.distToNext > 30 || typeof this.state.distToNext !== 'number' ? null : this.props.navigation.navigate('CAMERA')}
+        {this.state.distToNext > 20 || typeof this.state.distToNext !== 'number' ? null : this.props.navigation.navigate('CAMERA')}
 
       </Container>
     )
   }
 }
 
-const initialRegion = {
-  latitude: 41.895266,
-  longitude: -87.639035,
-  latitudeDelta: 0.009,
-  longitudeDelta: 0.009,
-};
+
 
 const mapState = (state) => {
   return {

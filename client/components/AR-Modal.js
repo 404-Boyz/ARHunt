@@ -15,7 +15,7 @@ export class ARModal extends Component {
 
   constructor(props) {
     super(props);
-    this.props.change(1, 1, props.clue.id)
+    this.props.change(1, 5, props.clue.id)
     this.state = {}
   }
   render() {

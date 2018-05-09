@@ -43,7 +43,7 @@ class AR extends React.Component {
         this.setState({
             distToNext: geolib.getDistance(this.props.geoPosition, { latitude: +this.state.clue.latitude, longitude: +this.state.clue.longitude }, 5),
         }, () => {
-            if (this.state.distToNext < 30 && this.state.clue.positionInHunt > 1) {
+            if (this.state.distToNext < 25 && this.state.clue.positionInHunt > 1) {
                 this.setState({ noteVisible: true })
                 this.makeCube(this.gl)
             } else if (this.state.clue.positionInHunt === 1) {
@@ -224,8 +224,8 @@ class AR extends React.Component {
                         visible={this.state.noteVisible}
                         onRequestClose={() => this.setState({ noteVisible: false })}>
                         <View style={styles.noteContainer}>
-                            <Text style={styles.noteTitle}>YOU FOUND THE {this.state.clue.name.toUpperCase()}!</Text>
-                            <Text style={styles.noteText}>Lorem ipsum dolor sit amet, graeci aliquip vim ei, utinam persequeris sit et, has tota expetendis et. Mea agam ubique ne, ad per magna labores.</Text>
+                            <Text style={styles.noteTitle}>YOU FOUND {this.props.locations.find(loc => loc.positionInHunt === this.state.clue.positionInHunt - 1).name.toUpperCase()}</Text>
+                            <Text style={styles.noteText}>{this.props.locations.find(loc => loc.positionInHunt === this.state.clue.positionInHunt - 1).success}</Text>
                             <Text style={styles.noteRemove}><Ionicons name={'md-arrow-dropdown-circle'} size={16} color="#898c93" />  Swipe down to hide this and find your next clue</Text>
                             <Button title='hide' onPress={() => this._panel.transitionTo(0)} />
                         </View>
@@ -237,6 +237,8 @@ class AR extends React.Component {
     }
 
 }
+
+// {this.state.clue.name.toUpperCase()}
 
 const mapState = (state) => {
     return {
