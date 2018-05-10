@@ -1,11 +1,11 @@
 export { default as AR } from './AR'
 export { default as ChooseAdv } from './ChooseAdv'
 export { default as ClueList } from './ClueList'
-export { default as Home } from './Home'
 export { Login } from './LogIn'
 export { default as TreasureMap } from './TreasureMap'
 export { Profile } from './Profile'
 export { default as SignUp } from './SignUp'
 export { Intro } from './Intro'
 export { IntroSlides } from './IntroSlides'
+export { default as Placeholder } from './Placeholder'
 

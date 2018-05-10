@@ -1,7 +1,9 @@
 import axios from 'axios'
+import { AsyncStorage } from 'react-native'
 import { StackNavigator, navigationOptions, NavigationActions } from 'react-navigation'
 import { devAxios } from './index'
 import { RootStack } from '../components/Navigator'
+import NavigationService from '../components/NavigationService';
 
 
 
@@ -19,7 +21,7 @@ const user = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({ type: GET_USER, user })
+export const getUser = user => ({ type: GET_USER, user })
 const removeUser = () => ({ type: REMOVE_USER })
 
 /**
@@ -39,6 +41,8 @@ export const authLogIn = (userName, password) =>
     devAxios.post('/auth/login', { userName, password })
       .then(res => {
         dispatch(getUser(res.data));
+        AsyncStorage.setItem('user', JSON.stringify(res.data));
+        NavigationService.navigate('Intro')
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
         dispatch(getUser({ error: authError }))
       })
@@ -61,6 +65,7 @@ export const logout = () =>
     devAxios.post('/auth/logout')
       .then(_ => {
         dispatch(removeUser())
+        AsyncStorage.removeItem('user')
       })
       .catch(err => console.log(err))
 

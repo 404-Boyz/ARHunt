@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+import NavigationService from './client/components/NavigationService';
 import RootStack from './client/components/Navigator.js'
 import store from './client/store'
 import { Provider } from 'react-redux'
@@ -34,7 +34,9 @@ export default class Main extends Component {
       return (
         <Root>
           <Provider store={store}>
-            <RootStack />
+            <RootStack ref={navigatorRef => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }} />
           </Provider>
         </Root>
       )

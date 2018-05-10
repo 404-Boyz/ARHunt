@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ScavengAR",
-    "slug": "scavengar",
+    "slug": "arhunt",
     "sdkVersion": "25.0.0",
     "orientation": "portrait",
     "description": "ScavengAR is an augmented reality, city-wide scavenger hunt application.  Users are led on a tour of local points of interest by following fun clues."
