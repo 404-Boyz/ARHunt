@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native'
 import { StackNavigator, navigationOptions, NavigationActions } from 'react-navigation'
 import { devAxios } from './index'
 import { RootStack } from '../components/Navigator'
+import NavigationService from '../components/NavigationService';
 
 
 
@@ -41,6 +42,7 @@ export const authLogIn = (userName, password) =>
       .then(res => {
         dispatch(getUser(res.data));
         AsyncStorage.setItem('user', JSON.stringify(res.data));
+        NavigationService.navigate('Intro')
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
         dispatch(getUser({ error: authError }))
       })
