@@ -14,7 +14,7 @@ const icons = {
     'CAMERA': 'ios-qr-scanner',
     'ADVENTURES': 'ios-images-outline',
     'logout': 'ios-log-out',
-    
+
 }
 
 
@@ -69,8 +69,7 @@ const mapDispatch = (dispatch) => {
     return {
         handleLogOut() {
             dispatch(logout());
-            dispatch(stopTracking());
-            this.props.navigation.navigate('Login')
+            dispatch(stopTracking())
         }
     }
 }
