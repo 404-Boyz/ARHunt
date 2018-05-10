@@ -41,7 +41,6 @@ export const authLogIn = (userName, password) =>
       .then(res => {
         dispatch(getUser(res.data));
         AsyncStorage.setItem('user', JSON.stringify(res.data));
-        console.log('ASYNCSTORAGE', AsyncStorage)
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
         dispatch(getUser({ error: authError }))
       })
@@ -64,6 +63,7 @@ export const logout = () =>
     devAxios.post('/auth/logout')
       .then(_ => {
         dispatch(removeUser())
+        AsyncStorage.removeItem('user')
       })
       .catch(err => console.log(err))
 

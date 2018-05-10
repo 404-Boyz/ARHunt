@@ -10,7 +10,9 @@ class Placeholder extends Component {
       .then((data) => {
         if (data) {
           console.log('EXISTING USER: ', data)
-          this.props.currentUser(data);
+          const persistedUser = JSON.parse(data)
+          console.log('RAW DATA', data, 'PARSED USER', persistedUser)
+          this.props.currentUser(persistedUser);
           this.props.navigation.navigate('MY PROFILE')
         }
         else {
