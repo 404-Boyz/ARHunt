@@ -52,7 +52,10 @@ const RootStack = DrawerNavigator({
         screen: ClueList
     },
     Login: {
-        screen: Login
+        screen: Login,
+        navigationOptions: {
+            drawerLockMode: 'locked-closed'
+        }
     },
     MAP: {
         screen: TreasureMap
@@ -78,7 +81,7 @@ const RootStack = DrawerNavigator({
         transitionConfig,
         drawerPosition: 'right',
         drawerWidth: width,
-        contentComponent: props => <SideBar {...props} />
+        contentComponent: props => <SideBar {...props} />,
 
     }
 );
