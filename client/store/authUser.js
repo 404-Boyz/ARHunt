@@ -65,8 +65,6 @@ export const logout = () =>
     devAxios.post('/auth/logout')
       .then(_ => {
         dispatch(removeUser());
-        AsyncStorage.removeItem('user');
-        NavigationService.navigate('Login')
       })
       .catch(err => console.log(err))
 
