@@ -70,6 +70,7 @@ const mapDispatch = (dispatch) => {
         handleLogOut() {
             dispatch(logout());
             dispatch(stopTracking())
+            this.props.navigation.navigate('Login')
         }
     }
 }
