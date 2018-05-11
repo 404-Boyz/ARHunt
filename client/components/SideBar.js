@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, AsyncStorage } from "react-native";
 import { Container, Content, Text, List, ListItem, Body } from "native-base";
 import { styles } from '../assets/styles/StyleSheet'
 import { Ionicons } from '@expo/vector-icons';
@@ -14,7 +14,7 @@ const icons = {
     'CAMERA': 'ios-qr-scanner',
     'ADVENTURES': 'ios-images-outline',
     'logout': 'ios-log-out',
-    
+
 }
 
 
@@ -68,8 +68,9 @@ const mapDispatch = (dispatch) => {
 
     return {
         handleLogOut() {
+            AsyncStorage.removeItem('user');
             dispatch(logout());
-            dispatch(stopTracking());
+            dispatch(stopTracking())
             this.props.navigation.navigate('Login')
         }
     }

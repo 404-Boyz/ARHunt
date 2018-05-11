@@ -64,8 +64,7 @@ export const logout = () =>
   dispatch =>
     devAxios.post('/auth/logout')
       .then(_ => {
-        dispatch(removeUser())
-        AsyncStorage.removeItem('user')
+        dispatch(removeUser());
       })
       .catch(err => console.log(err))
 
